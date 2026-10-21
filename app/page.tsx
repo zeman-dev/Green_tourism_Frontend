@@ -5,6 +5,7 @@ import {
 } from '@tanstack/react-query';
 import PopularStories from '@/components/PopularStories/PopularStories';
 import { getPopularStories } from '@/lib/api/popularStories';
+import Hero from '@/components/Hero/Hero';
 import styles from './page.module.css';
 
 export default async function Home() {
@@ -18,6 +19,7 @@ export default async function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+        <Hero />
         <HydrationBoundary state={dehydrate(queryClient)}>
           <PopularStories />
         </HydrationBoundary>

@@ -65,7 +65,6 @@ export function PrefetchTravellers() {
         queryClient.prefetchQuery({
             queryKey: travellersQueryKey,
             queryFn: travellersQueryFn,
-            staleTime: 1000 * 60 * 5,
         });
     }, [queryClient]);
 

@@ -1,4 +1,4 @@
-﻿import styles from "./TrevallerCard.module.css";
+import styles from "./TravellerCard.module.css";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -7,24 +7,22 @@ export type TravellerUser = {
   _id: string;
   username: string;
   articlesAmount: number;
-  /** The API currently returns `avatar`; the model stores `avatarUrl`. */
-  avatar?: string | null;
   avatarUrl?: string | null;
 };
 
-export type TrevallerCardProps = {
+export type TravellerCardProps = {
   user: TravellerUser;
   className?: string;
 };
 
-export default function TrevallerCard({
+export default function TravellerCard({
   user,
   className,
-}: TrevallerCardProps) {
+}: TravellerCardProps) {
   const cardClassName = className
     ? `${styles.card} ${className}`
     : styles.card;
-  const avatarUrl = user.avatarUrl || user.avatar;
+  const avatarUrl = user.avatarUrl;
 
   return (
     <article className={cardClassName}>
@@ -48,9 +46,7 @@ export default function TrevallerCard({
       <div className={styles.content}>
         <div className={styles.details}>
           <h3 className={styles.name}>{user.username}</h3>
-          <p className={styles.articleCount}>
-            Статей: {user.articlesAmount}
-          </p>
+          <p className={styles.articleCount}>Статей: {user.articlesAmount}</p>
         </div>
 
         <Link

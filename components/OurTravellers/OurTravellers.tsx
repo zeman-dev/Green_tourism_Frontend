@@ -1,20 +1,37 @@
 'use client'
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import styles from "./OurTravellers.module.css";
 import Link from "next/link";
+import { useQuery } from '@tanstack/react-query';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import type { Swiper as SwiperType } from 'swiper';
 import { Grid, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/navigation';
 import TravellerCard from "../TrevallerCard/TrevallerCard";
+import type { UsersApiResponse } from "../../types/user";
+
+const USERS_URL = 'https://green-tourism-backend.onrender.com/api/users?perPage=12&page=1';
 
 export default function OurTravellers() {
-    const swiperRef = useRef<SwiperType | null>(null);
     const [isBeginning, setIsBeginning] = useState(true);
     const [isEnd, setIsEnd] = useState(false);
+
+    const { data } = useQuery<UsersApiResponse>({
+        queryKey: ['travellers'],
+        queryFn: async () => {
+            const response = await fetch(USERS_URL);
+
+            if (!response.ok) {
+                throw new Error('Something went wrong');
+            }
+
+            return response.json();
+        },
+    });
+
+    const users = data?.users ?? [];
 
     return (
         <>
@@ -31,7 +48,6 @@ export default function OurTravellers() {
                                 prevEl: '.custom-prev',
                             }}
                             onSwiper={(swiper) => {
-                                swiperRef.current = swiper;
                                 setIsBeginning(swiper.isBeginning);
                                 setIsEnd(swiper.isEnd);
                             }}
@@ -70,18 +86,11 @@ export default function OurTravellers() {
                                 },
                             }}
                             >
-                            <SwiperSlide><TravellerCard/></SwiperSlide>
-                            <SwiperSlide><TravellerCard/></SwiperSlide>
-                            <SwiperSlide><TravellerCard/></SwiperSlide>
-                            <SwiperSlide><TravellerCard /></SwiperSlide>
-                            <SwiperSlide><TravellerCard/></SwiperSlide>
-                            <SwiperSlide><TravellerCard/></SwiperSlide>
-                            <SwiperSlide><TravellerCard/></SwiperSlide>
-                            <SwiperSlide><TravellerCard /></SwiperSlide>
-                            <SwiperSlide><TravellerCard/></SwiperSlide>
-                            <SwiperSlide><TravellerCard/></SwiperSlide>
-                            <SwiperSlide><TravellerCard/></SwiperSlide>
-                            <SwiperSlide><TravellerCard/></SwiperSlide>
+                            {users.map((user) => (
+                                <SwiperSlide key={user._id}>
+                                    <TravellerCard user={user} />
+                                </SwiperSlide>
+                            ))}
                         </Swiper>
                     </div>
 

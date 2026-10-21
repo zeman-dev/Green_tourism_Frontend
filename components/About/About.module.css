@@ -1,3 +1,11 @@
+.container {
+  min-width: 320px;
+  max-width: 375px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
 .about {
   padding: 48px 20px;
   background-color: #eef8ee;
@@ -12,19 +20,16 @@
 .textContent {
   display: flex;
   flex-direction: column;
-}
-
-.intro {
-  margin-bottom: 32px;
+  gap: 32px;
 }
 
 .textWrapper {
   display: flex;
   flex-direction: column;
+  gap: 24px;
 }
 
 .title {
-  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 28px;
   line-height: 1.2;
@@ -33,20 +38,21 @@
   margin-bottom: 24px;
 }
 .subtitle {
-  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 18px;
   line-height: 1.4;
   letter-spacing: -0.01em;
   color: #1b391b;
+  margin-top: 0;
+  margin-bottom: 16px;
 }
 
 .description {
-  font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
   color: #1b391b;
+  margin: 0;
 }
 
 .image {
@@ -54,16 +60,62 @@
   width: 100%;
   height: 410px;
   object-fit: cover;
+  object-position: center;
   border-radius: 12px;
 }
 
-@media (min-width: 768px) {
-  .image {
-    height: 410px;
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+  .about {
+    padding: 64px 32px;
+  }
+  .content {
+    gap: 32px;
+  }
+
+  .textWrapper {
+    flex-direction: row;
+  }
+  .textWrapper > div {
+    flex: 1;
+    min-width: 0;
   }
 }
 
-@media (min-width: 1440px) {
+@media screen and (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
+  }
+  .about {
+    padding: 112px 64px;
+  }
+
+  .content {
+    flex-direction: row;
+    gap: 24px;
+  }
+  .content > div {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .title {
+    margin-top: 76px;
+    font-size: 52px;
+  }
+  .intro > .description {
+    font-size: 20px;
+  }
+
+  .description {
+    font-size: 18px;
+  }
+  .subtitle {
+    font-size: 26px;
+  }
+
   .image {
     width: 644px;
     height: 686px;

@@ -3,6 +3,7 @@ import 'modern-normalize/modern-normalize.css';
 import './globals.css';
 import { Geist, Geist_Mono } from 'next/font/google';
 import TanstackProvider from '@/components/TanStackProvider/TanStackProvider';
+import Header from '../components/Header/Header';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -29,6 +30,7 @@ export default function RootLayout({ children }:Readonly<{
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
+        <Header />
         <TanstackProvider>{children}</TanstackProvider>
       </body>
     </html>

@@ -1,14 +1,15 @@
 .footer {
-  padding: 48px 20px;
   background-color: #def2de;
   color: #1b391b;
-  border-top: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .container {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  padding: 48px 20px;
+  margin: 0 auto;
+  max-width: 375px;
 }
 
 .top {
@@ -22,19 +23,18 @@
   transition: opacity 250ms ease;
 }
 
+.logo:hover {
+  opacity: 0.7;
+}
+
 .credits {
   padding-top: 32px;
   border-top: 1px solid rgba(0, 0, 0, 0.15);
 }
 
-@media (hover: hover) {
-  .logo:hover {
-    opacity: 0.7;
-  }
-}
-
 @media (min-width: 768px) {
-  .footer {
+  .container {
+    max-width: 768px;
     padding: 48px 32px;
   }
 
@@ -62,13 +62,9 @@
 }
 
 @media (min-width: 1440px) {
-  .footer {
-    padding: 80px 64px;
-  }
-
   .container {
-    max-width: 1312px;
-    margin-inline: auto;
+    max-width: 1440px;
+    padding: 80px 64px;
   }
 
   .top {

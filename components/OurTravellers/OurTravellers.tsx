@@ -9,26 +9,76 @@ import { Grid, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/navigation';
-import TravellerCard from "../TrevallerCard/TrevallerCard";
+import TravellerCard from "../TravellerCard/TravellerCard";
 import type { UsersApiResponse } from "../../types/user";
+import { clientApi } from '@/lib/api/clientApi';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
-const USERS_URL = 'https://green-tourism-backend.onrender.com/api/users?perPage=12&page=1';
+export const travellersQueryKey = ['travellers'] as const;
+
+export const travellersQueryFn = () => clientApi<UsersApiResponse>('/api/users', {
+    perPage: 12,
+    page: 1,
+});
+
+const swiperConfig = {
+    spaceBetween: 24,
+    navigation: {
+        nextEl: '.custom-next',
+        prevEl: '.custom-prev',
+    },
+    breakpoints: {
+        0: {
+            direction: 'horizontal',
+            slidesPerView: 1,
+            slidesPerGroup: 1,
+            grid: {
+                rows: 3,
+                fill: 'row',
+            },
+        },
+        768: {
+            direction: 'horizontal',
+            slidesPerView: 2,
+            slidesPerGroup: 2,
+            grid: {
+                rows: 2,
+                fill: 'row',
+            },
+        },
+        1440: {
+            direction: 'horizontal',
+            slidesPerView: 4,
+            slidesPerGroup: 4,
+            grid: {
+                rows: 1,
+            },
+        },
+    },
+} as const;
+
+export function PrefetchTravellers() {
+    const queryClient = useQueryClient();
+
+    useEffect(() => {
+        queryClient.prefetchQuery({
+            queryKey: travellersQueryKey,
+            queryFn: travellersQueryFn,
+            staleTime: 1000 * 60 * 5,
+        });
+    }, [queryClient]);
+
+    return null;
+}
 
 export default function OurTravellers() {
     const [isBeginning, setIsBeginning] = useState(true);
     const [isEnd, setIsEnd] = useState(false);
 
     const { data } = useQuery<UsersApiResponse>({
-        queryKey: ['travellers'],
-        queryFn: async () => {
-            const response = await fetch(USERS_URL);
-
-            if (!response.ok) {
-                throw new Error('Something went wrong');
-            }
-
-            return response.json();
-        },
+        queryKey: travellersQueryKey,
+        queryFn: travellersQueryFn,
     });
 
     const users = data?.users ?? [];
@@ -42,11 +92,8 @@ export default function OurTravellers() {
                     <div className={styles.swiperContainer}>
                         <Swiper
                             modules={[Grid, Navigation]}
-                            spaceBetween={24}
-                            navigation={{
-                                nextEl: '.custom-next',
-                                prevEl: '.custom-prev',
-                            }}
+                            spaceBetween={swiperConfig.spaceBetween}
+                            navigation={swiperConfig.navigation}
                             onSwiper={(swiper) => {
                                 setIsBeginning(swiper.isBeginning);
                                 setIsEnd(swiper.isEnd);
@@ -55,36 +102,7 @@ export default function OurTravellers() {
                                 setIsBeginning(swiper.isBeginning);
                                 setIsEnd(swiper.isEnd);
                             }}
-                            breakpoints={{
-                                0: {
-                                    direction: 'horizontal',
-                                    slidesPerView: 1,
-                                    slidesPerGroup: 1,
-                                    grid: {
-                                        rows: 3,
-                                        fill: 'row',
-                                    },
-                                },
-
-                                768: {
-                                    direction: 'horizontal',
-                                    slidesPerView: 2,
-                                    slidesPerGroup: 2,
-                                    grid: {
-                                        rows: 2,
-                                        fill: 'row',
-                                    },
-                                },
-
-                                1440: {
-                                    direction: 'horizontal',
-                                    slidesPerView: 4,
-                                    slidesPerGroup: 4,
-                                    grid: {
-                                        rows: 1,
-                                    },
-                                },
-                            }}
+                            breakpoints={swiperConfig.breakpoints}
                             >
                             {users.map((user) => (
                                 <SwiperSlide key={user._id}>

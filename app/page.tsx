@@ -1,18 +1,26 @@
-import styles from "./page.module.css";
-import { Suspense } from "react";
-import PopularStories from "@/components/PopularStories/PopularStories";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
+import PopularStories from '@/components/PopularStories/PopularStories';
+import { getPopularStories } from '@/lib/api/popularStories';
+import styles from './page.module.css';
 
+export default async function Home() {
+  const queryClient = new QueryClient();
 
+  await queryClient.prefetchQuery({
+    queryKey: ['popularStories'],
+    queryFn: getPopularStories,
+  });
 
-
-export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <Suspense fallback={<p className={styles.loader}>Завантаження...</p>}>
+        <HydrationBoundary state={dehydrate(queryClient)}>
           <PopularStories />
-        </Suspense>
-
+        </HydrationBoundary>
       </main>
     </div>
   );

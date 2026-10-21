@@ -15,7 +15,7 @@
   background-color: #eef8ee;
   align-items: center;
   padding: 64px 20px;
-  font-family: var(--font-geist-mono); /* поміняти */
+  font-family: var(--font-montserrat); /* поміняти */
   font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
@@ -23,7 +23,6 @@
 }
 
 .hero h1 {
-  font-family: var(--font-family); /* поміняти */
   font-weight: 700;
   font-size: 32px;
   line-height: 1.1;
@@ -49,8 +48,10 @@
   border: 1px solid #4a9849;
   border-radius: 6px;
   background-color: #4a9849;
-  font-family: var(--font-family); /* поміняти */
   color: #fff;
+  transition:
+    background-color 250ms ease,
+    color 250ms ease;
 }
 
 .joinbtn:hover,
@@ -91,16 +92,18 @@
     padding: 72px 64px;
     font-size: 20px;
   }
-.hero h1 {
-  font-size: 56px;
-}
+  .textbox {
+    width: 644px;
+  }
+  .hero h1 {
+    font-size: 56px;
+  }
   .picture {
     height: 580px;
     width: 644px;
     border: 1px solid #000;
   }
   .joinbtn {
-   
     width: 278px;
   }
 }

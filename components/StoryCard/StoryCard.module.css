@@ -1,0 +1,214 @@
+.card {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: max-content max-content minmax(0, 1fr);
+    grid-template-areas:
+        "image image image"
+        "author rating ."
+        "title title title"
+        "footer footer footer";
+    row-gap: 12px;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    padding-bottom: 16px;
+    border-radius: 12px;
+    background: #DEF2DE;
+    color: #1B391B;
+    font-family: Montserrat, sans-serif;
+}
+
+.imageWrap,
+.content {
+    display: contents;
+}
+
+.image {
+    grid-area: image;
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background: #e6ecdf;
+}
+
+.author {
+    grid-area: author;
+    display: flex;
+    align-items: center;
+    max-width: 143px;
+    min-width: 0;
+    min-height: 24px;
+    overflow: hidden;
+    margin: 4px 0 0 16px;
+    color: #1B391B;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.author::after {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 6px;
+    margin: 0 8px;
+    content: "\2022";
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.savedCount {
+    grid-area: rating;
+    position: static;
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: 2px;
+    min-height: 24px;
+    margin: 4px 0 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #1B391B;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+.savedCount > span {
+    order: 0;
+}
+
+.savedCount > svg {
+    order: 1;
+    width: 16px;
+    height: 16px;
+}
+
+.title {
+    grid-area: title;
+    display: -webkit-box;
+    height: 54px;
+    overflow: hidden;
+    margin: 0 16px;
+    color: #1B391B;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.footer {
+    grid-area: footer;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    min-width: 0;
+    margin: 0 16px;
+}
+
+.readButton {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    height: 48px;
+    min-height: 48px;
+    padding: 6px 12px;
+    border: 1px solid rgb(0 0 0 / 15%);
+    border-radius: 6px;
+    background: rgb(0 0 0 / 5%);
+    color: #1B391B;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.bookmarkButton {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: 0 0 48px;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 6px;
+    border: 1px solid rgb(0 0 0 / 15%);
+    border-radius: 6px;
+    background: rgb(0 0 0 / 5%);
+    color: #1B391B;
+    cursor: pointer;
+    transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+.readButton:hover,
+.bookmarkButton:hover:not(:disabled) {
+    border-color: rgb(0 0 0 / 25%);
+    background: rgb(0 0 0 / 10%);
+}
+
+.bookmarkButton[aria-pressed="true"] {
+    background: #1B391B;
+    color: #DEF2DE;
+}
+
+.bookmarkButton[aria-pressed="true"] svg path {
+    fill: currentColor;
+}
+
+.bookmarkButton:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+.readButton:focus-visible,
+.bookmarkButton:focus-visible {
+    outline: 2px solid #1B391B;
+    outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+    .card {
+        height: auto;
+    }
+}
+
+@media (min-width: 1440px) {
+    .author {
+        max-width: 183px;
+        min-height: 30px;
+        font-size: 16px;
+    }
+
+    .author::after {
+        font-size: 20px;
+    }
+
+    .savedCount {
+        min-height: 30px;
+        font-size: 16px;
+    }
+
+    .title {
+        height: 78px;
+        font-size: 26px;
+    }
+
+    .readButton {
+        font-size: 20px;
+    }
+}

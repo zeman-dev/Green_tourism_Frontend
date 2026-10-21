@@ -54,3 +54,17 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+@media (min-width: 768px) {
+    .container {
+        padding: 0 32px;
+        max-width: 768px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .container {
+        padding: 0 64px;
+        max-width: 1440px;
+    }
+}

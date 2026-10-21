@@ -23,7 +23,6 @@ export default function Header() {
     setIsMenuOpen(false);
   };
 
-
   useEffect(() => {
     const desktop = window.matchMedia('(min-width: 1440px)');
 

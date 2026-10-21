@@ -5,24 +5,14 @@ type AuthNavigationProps = {
   onNavigate?: () => void;
 };
 
-export default function AuthNavigation({
-  onNavigate,
-}: AuthNavigationProps) {
+export default function AuthNavigation({ onNavigate }: AuthNavigationProps) {
   return (
     <div className={css.actions}>
-      <Link
-        href="/login"
-        className={css.login}
-        onClick={onNavigate}
-      >
+      <Link href="/login" className={css.login} onClick={onNavigate}>
         Вхід
       </Link>
 
-      <Link
-        href="/register"
-        className={css.register}
-        onClick={onNavigate}
-      >
+      <Link href="/register" className={css.register} onClick={onNavigate}>
         Реєстрація
       </Link>
     </div>

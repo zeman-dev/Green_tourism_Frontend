@@ -48,6 +48,22 @@
     --font-family: "Montserrat", sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-montserrat), sans-serif;
+}
+
+.font-nunito {
+    font-family: var(--font-nunito), sans-serif;
+}
+
+.font-sora {
+    font-family: var(--font-sora), sans-serif;
+}
+
 .container {
     padding: 0 20px;
     max-width: 375px;
@@ -69,14 +85,4 @@
     }
 }
 
-body {
-    font-family: var(--font-montserrat), sans-serif;
-}
 
-.font-nunito {
-    font-family: var(--font-nunito), sans-serif;
-}
-
-.font-sora {
-    font-family: var(--font-sora), sans-serif;
-}

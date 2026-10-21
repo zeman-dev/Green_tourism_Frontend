@@ -26,9 +26,9 @@ export default function PopularStories() {
     );
   }
 
-  if(!stories){
-    return null;
-  }
+  if (!stories || stories.length === 0) {
+  return null;
+}
   return (
     <section className={styles.section}>
       <div className={styles.header}>
@@ -38,7 +38,7 @@ export default function PopularStories() {
       <div className={styles.slider}>
         <PopularStoriesSlider stories={stories} />
       </div>
-      
+
       <Link className={styles.allStories} href="/stories">
           Всі статті
         </Link>

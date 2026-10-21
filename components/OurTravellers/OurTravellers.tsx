@@ -11,13 +11,13 @@ import 'swiper/css/grid';
 import 'swiper/css/navigation';
 import TravellerCard from "../TravellerCard/TravellerCard";
 import type { UsersApiResponse } from "../../types/user";
-import { clientApi } from '@/lib/api/clientApi';
+import { fetchUsers } from '@/lib/api/clientApi';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
 export const travellersQueryKey = ['travellers'] as const;
 
-export const travellersQueryFn = () => clientApi<UsersApiResponse>('/api/users', {
+export const travellersQueryFn = () => fetchUsers({
     perPage: 12,
     page: 1,
 });

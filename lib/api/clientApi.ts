@@ -1,24 +1,22 @@
-export type QueryParams = Record<string, string | number | boolean | null | undefined>;
+import { apiClient } from './api';
+import type { User } from "../../types/user";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-export async function clientApi<T>(endpoint: string, params?: QueryParams): Promise<T> {
-  if (!API_BASE_URL) {
-    throw new Error('NEXT_PUBLIC_API_BASE_URL is not defined');
-  }
-
-  const url = new URL(endpoint, API_BASE_URL);
-
-  Object.entries(params ?? {}).forEach(([key, value]) => {
-    if (value === undefined || value === null || value === '') return;
-    url.searchParams.set(key, String(value));
-  });
-
-  const response = await fetch(url.toString());
-
-  if (!response.ok) {
-    throw new Error(`Something went wrong`);
-  }
-
-  return response.json() as Promise<T>;
+export interface FetchUsersParams {
+  page?: number;
+  perPage?: number;
 }
+
+export interface FetchUsersResponse {
+  page: number;
+  perPage: number;
+  totalUsers: number;
+  totalPages: number;
+  users: User[];
+}
+
+export const fetchUsers = async (params: FetchUsersParams): Promise<FetchUsersResponse> => {
+  
+
+  const response = await apiClient.get<FetchUsersResponse>('/api/users', { params });
+  return response.data;
+};

@@ -1,4 +1,4 @@
-import { apiClient } from './api';
+import { api } from './api';
 import type { User } from "../../types/user";
 
 export interface FetchUsersParams {
@@ -17,6 +17,6 @@ export interface FetchUsersResponse {
 export const fetchUsers = async (params: FetchUsersParams): Promise<FetchUsersResponse> => {
   
 
-  const response = await apiClient.get<FetchUsersResponse>('/api/users', { params });
+  const response = await api.get<FetchUsersResponse>('/users', { params });
   return response.data;
 };

@@ -10,18 +10,21 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
   display: "swap",
 });
+
 const nunito = Nunito_Sans({
   subsets: ["latin", "cyrillic"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-nunito",
   display: "swap",
 });
+
 const sora = Sora({
   subsets: ["latin"],
   weight: "700",
   variable: "--font-sora",
   display: "swap",
 });
+
 
 export const metadata: Metadata = {
   title: 'Природні мандри',

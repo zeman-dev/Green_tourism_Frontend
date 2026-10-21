@@ -33,11 +33,15 @@ export default function PopularStories() {
     <section className={styles.section}>
       <div className={styles.header}>
         <h2 className={styles.title}>Популярні статті</h2>
-        <Link className={styles.allStories} href="/stories">
+      </div>
+
+      <div className={styles.slider}>
+        <PopularStoriesSlider stories={stories} />
+      </div>
+      
+      <Link className={styles.allStories} href="/stories">
           Всі статті
         </Link>
-      </div>
-      <PopularStoriesSlider stories={stories} />
     </section>
   );
 }

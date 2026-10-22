@@ -135,7 +135,7 @@
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-    transition: background-color 150ms ease, border-color 150ms ease;
+    transition: background-color 250ms ease, border-color 250ms ease;
 }
 
 .bookmarkButton {
@@ -152,7 +152,7 @@
     background: rgb(0 0 0 / 5%);
     color: #1B391B;
     cursor: pointer;
-    transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+    transition: background-color 250ms ease, border-color 250ms ease, color 250ms ease;
 }
 
 .readButton:hover,

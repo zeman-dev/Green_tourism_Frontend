@@ -4,6 +4,6 @@ import type { AxiosError } from "axios";
 export type ApiError = AxiosError<{ error: string }>;
 
 export const api = axios.create({
-  baseURL: 'https://notehub-api.goit.study', /// Поменять на ссылку на наш бекенд
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   withCredentials: true,
 });

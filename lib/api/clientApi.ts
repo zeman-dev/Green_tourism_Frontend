@@ -1,8 +1,22 @@
-import axios from 'axios';
+import { api } from './api';
+import type { User } from "../../types/user";
 
-const clientApi = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
-  withCredentials: true,
-});
+export interface FetchUsersParams {
+  page?: number;
+  perPage?: number;
+}
 
-export default clientApi;
+export interface FetchUsersResponse {
+  page: number;
+  perPage: number;
+  totalUsers: number;
+  totalPages: number;
+  users: User[];
+}
+
+export const fetchUsers = async (params: FetchUsersParams): Promise<FetchUsersResponse> => {
+  
+
+  const response = await api.get<FetchUsersResponse>('/users', { params });
+  return response.data;
+};

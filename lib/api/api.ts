@@ -1,10 +1,6 @@
-import clientApi from './clientApi';
-import type { RegisterUserData, User } from '../../types/user';
+import axios from 'axios';
 
-export const registerUser = async (
-  data: RegisterUserData,
-): Promise<User> => {
-  const response = await clientApi.post<User>('/api/auth/register', data);
-
-  return response.data;
-};
+export const api = axios.create({
+  baseURL: "/api",
+  withCredentials: true,
+});

@@ -1,0 +1,111 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    width: 100%;
+}
+
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.label {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+
+    color: #000000;
+}
+
+.input {
+    width: 100%;
+    height: 43px;
+    padding: 8px;
+
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #000000;
+
+    background-color: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+
+    outline: none;
+}
+
+.input::placeholder {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.input:focus {
+    border-color: #5dbe5c;
+}
+
+.inputError {
+    border-color: #b00101;
+}
+
+.inputError:focus {
+    border-color: #b00101;
+}
+
+.error {
+    margin: 0;
+
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #b00101;
+}
+
+.submitButton {
+    width: 100%;
+    height: 44px;
+    padding: 6px 12px;
+
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #ffffff;
+
+    background-color: #4a9849;
+    border: 1px solid #4a9849;
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+.submitButton:hover,
+.submitButton:focus-visible {
+    background-color: #4a9849;
+    border-color: #4a9849;
+}
+
+.submitButton:active {
+    background-color: #254c24;
+    border-color: #254c24;
+}
+
+.submitButton:disabled {
+    background-color: #4a9849;
+    border-color: #4a9849;
+
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
+@media (min-width: 1440px) {
+
+    .label,
+    .input {
+        font-size: 18px;
+    }
+
+    .submitButton {
+        font-size: 20px;
+    }
+}

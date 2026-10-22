@@ -1,20 +1,33 @@
+'use client';
+
 import Link from 'next/link';
-import css from './AuthNavigation.module.css';
+import { usePathname } from 'next/navigation';
 
-type AuthNavigationProps = {
-  onNavigate?: () => void;
-};
+import styles from './AuthNavigation.module.css';
 
-export default function AuthNavigation({ onNavigate }: AuthNavigationProps) {
+export default function AuthNavigation() {
+  const pathname = usePathname();
+
+  const isRegisterPage = pathname === '/register';
+  const isLoginPage = pathname === '/login';
+
   return (
-    <div className={css.actions}>
-      <Link href="/login" className={css.login} onClick={onNavigate}>
-        Вхід
-      </Link>
-
-      <Link href="/register" className={css.register} onClick={onNavigate}>
+    <nav className={styles.navigation} aria-label="Авторизація">
+      <Link
+        href="/register"
+        className={`${styles.link} ${isRegisterPage ? styles.active : ''}`}
+        aria-current={isRegisterPage ? 'page' : undefined}
+      >
         Реєстрація
       </Link>
-    </div>
+
+      <Link
+        href="/login"
+        className={`${styles.link} ${isLoginPage ? styles.active : ''}`}
+        aria-current={isLoginPage ? 'page' : undefined}
+      >
+        Вхід
+      </Link>
+    </nav>
   );
 }

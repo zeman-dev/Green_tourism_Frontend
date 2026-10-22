@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export type TravellerUser = {
   _id: string;
-  username: string;
+  name: string;
   articlesAmount: number;
   avatarUrl?: string | null;
 };
@@ -30,7 +30,7 @@ export default function TravellerCard({
         <Image
           className={styles.avatar}
           src={avatarUrl}
-          alt={`${user.username} — фото профілю`}
+          alt={`${user.name} — фото профілю`}
           width={130}
           height={130}
           unoptimized
@@ -39,13 +39,13 @@ export default function TravellerCard({
         <div
           className={styles.avatar}
           role="img"
-          aria-label={`Фото профілю ${user.username} відсутнє`}
+          aria-label={`Фото профілю ${user.name} відсутнє`}
         />
       )}
 
       <div className={styles.content}>
         <div className={styles.details}>
-          <h3 className={styles.name}>{user.username}</h3>
+          <h3 className={styles.name}>{user.name}</h3>
           <p className={styles.articleCount}>Статей: {user.articlesAmount}</p>
         </div>
 

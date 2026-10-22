@@ -68,7 +68,7 @@ function HeaderContent({ pathname }: { pathname: string }) {
           onClick={() => setIsMenuOpen(previous => !previous)}
         >
           <Image
-            src={isMenuOpen ? 'icons/close.svg' : 'icons/burger.svg'}
+            src={isMenuOpen ? '/icons/close.svg' : '/icons/burger.svg'}
             alt=""
             width={24}
             height={24}

@@ -1,3 +1,4 @@
+
 import styles from './page.module.css';
 import About from '@/components/About/About';
 import {
@@ -8,9 +9,12 @@ import {
 import PopularStories from '@/components/PopularStories/PopularStories';
 import { getPopularStories } from '@/lib/api/popularStories';
 import Hero from '@/components/Hero/Hero';
+import Community from '@/components/Community/Community';
 import OurTravellers, {
   PrefetchTravellers,
 } from '@/components/OurTravellers/OurTravellers';
+import Footer from '@/components/Footer/Footer';
+
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -24,6 +28,7 @@ export default async function Home() {
     <div className={styles.page}>
       <main className={styles.main}>
         <Hero />
+        <Community isAuthenticated={false} />
         <HydrationBoundary state={dehydrate(queryClient)}>
           <PopularStories />
         </HydrationBoundary>
@@ -31,6 +36,7 @@ export default async function Home() {
         <About />
         <OurTravellers />
       </main>
+      <Footer />
     </div>
   );
 }

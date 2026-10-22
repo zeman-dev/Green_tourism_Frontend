@@ -3,8 +3,8 @@ import Image from 'next/image';
 
 const Hero = () => {
   return (
-    <div className={css.container}>
-      <section className={css.hero}>
+    <section className={css.hero}>
+      <div className={css.container}>
         <Image
           className={css.picture}
           src="/images/hero.jpg"
@@ -24,8 +24,8 @@ const Hero = () => {
             Доєднатись до мандрів
           </a>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 

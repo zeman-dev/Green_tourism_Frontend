@@ -3,14 +3,26 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AxiosError } from 'axios';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import {
+  ErrorMessage,
+  Field,
+  Form,
+  Formik,
+  FormikHelpers,
+} from 'formik';
 import * as Yup from 'yup';
 
-import { registerUser } from '../../lib/api/api';
+import { registerUser } from '../../lib/api/authApi';
 import styles from './RegistrationForm.module.css';
 
 const registrationSchema = Yup.object({
-  name: Yup.string().required("Введіть ім'я та прізвище"),
+  name: Yup.string()
+    .max(64, 'Імʼя та прізвище не може містити більше 64 символів')
+    .matches(
+      /^[A-Za-zА-Яа-яІіЇїЄєҐґ'’ -]+$/,
+      'Імʼя та прізвище не повинно містити спеціальних символів',
+    )
+    .required('Введіть імʼя та прізвище'),
 
   email: Yup.string()
     .email('Введіть коректну електронну адресу')
@@ -18,6 +30,7 @@ const registrationSchema = Yup.object({
 
   password: Yup.string()
     .min(8, 'Пароль має містити щонайменше 8 символів')
+    .max(128, 'Пароль не може містити більше 128 символів')
     .required('Введіть пароль'),
 });
 
@@ -27,31 +40,38 @@ const initialValues = {
   password: '',
 };
 
+type RegistrationFormValues = typeof initialValues;
+
 export default function RegistrationForm() {
   const router = useRouter();
   const [serverError, setServerError] = useState('');
+
+  const handleSubmit = async (
+    values: RegistrationFormValues,
+    { setSubmitting }: FormikHelpers<RegistrationFormValues>,
+  ) => {
+    try {
+      setServerError('');
+
+      await registerUser(values);
+
+      router.push('/');
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message?: string }>;
+
+      setServerError(
+        axiosError.response?.data?.message || 'Не вдалося зареєструватися',
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={registrationSchema}
-      onSubmit={async (values, { setSubmitting }) => {
-        try {
-          setServerError('');
-
-          await registerUser(values);
-
-          router.push('/');
-        } catch (error) {
-          const axiosError = error as AxiosError<{ message?: string }>;
-
-          setServerError(
-            axiosError.response?.data?.message || 'Не вдалося зареєструватися',
-          );
-        } finally {
-          setSubmitting(false);
-        }
-      }}
+      onSubmit={handleSubmit}
     >
       {({ isSubmitting, errors, touched }) => (
         <Form className={styles.form} noValidate>

@@ -1,13 +1,13 @@
 'use client';
 import css from '@/app/(auth routes)/login/login.module.css';
-// import AuthHeader from '../../../components/AuthHeader/AuthHeader';
-// import AuthNavigation from '../../../components/AuthNavigation/AuthNavigation';
 import LoginForm from "@/components/AuthLogin/LoginForm"
 import { ApiError } from '@/app/api/api';
 import AuthNavigation from '@/components/AuthNavigation/AuthNavigation';
 import { loginUser } from '@/lib/api/clientApi';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import AuthHeader from '@/components/AuthHeader/AuthHeader';
+import AuthFooter from '@/components/AuthFooter/AuthFooter';
 
 
 
@@ -30,7 +30,7 @@ const router = useRouter();
 
   return (
 <div className={`${css.page}`}>
-      {/* <AuthHeader /> */}
+      <AuthHeader />
 
       <main className={css.main}>
         <AuthNavigation />
@@ -47,7 +47,7 @@ const router = useRouter();
         </section>
       </main>
 
-      {/* <AuthFooter /> */}
+      <AuthFooter/>
     </div>
   );
 }

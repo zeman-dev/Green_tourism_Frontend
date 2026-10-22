@@ -11,6 +11,8 @@ import Hero from '@/components/Hero/Hero';
 import OurTravellers, {
   PrefetchTravellers,
 } from '@/components/OurTravellers/OurTravellers';
+import Footer from '@/components/Footer/Footer';
+
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -31,6 +33,7 @@ export default async function Home() {
         <About />
         <OurTravellers />
       </main>
+      <Footer />
     </div>
   );
 }

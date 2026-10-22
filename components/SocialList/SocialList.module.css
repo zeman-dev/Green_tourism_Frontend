@@ -1,0 +1,40 @@
+.list {
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: block;
+  color: inherit;
+  cursor: pointer;
+  transition: opacity 250ms ease;
+}
+
+.link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.link:hover {
+  opacity: 0.7;
+}
+
+.icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+@media (min-width: 768px) {
+  .list {
+    gap: 12px;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+}

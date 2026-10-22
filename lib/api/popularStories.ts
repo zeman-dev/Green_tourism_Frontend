@@ -2,7 +2,7 @@ import type { StoriesResponse, Story } from '@/types/story';
 
 export async function getPopularStories(): Promise<Story[]> {
   const response = await fetch(
-    '/stories?type=popular'
+    'https://green-tourism-backend.onrender.com/api/stories?type=popular'
   );
 
   if (!response.ok) {

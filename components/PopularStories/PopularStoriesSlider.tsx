@@ -6,6 +6,8 @@ import type { Swiper as SwiperType } from 'swiper';
 import type { Story } from '@/types/story';
 import 'swiper/css';
 import styles from './PopularStories.module.css';
+import StoryCard from '@/components/StoryCard/StoryCard';
+
 
 type PopularStoriesSliderProps = {
   stories: Story[];
@@ -39,10 +41,13 @@ export default function PopularStoriesSlider({
         }}
       >
         {stories.map(story => (
-          <SwiperSlide key={story._id}>
-            <h3 className={styles.cardTitle}>{story.title}</h3>
-            {/* <StoryCard story={story}/> */}
-          </SwiperSlide>
+      <SwiperSlide key={story._id}>
+  <StoryCard
+    story={story}
+    authorName=""
+    savedCount={story.rate}
+  />
+</SwiperSlide>
         ))}
       </Swiper>
       <div className={styles.nav}>

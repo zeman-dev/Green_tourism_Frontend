@@ -15,6 +15,7 @@ import OurTravellers, {
 } from '@/components/OurTravellers/OurTravellers';
 import Footer from '@/components/Footer/Footer';
 
+
 export default async function Home() {
   const queryClient = new QueryClient();
 

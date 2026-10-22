@@ -1,14 +1,13 @@
 "use client";
+import type { Story } from "@/types/story";
 
 import Link from "next/link";
 import styles from "./StoryCard.module.css";
 
 export type StoryCardProps = {
-  storyId: string;
-  imageUrl: string;
+  story: Story;
   authorName: string;
   savedCount: number;
-  title: string;
   isSaved?: boolean;
   isSaving?: boolean;
   onToggleSaved?: () => void;
@@ -36,11 +35,9 @@ function BookmarkIcon() {
 }
 
 export default function StoryCard({
-  storyId,
-  imageUrl,
+  story,
   authorName,
   savedCount,
-  title,
   isSaved = false,
   isSaving = false,
   onToggleSaved,
@@ -53,7 +50,7 @@ export default function StoryCard({
   return (
     <article className={cardClassName}>
       <div className={styles.imageWrap}>
-        <img className={styles.image} src={imageUrl} alt="" />
+        <img className={styles.image} src={story.img} alt="" />
         <span className={styles.savedCount} aria-label={`Збережено ${savedCount} разів`}>
           <BookmarkIcon />
           <span>{savedCount}</span>
@@ -62,9 +59,9 @@ export default function StoryCard({
 
       <div className={styles.content}>
         <p className={styles.author}>{authorName}</p>
-        <h3 className={styles.title}>{title}</h3>
+        <h3 className={styles.title}>{story.title}</h3>
         <div className={styles.footer}>
-          <Link className={styles.readButton} href={`/stories/${encodeURIComponent(storyId)}`}>Переглянути статтю</Link>
+          <Link className={styles.readButton} href={`/stories/${encodeURIComponent(story._id)}`}>Переглянути статтю</Link>
           <button type="button" className={styles.bookmarkButton} aria-label="Зберегти статтю" aria-pressed={isSaved} aria-busy={isSaving} disabled={isSaving} onClick={onToggleSaved}>
             <BookmarkIcon />
           </button>

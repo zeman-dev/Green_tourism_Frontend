@@ -11,10 +11,7 @@ import Hero from '@/components/Hero/Hero';
 import OurTravellers, {
   PrefetchTravellers,
 } from '@/components/OurTravellers/OurTravellers';
-<<<<<<< HEAD
-import styles from './page.module.css';
-=======
->>>>>>> 0ce2c338040418594ed877811e1c007638bd76aa
+
 
 export default async function Home() {
   const queryClient = new QueryClient();

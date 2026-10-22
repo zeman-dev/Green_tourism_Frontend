@@ -1,3 +1,4 @@
+
 import styles from './page.module.css';
 import Hero from '@/components/Hero/Hero';
 import Community from '@/components/Community/Community';

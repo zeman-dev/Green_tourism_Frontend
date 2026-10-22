@@ -27,8 +27,8 @@ export default async function Home() {
         <HydrationBoundary state={dehydrate(queryClient)}>
           <PopularStories />
         </HydrationBoundary>
-        <About />
         <PrefetchTravellers />
+        <About />
         <OurTravellers />
       </main>
     </div>

@@ -3,8 +3,8 @@ import styles from './About.module.css';
 
 export default function About() {
   return (
-    <div className={styles.container}>
-      <section className={styles.about}>
+    <section className={styles.about}>
+      <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.textContent}>
             <div className={styles.intro}>
@@ -50,7 +50,7 @@ export default function About() {
             className={styles.image}
           />
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

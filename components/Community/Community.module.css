@@ -1,29 +1,35 @@
+.container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 48px 64px;
+
+  background-color: #eef8ee;
+  color: #fff;
+}
 
 .community {
   position: relative;
   isolation: isolate;
   overflow: hidden;
 
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-
+  box-sizing: border-box;
   width: 100%;
-  max-width: 1440px;
+  max-width: 1312px;
   min-height: 460px;
   margin: 0 auto;
-  padding: 64px 68px;
+  padding: 64px;
 
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 12px;
-  background-color: #071208;
-  color: #fff;
+  background-color: #183a24;
 }
 
 .picture {
   position: absolute;
   inset: 0;
-  z-index: -2;
+  z-index: -1;
 
   width: 100%;
   height: 100%;
@@ -31,26 +37,19 @@
   object-position: center;
 }
 
-.community::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-
-  background: rgba(3, 15, 5, 0.55);
-}
-
 .content {
+  position: relative;
   width: 100%;
 }
 
 .title {
   max-width: 800px;
-  margin: 0 0 28px;
+  margin: 0 0 24px;
 
-  font-size: 52px;
+  font-size: 48px;
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .description {
@@ -65,10 +64,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 
-  min-height: 53px;
+  min-height: 48px;
   margin-top: 32px;
-  padding: 12px 20px;
+  padding: 6px 12px;
 
   border: 1px solid #4a9849;
   border-radius: 6px;
@@ -76,7 +76,10 @@
   background-color: #4a9849;
   color: #fff;
 
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
   text-decoration: none;
 
   transition:
@@ -91,47 +94,54 @@
 }
 
 .joinbtn:focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid #1b391b;
   outline-offset: 3px;
 }
 
-@media (max-width: 767px) {
+@media (min-width: 768px) and (max-width: 1439px) {
+  .container {
+    padding: 32px;
+  }
+
   .community {
-    min-height: 400px;
-    padding: 40px 24px;
-    border-radius: 8px;
+    min-height: auto;
+    padding: 16px;
   }
 
   .title {
-    margin-bottom: 20px;
     font-size: 32px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding: 32px 20px;
+  }
+
+  .community {
+    min-height: auto;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .title {
+    margin-bottom: 24px;
+    font-size: 26px;
     line-height: 1.2;
   }
 
   .description {
     font-size: 16px;
-    line-height: 1.5;
   }
 
   .joinbtn {
-    min-height: 44px;
-    margin-top: 24px;
-    padding: 10px 16px;
+    width: 100%;
+    margin-top: 32px;
     font-size: 16px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1439px) {
-  .community {
-    padding: 56px 40px;
-  }
-
-  .title {
-    font-size: 42px;
-  }
-
-  .description {
-    font-size: 18px;
   }
 }
 

@@ -1,0 +1,66 @@
+.loadbtn {
+  font-family: var(--font-montserrat); /* поміняти */
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1b391b;
+  display: flex;
+  margin-top: 40px;
+  text-decoration: none;
+  width: 100%;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #4a9849;
+  border-radius: 6px;
+  background-color: #4a9849;
+  color: #fff;
+  transition:
+    background-color 250ms ease,
+    color 250ms ease;
+}
+
+.loadbtn:hover,
+.loadbtn:focus {
+  background-color: #def2de;
+  color: #1b391b;
+}
+
+.loadbtn:active {
+  background-color: #4a9849;
+  color: #fff;
+}
+
+.loadbtn:disabled {
+  cursor: default;
+}
+
+.loadbtn:disabled:hover {
+  background-color: #4a9849;
+  color: #fff;
+  transform: none;
+  }
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid white;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .loadbtn {
+    width: auto;
+    padding: auto 12px;
+  }
+}
+

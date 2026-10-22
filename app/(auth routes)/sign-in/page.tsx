@@ -1,47 +1,91 @@
 'use client';
 
-import { useFormik } from 'formik';
-import { useRouter } from 'next/router';
+import css from './SignInPage.module.css'
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
+import toast from 'react-hot-toast';
+import Copyright from '@/components/Copyright/Copyright';
+import Logo from '@/components/Logo/Logo';
+import AuthNavigation from '@/components/AuthNavigation/AuthNavigation';
+
+
+interface LoginFormValues{
+  email: string;
+  password: string;
+}
+
+const initialValues: LoginFormValues = {
+  email: '',
+  password: '',
+}
 
 const validationSchema = Yup.object({
-    email: Yup.string().email('Incorrecr email format').required('Email is required'),
-    password: Yup.string().min(8, 'Password must contain min 6 symbols').required('Password is required').
+    email: Yup.string().email('Невірний формат пошти').required("Електронна пошта є обов'язковою"),
+    password: Yup.string().min(8, 'Пароль повинен містити мінімум 8 знаків').required("Пароль є обов'язковим"),
 });
 
 const SignIn = () => {
     const router = useRouter();
 
-    const formik = useFormik({
-        initialValues: {
-            email: "",
-            password: "",
-        },
-        validationSchema,
-        onSubmit: async (values, {setSubmitting}) =>{
-            try{}
-            catch (error) {
-        toast.error(error.message || 'Помилка авторизації. Спробуйте ще раз.');
+    const handleSubmit = (
+    values: LoginFormValues,
+    actions: FormikHelpers<LoginFormValues>
+  ) => {
+     try{
+
+              // Тут буде запит на бек
+            }
+            catch (error: unknown) {
+        toast.error(error instanceof Error ? error.message : 'Помилка авторизації. Спробуйте ще раз.');
       } finally {
-        setSubmitting(false);
+        actions.setSubmitting(false);
+        actions.resetForm();
       }
-        }
-    })
-  const handleSubmit = async (formData: FormData) => {};
+  };
 
   return (
-    <form action={handleSubmit}>
-      <h1>Sign in</h1>
-      <label>
-        Email
-        <input type="email" name="email" required />
+    <div className={css.pageWrapper}>
+    <header className={css.header}>
+        <Logo />
+      </header>
+      <main className={css.mainContent}>
+        <div className={css.formContainer}>
+    <AuthNavigation/>
+     <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      <Form className={css.form}>
+      <h1 className={css.title}>Вхід</h1>
+      <p className={css.subtitle}>Вітаємо знову у спільноті мандрівників!</p>
+
+      <div className={css.inputGroup}>
+      <label htmlFor='email'>
+        Пошта*
+        </label>
+      <Field type="email" name="email" id="email" required placeholder='hello@podorozhnyky.ua' className={css.input}/>
+      <ErrorMessage name="email" component="span" className={css.errorText}/>
+      </div>
+
+      <div className={css.inputGroup}>
+      <label htmlFor='password' className={css.label}>
+        Пароль*
       </label>
-      <label>
-        Password
-        <input type="password" name="password" required />
-      </label>
-      <button type="submit">Log in</button>
-    </form>
+      <Field type="password" name="password" id="password" required placeholder='********' className={css.input}/>
+      <ErrorMessage name="password" component="span" className={css.errorText}/>
+      </div>
+      
+      <button type="submit" className={css.submitBtn}>Увійти</button>
+    </Form>
+    </Formik>
+    </div>
+      </main>
+    <footer className={css.footer}>
+        <Copyright serverYear={new Date().getFullYear()} />
+      </footer>
+   </div>
   );
 };
 

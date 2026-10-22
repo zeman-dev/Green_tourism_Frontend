@@ -1,0 +1,109 @@
+.container {
+  min-width: 320px;
+  max-width: 375px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.hero {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background-color: #eef8ee;
+  align-items: center;
+  padding: 64px 20px;
+  font-family: var(--font-montserrat); /* поміняти */
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1b391b;
+}
+
+.hero h1 {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+}
+
+.picture {
+  width: 100%;
+  height: 469px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.joinbtn {
+  display: flex;
+  margin-top: 24px;
+  text-decoration: none;
+  width: 100%;
+  height: 39px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #4a9849;
+  border-radius: 6px;
+  background-color: #4a9849;
+  color: #fff;
+  transition:
+    background-color 250ms ease,
+    color 250ms ease;
+}
+
+.joinbtn:hover,
+.joinbtn:focus {
+  background-color: #def2de;
+  color: #1b391b;
+}
+
+.joinbtn:active {
+  background-color: #4a9849;
+  color: #fff;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+
+  .hero {
+    padding: 64px 32px;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+  }
+
+  .joinbtn {
+    margin-top: 32px;
+    width: 228px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
+  }
+  .hero {
+    flex-direction: row-reverse;
+    padding: 72px 64px;
+    font-size: 20px;
+  }
+  .textbox {
+    width: 644px;
+  }
+  .hero h1 {
+    font-size: 56px;
+  }
+  .picture {
+    height: 580px;
+    width: 644px;
+    border: 1px solid #000;
+  }
+  .joinbtn {
+    width: 278px;
+  }
+}

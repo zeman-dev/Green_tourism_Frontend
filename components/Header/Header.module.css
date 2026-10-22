@@ -16,30 +16,6 @@
   gap: 0 8px;
 }
 
-.logo {
-  grid-column: 1;
-  grid-row: 1;
-  justify-self: start;
-
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-
-  color: inherit;
-  text-decoration: none;
-}
-
-.logo img {
-  flex-shrink: 0;
-}
-
-.logoText {
-  color: #1b391b;
-  font-size: 17px;
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.01em;
-}
 
 .burger {
   grid-column: 2;
@@ -138,13 +114,6 @@
     column-gap: 12px;
   }
 
-  .logo {
-    gap: 8px;
-  }
-
-  .logoText {
-    font-size: 18px;
-  }
 }
 
 /* Tablet */
@@ -156,9 +125,6 @@
     padding: 16px 32px;
   }
 
-  .logoText {
-    font-size: 20px;
-  }
 
   .burger {
     grid-column: 3;

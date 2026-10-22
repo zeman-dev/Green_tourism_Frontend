@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import Logo from '../Logo/Logo';
 
 import AuthNavigation from '../AuthNavigation/AuthNavigation';
 import css from './Header.module.css';
@@ -15,9 +16,14 @@ const navigationLinks = [
 ];
 
 export default function Header() {
+  const pathname = usePathname();
+
+  return <HeaderContent key={pathname} pathname={pathname} />;
+}
+
+function HeaderContent({ pathname }: { pathname: string }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const burgerRef = useRef<HTMLButtonElement>(null);
-  const pathname = usePathname();
 
   const closeMenu = () => {
     setIsMenuOpen(false);
@@ -50,15 +56,7 @@ export default function Header() {
       }}
     >
       <div className={css.container}>
-        <Link href="/" className={css.logo} onClick={closeMenu}>
-          <Image src="/logo.svg" alt="" width={24} height={24} />
-
-          <span className={css.logoText}>
-            Природні
-            <br />
-            Мандри
-          </span>
-        </Link>
+        <Logo />
 
         <button
           ref={burgerRef}
@@ -70,7 +68,7 @@ export default function Header() {
           onClick={() => setIsMenuOpen(previous => !previous)}
         >
           <Image
-            src={isMenuOpen ? '/close.svg' : '/burger.svg'}
+            src={isMenuOpen ? 'icons/close.svg' : 'icons/burger.svg'}
             alt=""
             width={24}
             height={24}

@@ -7,6 +7,7 @@ import PopularStories from '@/components/PopularStories/PopularStories';
 import { getPopularStories } from '@/lib/api/popularStories';
 import Hero from '@/components/Hero/Hero';
 import styles from './page.module.css';
+import OurTravellers, { PrefetchTravellers } from "@/components/OurTravellers/OurTravellers";
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -23,6 +24,8 @@ export default async function Home() {
         <HydrationBoundary state={dehydrate(queryClient)}>
           <PopularStories />
         </HydrationBoundary>
+        <PrefetchTravellers />
+        <OurTravellers />
       </main>
     </div>
   );

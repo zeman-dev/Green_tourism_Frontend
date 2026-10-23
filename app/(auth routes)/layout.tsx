@@ -5,9 +5,11 @@ import { useEffect } from "react";
 
 interface LayoutChildren{
     children: React.ReactNode,
+    header: React.ReactNode,
+    footer: React.ReactNode,
 }
 
-export default function AuthLayout({children} : LayoutChildren){
+export default function AuthLayout({header, children, footer} : LayoutChildren){
  const router = useRouter();
  
  useEffect(()=>{
@@ -16,7 +18,9 @@ export default function AuthLayout({children} : LayoutChildren){
 
 return(
     <>
+    {header}
     {children}
+    {footer}
     </>
 )
 }

@@ -1,3 +1,6 @@
+
+import styles from './page.module.css';
+import About from '@/components/About/About';
 import {
   dehydrate,
   HydrationBoundary,
@@ -6,8 +9,12 @@ import {
 import PopularStories from '@/components/PopularStories/PopularStories';
 import { getPopularStories } from '@/lib/api/popularStories';
 import Hero from '@/components/Hero/Hero';
-import styles from './page.module.css';
-import OurTravellers, { PrefetchTravellers } from "@/components/OurTravellers/OurTravellers";
+import Community from '@/components/Community/Community';
+import OurTravellers, {
+  PrefetchTravellers,
+} from '@/components/OurTravellers/OurTravellers';
+import Footer from '@/components/Footer/Footer';
+
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -21,12 +28,15 @@ export default async function Home() {
     <div className={styles.page}>
       <main className={styles.main}>
         <Hero />
+        <Community isAuthenticated={false} />
         <HydrationBoundary state={dehydrate(queryClient)}>
           <PopularStories />
         </HydrationBoundary>
         <PrefetchTravellers />
+        <About />
         <OurTravellers />
       </main>
+      <Footer />
     </div>
   );
 }

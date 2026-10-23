@@ -1,5 +1,5 @@
 import { api } from './api';
-import type { User } from "../../types/user";
+import type { login, User } from "../../types/user";
 
 export interface FetchUsersParams {
   page?: number;
@@ -20,3 +20,8 @@ export const fetchUsers = async (params: FetchUsersParams): Promise<FetchUsersRe
   const response = await api.get<FetchUsersResponse>('/users', { params });
   return response.data;
 };
+
+export const loginUser = async (user : login) => {
+ const response = await api.post<User>('users/login', user);
+ return response.data;
+}

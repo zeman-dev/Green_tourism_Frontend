@@ -3,6 +3,7 @@ import 'modern-normalize/modern-normalize.css';
 import './globals.css';
 import { Montserrat, Sora, Nunito_Sans } from 'next/font/google';
 import TanstackProvider from '@/components/TanStackProvider/TanStackProvider';
+import Header from '../components/Header/Header';
 
 const montserrat = Montserrat({
   subsets: ["latin", "cyrillic"],
@@ -37,6 +38,7 @@ export default function RootLayout({ children }:Readonly<{
   return (
     <html lang="uk" className={`${sora.variable} ${montserrat.variable} ${nunito.variable}`}>
       <body>
+        <Header />
         <TanstackProvider>{children}</TanstackProvider>
       </body>
     </html>

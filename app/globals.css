@@ -1,3 +1,6 @@
+html {
+  scroll-behavior: smooth;
+}
 :root {
     --color-scheme-1-background: var(--color-white);
     --color-neutral-darkest: #000;

@@ -1,14 +1,15 @@
-.container {
-  min-width: 320px;
-  max-width: 375px;
+.hero {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
+  background-color: #eef8ee;
 }
 
-.hero {
-  width: 100%;
+.container {
+  min-width: 320px;
+  max-width: 375px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -22,7 +23,7 @@
   color: #1b391b;
 }
 
-.hero h1 {
+.container h1 {
   font-weight: 700;
   font-size: 32px;
   line-height: 1.1;
@@ -68,13 +69,10 @@
 @media screen and (min-width: 768px) {
   .container {
     max-width: 768px;
-  }
-
-  .hero {
     padding: 64px 32px;
   }
 
-  .hero h1 {
+  .container h1 {
     font-size: 48px;
   }
 
@@ -86,8 +84,6 @@
 @media screen and (min-width: 1440px) {
   .container {
     max-width: 1440px;
-  }
-  .hero {
     flex-direction: row-reverse;
     padding: 72px 64px;
     font-size: 20px;
@@ -95,13 +91,12 @@
   .textbox {
     width: 644px;
   }
-  .hero h1 {
+  .container h1 {
     font-size: 56px;
   }
   .picture {
     height: 580px;
     width: 644px;
-    border: 1px solid #000;
   }
   .joinbtn {
     width: 278px;

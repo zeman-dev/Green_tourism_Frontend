@@ -42,7 +42,9 @@ export default function StoryPage() {
   if (isLoading) {
     return (
       <main className={styles.page}>
-        <p className={styles.message}>Завантаження...</p>
+        <div className={styles.loaderWrapper}>
+          <span className={styles.loader} aria-label="Завантаження" />
+        </div>
       </main>
     );
   }

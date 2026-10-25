@@ -95,7 +95,7 @@ function HeaderContent({ pathname }: { pathname: string }) {
         </nav>
 
         <div className={css.authNavigation} onClick={closeMenu}>
-          <AuthNavigation />
+          <AuthNavigation variant="header" />
         </div>
       </div>
     </header>

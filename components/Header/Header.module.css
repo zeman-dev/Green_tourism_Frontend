@@ -63,7 +63,6 @@
   transition: color 150ms ease;
 }
 
-/* Відкрите мобільне меню */
 .headerOpen .container {
   min-height: 100svh;
   grid-template-rows: auto auto 1fr auto;
@@ -107,7 +106,6 @@
   }
 }
 
-/* Mobile */
 @media (min-width: 375px) {
   .container {
     max-width: 375px;
@@ -116,7 +114,6 @@
 
 }
 
-/* Tablet */
 @media (min-width: 768px) {
   .container {
     max-width: 768px;
@@ -155,7 +152,6 @@
   }
 }
 
-/* Desktop */
 @media (min-width: 1440px) {
   .container,
   .headerOpen .container {

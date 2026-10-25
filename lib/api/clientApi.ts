@@ -22,6 +22,6 @@ export const fetchUsers = async (params: FetchUsersParams): Promise<FetchUsersRe
 };
 
 export const loginUser = async (user : login) => {
- const response = await api.post<User>('users/login', user);
+ const response = await api.post<User>('auth/login', user); // it was 'users/login'
  return response.data;
 }

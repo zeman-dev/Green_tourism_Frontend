@@ -1,53 +1,91 @@
 'use client';
-import css from '@/app/(auth routes)/login/login.module.css';
-import LoginForm from "@/components/AuthLogin/LoginForm"
-import { ApiError } from '@/app/api/api';
+
+import css from './login.module.css'
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import { useRouter } from 'next/navigation';
+import * as Yup from 'yup';
+import toast from 'react-hot-toast';
+import Copyright from '@/components/Copyright/Copyright';
+import Logo from '@/components/Logo/Logo';
 import AuthNavigation from '@/components/AuthNavigation/AuthNavigation';
 import { loginUser } from '@/lib/api/clientApi';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import AuthHeader from '@/components/AuthHeader/AuthHeader';
-import AuthFooter from '@/components/AuthFooter/AuthFooter';
 
 
+interface LoginFormValues{
+  email: string;
+  password: string;
+}
 
+const initialValues: LoginFormValues = {
+  email: '',
+  password: '',
+}
 
-export default function signIn() {
+const validationSchema = Yup.object({
+    email: Yup.string().email('Невірний формат пошти').required("Електронна пошта є обов'язковою"),
+    password: Yup.string().min(8, 'Пароль повинен містити мінімум 8 знаків').required("Пароль є обов'язковим"),
+});
 
-const [isError, setIsError] = useState("");
-const router = useRouter();
+const SignIn = () => {
+    const router = useRouter();
 
-  async function handlesubmit(formData: FormData) {
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
+    const handleSubmit = async (
+    values: LoginFormValues,
+    actions: FormikHelpers<LoginFormValues>
+  ) => {
     try {
-      const user = await loginUser({ email, password });
+      const user = await loginUser(values);
       router.push('/profile');
-    }catch(error){
-          setIsError((error as ApiError).response?.data.error ?? (error as ApiError).message);
-        }
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : 'Помилка авторизації. Спробуйте ще раз.');
+    } finally {
+      actions.setSubmitting(false);
     }
+  };
 
   return (
-<div className={`${css.page}`}>
-      <AuthHeader />
+    <div className={css.pageWrapper}>
+    <header className={css.header}>
+        <Logo />
+      </header>
+      <main className={css.mainContent}>
+        <div className={css.formContainer}>
+    <AuthNavigation/>
+     <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      <Form className={css.form}>
+      <h1 className={css.title}>Вхід</h1>
+      <p className={css.subtitle}>Вітаємо знову у спільноті мандрівників!</p>
 
-      <main className={css.main}>
-        <AuthNavigation />
+      <div className={css.inputGroup}>
+      <label htmlFor='email' className={css.label}>
+        Пошта*
+        </label>
+      <Field type="email" name="email" id="email" required placeholder='hello@podorozhnyky.ua' className={css.input}/>
+      <ErrorMessage name="email" component="span" className={css.errorText}/>
+      </div>
 
-        <section className={css.content}>
-          <div className={css.heading}>
-            <h1 className={css.title}>Реєстрація</h1>
-
-            <p className={css.subtitle}>
-              Раді вас бачити у спільноті мандрівників!
-            </p>
-          </div>
-          <LoginForm/>
-        </section>
-      </main>
-
-      <AuthFooter/>
+      <div className={css.inputGroup}>
+      <label htmlFor='password' className={css.label}>
+        Пароль*
+      </label>
+      <Field type="password" name="password" id="password" required placeholder='********' className={css.input}/>
+      <ErrorMessage name="password" component="span" className={css.errorText}/>
+      </div>
+      
+      <button type="submit" className={css.submitBtn}>Увійти</button>
+    </Form>
+    </Formik>
     </div>
+      </main>
+    <footer className={css.footer}>
+        <Copyright serverYear={new Date().getFullYear()} />
+      </footer>
+   </div>
   );
-}
+};
+
+export default SignIn;

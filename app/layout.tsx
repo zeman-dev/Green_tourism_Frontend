@@ -4,6 +4,7 @@ import './globals.css';
 import { Montserrat, Sora, Nunito_Sans } from 'next/font/google';
 import TanstackProvider from '@/components/TanStackProvider/TanStackProvider';
 import Header from '../components/Header/Header';
+import { Toaster } from 'react-hot-toast';
 
 const montserrat = Montserrat({
   subsets: ["latin", "cyrillic"],
@@ -40,6 +41,7 @@ export default function RootLayout({ children }:Readonly<{
       <body>
         <Header />
         <TanstackProvider>{children}</TanstackProvider>
+        <Toaster position="top-center" />
       </body>
     </html>
   );

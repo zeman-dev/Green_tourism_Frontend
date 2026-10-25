@@ -1,4 +1,5 @@
 import Footer from '@/components/Footer/Footer';
+import Header from '@/components/Header/Header';
 
 type PublicLayoutProps = {
   children: React.ReactNode;
@@ -7,8 +8,12 @@ type PublicLayoutProps = {
 export default function PublicLayout({ children }: PublicLayoutProps) {
   return (
     <>
+    <Header />
       {children}
       <Footer />
     </>
   );
 }
+
+
+

@@ -1,4 +1,3 @@
-
 import styles from './page.module.css';
 import About from '@/components/About/About';
 import {
@@ -14,7 +13,6 @@ import OurTravellers, {
   PrefetchTravellers,
 } from '@/components/OurTravellers/OurTravellers';
 import Footer from '@/components/Footer/Footer';
-
 
 export default async function Home() {
   const queryClient = new QueryClient();

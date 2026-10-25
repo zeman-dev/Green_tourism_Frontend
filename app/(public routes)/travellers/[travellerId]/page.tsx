@@ -175,12 +175,15 @@ if (hasError || !profile) {
         <h1 className={styles.pageTitle}>Статті Мандрівника</h1>
 
         {profile.totalStories === 0 ? (
-          <MessageNoStories />
+          <MessageNoStories
+          text="Цей користувач ще не публікував історій"
+          buttonText="Назад до історій"
+          linkTo="/stories"
+          />
         ) : (
           <>
             <TravellersStories
               stories={profile.stories}
-              authorName={profile.user.name}
             />
 
             <LoadMore

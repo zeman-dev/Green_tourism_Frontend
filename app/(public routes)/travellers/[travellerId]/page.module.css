@@ -5,6 +5,8 @@
 
 .storiesSection {
     background-color: var(--color-scheme-2-background);
+    padding-bottom: 72px;
+    padding-top: 48px;
 }
 
 .loaderWrapper {
@@ -44,7 +46,7 @@
 .pageTitle {
     padding-inline: 20px;
     max-width: 375px;
-    margin-inline: auto;
+    margin: 0 auto 40px;
 }
 
 @media (min-width: 768px) {
@@ -65,4 +67,9 @@
          .statePage {
              padding: 48px 64px;
          }
+
+        .container {
+            box-sizing: border-box;
+            padding-inline: 64px;
+        }
 }

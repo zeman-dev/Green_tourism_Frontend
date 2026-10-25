@@ -7,7 +7,7 @@ export default function usePerPage() {
 
   useEffect(() => {
     const updatePerPage = () => {
-     if (window.innerWidth < 1440) {
+      if (window.innerWidth < 1440) {
         setPerPage(8);
       } else {
         setPerPage(9);

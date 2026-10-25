@@ -1,19 +1,16 @@
-import StoriesClient from "./StoriesClient";
+import StoriesClient from './StoriesClient';
 import {
   QueryClient,
   HydrationBoundary,
   dehydrate,
-} from "@tanstack/react-query";
-import { fetchStories } from "@/lib/api/clientApi";
-
-
+} from '@tanstack/react-query';
+import { fetchStories } from '@/lib/api/clientApi';
 
 async function StoriesPage() {
-    
-const queryClient = new QueryClient();
+  const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["stories"],
+    queryKey: ['stories'],
     queryFn: () => fetchStories({}),
   });
 
@@ -25,5 +22,3 @@ const queryClient = new QueryClient();
 }
 
 export default StoriesPage;
-
-

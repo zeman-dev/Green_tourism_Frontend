@@ -6,14 +6,13 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import LoadMore from '@/components/LoadMore/LoadMore';
 import usePerPage from '@/hooks/usePerPage';
-import css from './StoriesClient.module.css'
-
+import css from './StoriesClient.module.css';
 
 export default function StoriesClient() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const perPage = usePerPage();
- 
-   const {
+
+  const {
     data,
     isError,
     isLoading,
@@ -27,8 +26,8 @@ export default function StoriesClient() {
         page: pageParam,
         perPage,
         ...(selectedCategory !== 'all' && {
-      category: selectedCategory,
-    })
+          category: selectedCategory,
+        }),
       }),
     initialPageParam: 1,
 
@@ -43,7 +42,7 @@ export default function StoriesClient() {
   });
 
   const stories = data?.pages.flatMap(page => page.stories) ?? [];
- 
+
   if (isError) {
     return <p>Не вдалося завантажити історії.</p>; // переробити на push
   }
@@ -52,21 +51,17 @@ export default function StoriesClient() {
     return <p className={css.loading}>Завантаження історій...</p>;
   }
 
-// заготовка, має йти після h1: <CategoriesFilter  selectedCategory={selectedCategory}  onCategoryChange={setSelectedCategory}/>
+  // заготовка, має йти після h1: <CategoriesFilter  selectedCategory={selectedCategory}  onCategoryChange={setSelectedCategory}/>
   return (
     <div className={css.storiespage}>
-<h1>Статті</h1>
-
- 
-
-
-       <TravellersStories stories={stories}>
-          <LoadMore
-            onLoadMore={() => fetchNextPage()}
-            hasMore={hasNextPage}
-            isLoading={isFetchingNextPage}
-          />
-        </TravellersStories>
-          </div>
+      <h1>Статті</h1>
+      <TravellersStories stories={stories}>
+        <LoadMore
+          onLoadMore={() => fetchNextPage()}
+          hasMore={hasNextPage}
+          isLoading={isFetchingNextPage}
+        />
+      </TravellersStories>
+    </div>
   );
 }

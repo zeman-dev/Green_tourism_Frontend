@@ -2,28 +2,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-padding-top: 32px;
+  padding-top: 32px;
   padding-bottom: 64px;
   background-color: #eef8ee;
   font-family: var(--font-montserrat);
   font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
-  
 }
 
-.storiespage h1{
-    font-weight: 700;
-font-size: 32px;
-line-height: 1.1;
-letter-spacing: -0.01em;
-text-align: center;
-color: #000;
+.storiespage h1 {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #000;
 }
 
 .loading {
-    display: flex;
-font-weight: 500;
+  display: flex;
+  font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
   justify-content: center;
@@ -33,29 +32,26 @@ font-weight: 500;
 }
 
 @media screen and (min-width: 768px) {
+  .storiespage {
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+    text-align: center;
+    color: var(--color-scheme-1-text);
+  }
 
-.storiespage {
-font-family: var(--font-family);
-font-weight: 700;
-font-size: 32px;
-line-height: 110%;
-letter-spacing: -0.01em;
-text-align: center;
-color: var(--color-scheme-1-text);
-}
-
-.storiespage h1{
+  .storiespage h1 {
     font-size: 48px;
-}
-
+  }
 }
 @media screen and (min-width: 1440px) {
-    .storiespage {
-padding-top: 48px;
-  padding-bottom: 72px;
-}
-.storiespage h1{
+  .storiespage {
+    padding-top: 48px;
+    padding-bottom: 72px;
+  }
+  .storiespage h1 {
     font-size: 56px;
-}
-
+  }
 }

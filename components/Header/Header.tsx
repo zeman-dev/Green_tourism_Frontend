@@ -4,9 +4,11 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import Logo from '../Logo/Logo';
 
+import Logo from '../Logo/Logo';
+import UserBar from '../UserBar/UserBar';
 import AuthNavigation from '../AuthNavigation/AuthNavigation';
+
 import css from './Header.module.css';
 
 const navigationLinks = [
@@ -18,25 +20,50 @@ const navigationLinks = [
 export default function Header() {
   const pathname = usePathname();
 
-  return <HeaderContent key={pathname} pathname={pathname} />;
+  // Тимчасовий стан для перевірки верстки.
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+  return (
+    <HeaderContent
+      key={pathname}
+      pathname={pathname}
+      isAuthenticated={isAuthenticated}
+      onLogout={() => setIsAuthenticated(false)}
+    />
+  );
 }
 
-function HeaderContent({ pathname }: { pathname: string }) {
+type HeaderContentProps = {
+  pathname: string;
+  isAuthenticated: boolean;
+  onLogout: () => void;
+};
+
+function HeaderContent({
+  pathname,
+  isAuthenticated,
+  onLogout,
+}: HeaderContentProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const burgerRef = useRef<HTMLButtonElement>(null);
 
-  const closeMenu = () => {
+  function closeMenu() {
     setIsMenuOpen(false);
-  };
+  }
+
+  function handleLogout() {
+    onLogout();
+    closeMenu();
+  }
 
   useEffect(() => {
     const desktop = window.matchMedia('(min-width: 1440px)');
 
-    const handleResize = () => {
+    function handleResize() {
       if (desktop.matches) {
         setIsMenuOpen(false);
       }
-    };
+    }
 
     desktop.addEventListener('change', handleResize);
 
@@ -44,6 +71,31 @@ function HeaderContent({ pathname }: { pathname: string }) {
       desktop.removeEventListener('change', handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isMenuOpen]);
+
+  function renderLinks() {
+    return navigationLinks.map(({ href, label }) => (
+      <Link
+        key={href}
+        href={href}
+        className={css.navLink}
+        aria-current={pathname === href ? 'page' : undefined}
+        onClick={closeMenu}
+      >
+        {label}
+      </Link>
+    ));
+  }
 
   return (
     <header
@@ -56,46 +108,97 @@ function HeaderContent({ pathname }: { pathname: string }) {
       }}
     >
       <div className={css.container}>
-        <Logo />
+        <div className={css.topBar}>
+          <Logo />
 
-        <button
-          ref={burgerRef}
-          type="button"
-          className={css.burger}
-          aria-label={isMenuOpen ? 'Закрити меню' : 'Відкрити меню'}
-          aria-expanded={isMenuOpen}
-          aria-controls="header-navigation"
-          onClick={() => setIsMenuOpen(previous => !previous)}
+          <nav
+            className={css.desktopNavigation}
+            aria-label="Основна навігація"
+          >
+            {renderLinks()}
+
+            {isAuthenticated && (
+              <Link
+                href="/profile"
+                className={css.navLink}
+                aria-current={pathname === '/profile' ? 'page' : undefined}
+              >
+                Мій профіль
+              </Link>
+            )}
+          </nav>
+
+          <div className={css.topActions}>
+            {isAuthenticated ? (
+              <>
+                <Link href="/new-story" className={css.publishLink}>
+                  Опублікувати статтю
+                </Link>
+
+                <div className={css.desktopUserBar}>
+                  <UserBar
+                    name="John Doe"
+                    onLogout={handleLogout}
+                  />
+                </div>
+              </>
+            ) : (
+              <AuthNavigation variant="header" />
+            )}
+          </div>
+
+          <button
+            ref={burgerRef}
+            type="button"
+            className={css.burger}
+            aria-label={isMenuOpen ? 'Закрити меню' : 'Відкрити меню'}
+            aria-expanded={isMenuOpen}
+            aria-controls="header-menu"
+            onClick={() => setIsMenuOpen(previous => !previous)}
+          >
+            <Image
+              src={isMenuOpen ? '/icons/close.svg' : '/icons/burger.svg'}
+              alt=""
+              width={24}
+              height={24}
+            />
+          </button>
+        </div>
+
+        <div
+          id="header-menu"
+          className={css.menuPanel}
+          hidden={!isMenuOpen}
         >
-          <Image
-            src={isMenuOpen ? '/icons/close.svg' : '/icons/burger.svg'}
-            alt=""
-            width={24}
-            height={24}
-            aria-hidden="true"
-          />
-        </button>
+          <nav
+            className={css.menuNavigation}
+            aria-label="Основна навігація"
+          >
+            {renderLinks()}
+          </nav>
 
-        <nav
-          id="header-navigation"
-          className={css.navigation}
-          aria-label="Основна навігація"
-        >
-          {navigationLinks.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className={css.navLink}
-              aria-current={pathname === href ? 'page' : undefined}
-              onClick={closeMenu}
-            >
-              {label}
-            </Link>
-          ))}
-        </nav>
+          <div className={css.menuBottom}>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  href="/new-story"
+                  className={`${css.publishLink} ${css.mobilePublish}`}
+                  onClick={closeMenu}
+                >
+                  Опублікувати статтю
+                </Link>
 
-        <div className={css.authNavigation} onClick={closeMenu}>
-          <AuthNavigation variant="header" />
+                <UserBar
+                  name="John Doe"
+                  onLogout={handleLogout}
+                />
+              </>
+            ) : (
+              <div className={css.mobileAuth} onClick={closeMenu}>
+                <AuthNavigation variant="header" />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>

@@ -2,12 +2,15 @@
 import css from './TravellersStories.module.css';
 import type { Story } from '@/types/story';
 import StoryCard from '../StoryCard/StoryCard';
+import type { ReactNode } from 'react'
 
 interface StoryListProps {
   stories: Story[];
+  children?: ReactNode;
+
 }
 
-export default function TravellersStories({ stories }: StoryListProps) {
+export default function TravellersStories({ stories, children }: StoryListProps) {
   return (
     <section className={css.stories}>
     <div className={css.container}>
@@ -24,6 +27,7 @@ export default function TravellersStories({ stories }: StoryListProps) {
         );
       })}
     </ul>
+       {children}
     </div>
     </section>
   );

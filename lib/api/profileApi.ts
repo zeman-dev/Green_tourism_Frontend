@@ -3,6 +3,8 @@ import type { Story } from '@/types/story';
 import type { User } from '@/types/user';
 import type { ProfileTab } from '@/lib/constants/profileTabs';
 
+export const PROFILE_STORIES_KEY = ['profileStories'] as const;
+
 export type ProfileStory = Omit<Story, 'ownerId'> & {
   ownerId: { _id: string; name: string; avatarUrl: string };
 };

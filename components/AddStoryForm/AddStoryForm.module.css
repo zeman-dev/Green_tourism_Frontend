@@ -1,0 +1,9 @@
+.image {
+    object-fit: cover;
+}
+
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    height: 223px;
+}

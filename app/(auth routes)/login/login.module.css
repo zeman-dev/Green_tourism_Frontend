@@ -1,217 +1,29 @@
-/* ============================================================
-   Login / Вхід — стили по макету Figma "Природні мандри"
-   Брейкпоинты как в global.css: mobile 375 → tablet 768 → desktop 1440
-   ============================================================ */
-
-/* ---------- Страница ---------- */
-.page {
-  display: flex;
-  flex-direction: column;
+.pageWrapper {
   min-height: 100vh;
-  padding: 0 20px;
-  background-color: var(--color-scheme-1-background);
-  color: var(--color-scheme-1-text);
-  font-family: var(--font-nunito), sans-serif;
-}
-
-.main {
-  flex: 1;
   display: flex;
   flex-direction: column;
+}
+
+.header {
+  flex: 0 0 auto;
+  display: flex;
   align-items: center;
-  gap: 32px;
-  width: 100%;
-  padding: 64px 0;
+  justify-content: flex-start;
+  padding: 18px 20px; 
 }
 
-/* ---------- Блок с заголовком и формой ---------- */
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  width: 100%;
-  max-width: 644px;
-}
-
-.heading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  text-align: center;
-}
-
-.title {
-  margin: 0;
-  font-family: var(--font-sora), sans-serif;
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  color: var(--color-scheme-1-text);
-}
-
-.subtitle {
-  margin: 0;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.5;
-  color: var(--color-scheme-1-text);
-}
-
-/* ---------- Форма ---------- */
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 100%;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.label {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.5;
-  color: var(--color-scheme-1-text);
-}
-
-.input {
-  width: 100%;
-  padding: 8px;
-  font-family: inherit;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.5;
-  color: var(--color-scheme-1-text);
-  background-color: var(--color-scheme-1-background);
-  border: 1px solid var(--color-scheme-1-border);
-  border-radius: 6px;
-  outline: none;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.input::placeholder {
-  color: var(--opacity-neutral-darkest-60);
-  opacity: 1;
-}
-
-.input:hover {
-  border-color: var(--opacity-neutral-darkest-40);
-}
-
-.input:focus-visible {
-  border-color: var(--color-mantis-dark);
-  box-shadow: 0 0 0 3px var(--color-mantis-lighter);
-}
-
-/* Состояние ошибки (добавляй класс к .input) */
-.inputError,
-.input[aria-invalid='true'] {
-  border-color: var(--color-red);
-}
-
-.inputError:focus-visible,
-.input[aria-invalid='true']:focus-visible {
-  box-shadow: 0 0 0 3px rgba(176, 1, 1, 0.15);
-}
-
-/* ---------- Кнопка ---------- */
-.buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.button {
+.mainContent {
+  flex: 1 1 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  width: 100%;
-  height: 44px;
-  padding: 6px 12px;
-  font-family: inherit;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.5;
-  color: var(--color-white);
-  background-color: var(--color-mantis-dark);
-  border: 1px solid var(--color-mantis-dark);
-  border-radius: 6px;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
+  padding: 40px 20px;
 }
 
-.button:hover:not(:disabled) {
-  background-color: var(--color-mantis-darker);
-  border-color: var(--color-mantis-darker);
-}
-
-.button:focus-visible {
-  outline: 3px solid var(--color-mantis-light);
-  outline-offset: 2px;
-}
-
-.button:disabled {
-  background-color: var(--color-neutral-light);
-  border-color: var(--color-neutral-light);
-  cursor: not-allowed;
-}
-
-/* ---------- Сообщение об ошибке ---------- */
-.error {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
-  text-align: center;
-  color: var(--color-red);
-}
-
-/* ============================================================
-   Tablet ≥ 768px
-   ============================================================ */
 @media (min-width: 768px) {
-  .page {
-    padding: 0 32px;
-  }
-
-  .title {
-    font-size: 44px;
-  }
+  /* .header { padding-left: 32px; padding-right: 32px; } */
 }
 
-/* ============================================================
-   Desktop ≥ 1440px
-   ============================================================ */
-@media (min-width: 1440px) {
-  .page {
-    padding: 0 64px;
-  }
-
-  .title {
-    font-size: 52px;
-  }
-
-  .subtitle {
-    font-size: 20px;
-  }
-
-  .label,
-  .input,
-  .button {
-    font-size: 18px;
-  }
-
-  .input {
-    padding: 8px;
-  }
-}
+/* @media (min-width: 1440px) {
+  .header { padding-left: 64px; padding-right: 64px; }
+} */

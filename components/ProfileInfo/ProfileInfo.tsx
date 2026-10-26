@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import TravellerInfo from '@/components/TravellerInfo/TravellerInfo';
-import { fetchCurrentUser } from '@/lib/api/profileApi';
+import { fetchCurrentUser } from '@/lib/api/clientApi';
 import css from './ProfileInfo.module.css';
 
 export default function ProfileInfo() {
@@ -12,18 +12,13 @@ export default function ProfileInfo() {
   });
 
   if (isLoading) {
-    return (
-      <div className={`${css.status} container`} role="status">
-        <span className={css.spinner} aria-hidden="true" />
-        Завантаження профілю...
-      </div>
-    );
+    return <p className={`${css.status} container`}>Завантаження профілю...</p>;
   }
 
   if (isError || !data) {
     return (
-      <p className={`${css.status} ${css.error} container`} role="alert">
-        Не вдалося завантажити дані профілю. Спробуйте пізніше.
+      <p className={`${css.status} container`}>
+        Не вдалося завантажити профіль.
       </p>
     );
   }

@@ -2,8 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { PROFILE_TABS } from '@/lib/constants/profileTabs';
 import css from './ProfileTabs.module.css';
+
+const tabs = [
+  { href: '/profile/saved', label: 'Збережені історії' },
+  { href: '/profile/own', label: 'Мої історії' },
+];
 
 export default function ProfileTabs() {
   const pathname = usePathname();
@@ -11,12 +15,11 @@ export default function ProfileTabs() {
   return (
     <nav className={`${css.nav} container`} aria-label="Розділи профілю">
       <ul className={css.list}>
-        {PROFILE_TABS.map(tab => {
-          const isActive =
-            pathname === tab.href || pathname.startsWith(`${tab.href}/`);
+        {tabs.map(tab => {
+          const isActive = pathname === tab.href;
 
           return (
-            <li className={css.item} key={tab.slug}>
+            <li className={css.item} key={tab.href}>
               <Link
                 href={tab.href}
                 scroll={false}

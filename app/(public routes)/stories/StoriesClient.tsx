@@ -29,7 +29,7 @@ export default function StoriesClient() {
       fetchStories({
         page: pageParam,
         perPage,
-        ...(selectedCategory !== 'al' && {
+        ...(selectedCategory !== 'all' && {
           category: selectedCategory,
         }),
       }),

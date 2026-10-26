@@ -1,0 +1,8 @@
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  font-size: 16px;
+  color: var(--color-scheme-2-text);
+}

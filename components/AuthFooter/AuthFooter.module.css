@@ -1,0 +1,23 @@
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 24px;
+    padding-bottom: 24px;
+}
+
+.copyright {
+    margin: 0;
+    font-size: 16px;
+    line-height: 150%;
+    color: #4a4a4a;
+    text-align: center;
+}
+
+@media (min-width: 1440px) {
+    .footer {
+        padding-top: 27px;
+        padding-bottom: 27px;
+    }
+}

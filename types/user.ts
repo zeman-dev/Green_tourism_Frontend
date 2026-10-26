@@ -16,3 +16,8 @@ export interface UsersApiResponse {
   totalPages: number;
   users: User[];
 }
+
+export interface login {
+  email: string,
+  password: string,
+}

@@ -1,9 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
 import styles from './AuthNavigation.module.css';
+import Link from 'next/link';
 
 type AuthNavigationProps = {
   variant?: 'header' | 'auth';

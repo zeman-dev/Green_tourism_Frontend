@@ -3,7 +3,7 @@ import 'modern-normalize/modern-normalize.css';
 import './globals.css';
 import { Montserrat, Sora, Nunito_Sans } from 'next/font/google';
 import TanstackProvider from '@/components/TanStackProvider/TanStackProvider';
-
+import { Toaster } from 'react-hot-toast';
 
 const montserrat = Montserrat({
   subsets: ["latin", "cyrillic"],
@@ -32,13 +32,19 @@ export const metadata: Metadata = {
   description: 'Відкрий Україну заново — еко-мандри для натхнення',
 };
 
+
+
 export default function RootLayout({ children }:Readonly<{
   children: React.ReactNode;
+
 }>) {
   return (
     <html lang="uk" className={`${sora.variable} ${montserrat.variable} ${nunito.variable}`}>
       <body>
-        <TanstackProvider>{children}</TanstackProvider>
+        <TanstackProvider>
+          {children}
+          </TanstackProvider>
+        <Toaster position="top-center" />
       </body>
     </html>
   );

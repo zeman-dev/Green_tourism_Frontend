@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-export default function Stories(){
-    return (
-        <>
-        </>
-    )
-}
-=======
 import StoriesClient from './StoriesClient';
 import {
   QueryClient,
@@ -30,4 +22,3 @@ async function StoriesPage() {
 }
 
 export default StoriesPage;
->>>>>>> 33e867f645256183168126f5722a6ef5e0cb0b3a

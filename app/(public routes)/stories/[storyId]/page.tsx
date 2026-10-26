@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-export default function StoryId(){
-    return (
-        <>
-        </>
-    )
-=======
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -69,5 +62,4 @@ export default function StoryPage() {
       <StoryDetails story={story} />
     </main>
   );
->>>>>>> 33e867f645256183168126f5722a6ef5e0cb0b3a
 }

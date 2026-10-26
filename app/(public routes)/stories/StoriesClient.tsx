@@ -7,6 +7,7 @@ import { useState } from 'react';
 import LoadMore from '@/components/LoadMore/LoadMore';
 import usePerPage from '@/hooks/usePerPage';
 import css from './StoriesClient.module.css';
+import CategoriesFilter from '@/components/CategoriesFilter/CategoriesFilter';
 
 export default function StoriesClient() {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -55,6 +56,10 @@ export default function StoriesClient() {
   return (
     <div className={css.storiespage}>
       <h1>Статті</h1>
+      <CategoriesFilter
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+      />
       <TravellersStories stories={stories}>
         <LoadMore
           onLoadMore={() => fetchNextPage()}

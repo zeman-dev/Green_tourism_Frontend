@@ -1,4 +1,4 @@
-import css from '../app/(public routes)/page.module.css';
+import css from './page.module.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

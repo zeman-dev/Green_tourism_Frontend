@@ -9,10 +9,8 @@ import usePerPage from '@/hooks/usePerPage';
 import css from './StoriesClient.module.css';
 import { Toaster, toast } from 'react-hot-toast';
 
-
 export default function StoriesClient() {
   const [selectedCategory, setSelectedCategory] = useState('all');
-
   const perPage = usePerPage();
 
   const {

@@ -63,5 +63,17 @@ export const fetchTravellerStories = async ({
     { params },
   );
 
+export const fetchCurrentUser = async (): Promise<User> => {
+  const response = await api.get<{ user: User }>('/users/me');
+  return response.data.user;
+};
+
+export const fetchSavedStories = async (params: FetchStoriesParams): Promise<FetchStoriesResponse> => {
+  const response = await api.get<FetchStoriesResponse>('/users/me/saved-stories', { params });
+  return response.data;
+};
+
+export const fetchMyStories = async (params: FetchStoriesParams): Promise<FetchStoriesResponse> => {
+  const response = await api.get<FetchStoriesResponse>('/users/me/stories', { params });
   return response.data;
 };

@@ -1,6 +1,5 @@
-export default function Profile(){
-    return (
-        <>
-        </>
-    )
+import { redirect } from 'next/navigation';
+
+export default function Profile() {
+  redirect('/profile/saved');
 }

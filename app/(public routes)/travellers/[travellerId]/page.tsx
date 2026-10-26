@@ -1,199 +1,105 @@
-"use client";
+import { isAxiosError } from 'axios';
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { isAxiosError } from "axios";
-import styles from "./page.module.css";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
 
-import TravellerInfo from "@/components/TravellerInfo/TravellerInfo";
-import TravellersStories from "@/components/TravellersStories/TravellersStories";
-import MessageNoStories from "@/components/MessageNoStories/MessageNoStories";
-import LoadMore from "@/components/LoadMore/LoadMore";
-import { api } from "@/lib/api/api";
-import type { User, UsersApiResponse } from "@/types/user";
-import type { StoriesResponse } from "@/types/story";
+import type { StoriesResponse } from '@/types/story';
 
-type TravellerApiResponse = StoriesResponse & {
-  user: {
-    _id: string;
-    username: string;
-    articlesAmount: number;
-  };
+import TravellerInfo from '@/components/TravellerInfo/TravellerInfo';
+import MessageNoStories from '@/components/MessageNoStories/MessageNoStories';
+
+import {
+  fetchTravellerProfileServer,
+  fetchTravellerStoriesServer,
+} from '@/lib/api/travellerApi';
+
+import TravellerStoriesClient from '../TravellerStoriesClient';
+
+import styles from './page.module.css';
+
+type TravellerPageProps = {
+  params: Promise<{
+    travellerId: string;
+  }>;
 };
 
-type TravellerProfile = StoriesResponse & {
-  user: User;
-};
+export default async function TravellerPage({
+  params,
+}: TravellerPageProps) {
+  const { travellerId } = await params;
 
-export default function TravellerId() {
-  const { travellerId } = useParams<{ travellerId: string }>();
+  const queryClient = new QueryClient();
 
-  const [profile, setProfile] = useState<TravellerProfile | null>(null);
-  const [perPage, setPerPage] = useState<number | null>(null);
-  const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [notFound, setNotFound] = useState(false);
-  const [hasError, setHasError] = useState(false);
+  let profile;
 
-  useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 1440px)");
+ try {
+  const [profileData] = await Promise.all([
+    fetchTravellerProfileServer(travellerId, 6),
 
-    const updatePageSize = () => {
-      setPerPage(desktop.matches ? 6 : 4);
-    };
+    queryClient.prefetchInfiniteQuery({
+      queryKey: ['travellerStories', travellerId, 6],
 
-    updatePageSize();
-    desktop.addEventListener("change", updatePageSize);
+      queryFn: ({ pageParam }) =>
+        fetchTravellerStoriesServer(
+          travellerId,
+          pageParam,
+          6,
+        ),
 
-    return () => desktop.removeEventListener("change", updatePageSize);
-  }, []);
+      initialPageParam: 1,
 
-  useEffect(() => {
-    if (!travellerId || perPage === null) return;
-
-    let cancelled = false;
-
-    async function loadProfile() {
-      setIsLoading(true);
-      setNotFound(false);
-      setHasError(false);
-      setPage(1);
-
-      try {
-        const [profileResponse, usersResponse] = await Promise.all([
-          api.get<TravellerApiResponse>(`/users/${travellerId}`, {
-            params: { page: 1, perPage },
-          }),
-          api.get<UsersApiResponse>("/users", {
-            params: { page: 1, perPage: 100 },
-          }),
-        ]);
-
-        if (cancelled) return;
-
-        const user = usersResponse.data.users.find(
-          (item) => item._id === travellerId,
-        );
-
-        if (!user) {
-          setProfile(null);
-          setNotFound(true);
-          return;
-        }
-
-        setProfile({
-          ...profileResponse.data,
-          user,
-        });
-      } catch (error) {
-        if (cancelled) return;
-
-        setProfile(null);
-        setNotFound(
-          isAxiosError(error) && error.response?.status === 404,
-        );
-        setHasError(
-          !isAxiosError(error) || error.response?.status !== 404,
-        );
-      } finally {
-        if (!cancelled) setIsLoading(false);
-      }
-    }
-
-    loadProfile();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [travellerId, perPage]);
-
-  async function loadMore() {
-    if (!profile || perPage === null || isLoadingMore) return;
-
-    const nextPage = page + 1;
-    setIsLoadingMore(true);
-
-    try {
-      const { data } = await api.get<StoriesResponse>(
-        `/users/${travellerId}`,
-        { params: { page: nextPage, perPage } },
-      );
-
-      setProfile((current) =>
-        current
-          ? {
-              ...current,
-              ...data,
-              user: current.user,
-              stories: [...current.stories, ...data.stories],
-            }
-          : current,
-      );
-
-      setPage(nextPage);
-    } finally {
-      setIsLoadingMore(false);
-    }
+      getNextPageParam: (lastPage: StoriesResponse) => {
+  if (lastPage.page < lastPage.totalPages) {
+    return lastPage.page + 1;
   }
 
-  if (isLoading) {
-  return (
-    <main className={`${styles.page} ${styles.statePage}`}>
-      <div className={styles.loaderWrapper}>
-        <span
-          className={styles.loader}
-          role="status"
-          aria-label="Завантаження"
-        />
-      </div>
-    </main>
-  );
-}
+  return undefined;
+},
+    }),
+  ]);
 
-if (notFound) {
-  return (
-    <main className={`${styles.page} ${styles.statePage}`}>
-      <p className={styles.message}>Такий користувач відсутній</p>
-    </main>
-  );
-}
+  profile = profileData;
+} catch (error) {
+    const isNotFound =
+      (isAxiosError(error) && error.response?.status === 404) ||
+      (error instanceof Error &&
+        error.message === 'Traveller not found');
 
-if (hasError || !profile) {
-  return (
-    <main className={`${styles.page} ${styles.statePage}`}>
-      <p className={styles.message}>Не вдалося завантажити сторінку.</p>
-    </main>
-  );
-}
+    return (
+      <main className={`${styles.page} ${styles.statePage}`}>
+        <p className={styles.message}>
+          {isNotFound
+            ? 'Такий користувач відсутній'
+            : 'Не вдалося завантажити сторінку.'}
+        </p>
+      </main>
+    );
+  }
 
   return (
-    <main className={styles.page}>
-      <TravellerInfo user={profile.user} />
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <main className={styles.page}>
+        <TravellerInfo user={profile.user} />
 
-      <section className={styles.storiesSection}>
-        <h1 className={styles.pageTitle}>Статті Мандрівника</h1>
+        <section className={styles.storiesSection}>
+          <h1 className={styles.pageTitle}>
+            Статті Мандрівника
+          </h1>
 
-        {profile.totalStories === 0 ? (
-          <MessageNoStories
-          text="Цей користувач ще не публікував історій"
-          buttonText="Назад до історій"
-          linkTo="/stories"
-          />
-        ) : (
-          <>
-            <TravellersStories
-              stories={profile.stories}
+          {profile.totalStories === 0 ? (
+            <MessageNoStories
+              text="Цей користувач ще не публікував історій"
+              buttonText="Назад до історій"
+              linkTo="/stories"
             />
-
-            <LoadMore
-              onLoadMore={loadMore}
-              isLoading={isLoadingMore}
-              hasMore={page < profile.totalPages}
-            />
-          </>
-        )}
-      </section>
-    </main>
+          ) : (
+            <TravellerStoriesClient travellerId={travellerId} />
+          )}
+        </section>
+      </main>
+    </HydrationBoundary>
   );
-}   
+}

@@ -3,13 +3,15 @@
 import TravellersStories from '@/components/TravellersStories/TravellersStories';
 import { fetchStories } from '@/lib/api/clientApi';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LoadMore from '@/components/LoadMore/LoadMore';
 import usePerPage from '@/hooks/usePerPage';
 import css from './StoriesClient.module.css';
+import { Toaster, toast } from 'react-hot-toast';
 
 export default function StoriesClient() {
   const [selectedCategory, setSelectedCategory] = useState('all');
+
   const perPage = usePerPage();
 
   const {
@@ -43,9 +45,11 @@ export default function StoriesClient() {
 
   const stories = data?.pages.flatMap(page => page.stories) ?? [];
 
-  if (isError) {
-    return <p>Не вдалося завантажити історії.</p>; // переробити на push
-  }
+  useEffect(() => {
+    if (isError) {
+      toast.error('Не вдалося завантажити історії.');
+    }
+  }, [isError]);
 
   if (isLoading) {
     return <p className={css.loading}>Завантаження історій...</p>;
@@ -62,6 +66,18 @@ export default function StoriesClient() {
           isLoading={isFetchingNextPage}
         />
       </TravellersStories>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            fontSize: '16px',
+            padding: '10px 14px',
+            maxWidth: '360px',
+            width: 'auto',
+            whiteSpace: 'nowrap',
+          },
+        }}
+      />
     </div>
   );
 }

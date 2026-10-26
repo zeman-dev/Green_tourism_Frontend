@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from "next/navigation"
-import { useEffect } from "react";
+import { startTransition, useEffect, useState } from "react";
 
 interface LayoutChildren{
     children: React.ReactNode,
@@ -9,18 +9,22 @@ interface LayoutChildren{
     footer: React.ReactNode,
 }
 
-export default function AuthLayout({header, children, footer} : LayoutChildren){
- const router = useRouter();
+export default function AuthLayout({ header, children, footer }: LayoutChildren) {
+    const [loading, setLoading] = useState(true);
+    const router = useRouter();
  
- useEffect(()=>{
-    router.refresh()
- },[])
+    useEffect(() => {
+        router.refresh();
+        startTransition(() => {
+            setLoading(false);
+        });
+    }, [router]);
 
-return(
-    <>
-    {header}
-    {children}
-    {footer}
-    </>
-)
+    return (
+        <>
+            {header}
+            {loading ? <div>Loading...</div> : children}
+            {footer}
+        </>
+    );
 }

@@ -5,11 +5,9 @@ import { startTransition, useEffect, useState } from "react";
 
 interface LayoutChildren{
     children: React.ReactNode,
-    header: React.ReactNode,
-    footer: React.ReactNode,
 }
 
-export default function AuthLayout({ header, children, footer }: LayoutChildren) {
+export default function AuthLayout({  children }: LayoutChildren) {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
  
@@ -22,9 +20,7 @@ export default function AuthLayout({ header, children, footer }: LayoutChildren)
 
     return (
         <>
-            {header}
             {loading ? <div>Loading...</div> : children}
-            {footer}
         </>
     );
 }

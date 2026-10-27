@@ -12,8 +12,7 @@ export async function checkSession() {
   try {
     const apiRes = await api.get('auth/session', {
       headers: {
-        Cookie: cookieStore.toString(), // передаємо всі куки як є —
-                                          // бекенд сам вирішить, який токен валідний
+        Cookie: cookieStore.toString(), 
       },
     });
 
@@ -28,16 +27,16 @@ export async function checkSession() {
       }
     }
 
-    return apiRes; // завжди повний AxiosResponse
+    return apiRes; 
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
       if (error.response) {
-        return error.response; // теж повний AxiosResponse, просто з кодом помилки (401 і т.д.)
+        return error.response;
       }
     } else {
       logErrorResponse({ message: (error as Error).message });
     }
-    throw error; // немає навіть response (мережева помилка) — прокидаємо далі
+    throw error; 
   }
 }

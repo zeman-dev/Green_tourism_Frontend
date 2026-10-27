@@ -6,7 +6,7 @@ export default function AddStoryForm() {
     return (
         <>
             <form action="" className={styles.form}>
-                <label htmlFor="title">Обкладинка статті</label>
+                <label htmlFor="story-cover" className={styles.title}>Обкладинка статті</label>
                 <div className={styles.imageWrapper}>
                     <Image 
                         className={styles.image}
@@ -16,27 +16,28 @@ export default function AddStoryForm() {
                     />
                 </div>
 
-                <label className={styles.imageButton}>
+                <label htmlFor="story-image" className={styles.imageButton}>
                     Завантажити фото
-                    <input type="file" accept="image/*" style={{ display: 'none' }} />
+                    <input id="story-image" name="storyImage" type="file" accept="image/*" style={{ display: 'none' }} />
                 </label>
 
-                <label className={styles.title}>Заголовок</label>
-                <input className={styles.titleInput} type="text" placeholder="Введіть заголовок історії" />
+                <label htmlFor="story-title" className={styles.title}>Заголовок</label>
+                <textarea id="story-title" name="title" className={styles.input} placeholder="Введіть заголовок історії" />
 
-                <label className={styles.category}>Категорія</label>
-                <select className={styles.categorySelect}>
+                <label htmlFor="story-category" className={styles.title}>Категорія</label>
+                <select id="story-category" name="category" required className={styles.categorySelect}>
+                    <option className={styles.categoryDefault} value="" disabled selected hidden>Категорія</option>
                     <option value="option1">option1</option>
                     <option value="option2">option2</option>
                     <option value="option3">option3</option>
                 </select>
 
-                <label className={styles.story}>Текст історії</label>
-                <textarea className={styles.storyTextarea} placeholder="Ваша історія тут" rows={5} />
+                <label htmlFor="story-text" className={styles.title}>Текст історії</label>
+                <textarea id="story-text" name="storyText" className={styles.textarea} placeholder="Ваша історія тут" />
 
                 <div className={styles.buttonWrapper}>
-                    <button className={styles.submitButton} type="submit">Зберегти</button>
-                    <button className={styles.cancelButton} type="button">Відмінити</button>
+                    <button className={styles.cancelButton} type="submit">Відмінити</button>
+                    <button className={styles.submitButton} type="button">Зберегти</button>
                 </div>
             </form>
         </>

@@ -6,44 +6,56 @@ import TanstackProvider from '@/components/TanStackProvider/TanStackProvider';
 import { Toaster } from 'react-hot-toast';
 
 const montserrat = Montserrat({
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-montserrat",
-  display: "swap",
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-montserrat',
+  display: 'swap',
 });
 
 const nunito = Nunito_Sans({
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-nunito",
-  display: "swap",
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-nunito',
+  display: 'swap',
 });
 
 const sora = Sora({
-  subsets: ["latin"],
-  weight: "700",
-  variable: "--font-sora",
-  display: "swap",
+  subsets: ['latin'],
+  weight: '700',
+  variable: '--font-sora',
+  display: 'swap',
 });
-
 
 export const metadata: Metadata = {
   title: 'Природні мандри',
   description: 'Відкрий Україну заново — еко-мандри для натхнення',
 };
 
+<<<<<<< HEAD
 
 
 export default function RootLayout({ children }:Readonly<{
+=======
+export default function RootLayout({
+  children,
+}: Readonly<{
+>>>>>>> a1c64c23d45292562006d9b495bca00f22258421
   children: React.ReactNode;
 
 }>) {
   return (
-    <html lang="uk" className={`${sora.variable} ${montserrat.variable} ${nunito.variable}`}>
+    <html
+      lang="uk"
+      className={`${sora.variable} ${montserrat.variable} ${nunito.variable}`}
+    >
       <body>
+<<<<<<< HEAD
         <TanstackProvider>
           {children}
           </TanstackProvider>
+=======
+        <TanstackProvider>{children}</TanstackProvider>
+>>>>>>> a1c64c23d45292562006d9b495bca00f22258421
         <Toaster position="top-center" />
       </body>
     </html>

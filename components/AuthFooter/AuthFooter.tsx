@@ -3,7 +3,7 @@ import styles from './AuthFooter.module.css';
 export default function AuthFooter() {
   return (
     <footer className={styles.footer}>
-      <p className={styles.copyright}>© 2025 Природні Мандри</p>
+      <p className={styles.copyright}>© {new Date().getFullYear()} Природні Мандри</p>
     </footer>
   );
 }

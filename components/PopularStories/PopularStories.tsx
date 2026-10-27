@@ -31,7 +31,8 @@ export default function PopularStories() {
 }
   return (
     <section className={styles.section}>
-      <div className={styles.header}>
+      <div className={`${styles.inner} container`}>
+        <div className={styles.header}>
         <h2 className={styles.title}>Популярні статті</h2>
       </div>
 
@@ -42,6 +43,7 @@ export default function PopularStories() {
       <Link className={styles.allStories} href="/stories">
           Всі статті
         </Link>
+      </div>
     </section>
   );
 }

@@ -20,7 +20,7 @@ export default function TravellersStories({ stories, children }: StoryListProps)
           <li className={css.listItem} key={story._id}>
             <StoryCard
               story={story}
-              authorName="TEST" /* доробити */
+              authorName={story.ownerId.name}
               savedCount={story.rate}
             />
           </li>

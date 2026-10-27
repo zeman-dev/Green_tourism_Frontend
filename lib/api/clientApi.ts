@@ -1,6 +1,7 @@
 import { api } from './api';
-import type { login, User } from "../../types/user";
+import type { login, User } from '../../types/user';
 import { Story } from '@/types/story';
+import type { Category } from '@/types/category';
 
 export interface FetchUsersParams {
   page?: number;
@@ -15,25 +16,24 @@ export interface FetchUsersResponse {
   users: User[];
 }
 
-export const fetchUsers = async (params: FetchUsersParams): Promise<FetchUsersResponse> => {
-  
-
+export const fetchUsers = async (
+  params: FetchUsersParams
+): Promise<FetchUsersResponse> => {
   const response = await api.get<FetchUsersResponse>('/users', { params });
   return response.data;
 };
 
-export const loginUser = async (user : login) => {
- const response = await api.post<User>('auth/login', user); // it was 'users/login'
- return response.data;
-}
+export const loginUser = async (user: login) => {
+  const response = await api.post<User>('auth/login', user); // it was 'users/login'
+  return response.data;
+};
 //============================================
 export interface FetchStoriesParams {
   page?: number;
   perPage?: number;
   category?: string;
-  type?:string;
+  type?: string;
 }
-
 
 export interface FetchStoriesResponse {
   page: number;
@@ -42,9 +42,9 @@ export interface FetchStoriesResponse {
   totalPages: number;
   stories: Story[];
 }
-export const fetchStories = async (params: FetchStoriesParams): Promise<FetchStoriesResponse> => {
-  
-
+export const fetchStories = async (
+  params: FetchStoriesParams
+): Promise<FetchStoriesResponse> => {
   const response = await api.get<FetchStoriesResponse>('/stories', { params });
   return response.data;
 };
@@ -55,12 +55,28 @@ export const fetchCurrentUser = async (): Promise<User> => {
   return response.data.user;
 };
 
-export const fetchSavedStories = async (params: FetchStoriesParams): Promise<FetchStoriesResponse> => {
-  const response = await api.get<FetchStoriesResponse>('/users/me/saved-stories', { params });
+export const fetchSavedStories = async (
+  params: FetchStoriesParams
+): Promise<FetchStoriesResponse> => {
+  const response = await api.get<FetchStoriesResponse>(
+    '/users/me/saved-stories',
+    { params }
+  );
   return response.data;
 };
 
-export const fetchMyStories = async (params: FetchStoriesParams): Promise<FetchStoriesResponse> => {
-  const response = await api.get<FetchStoriesResponse>('/users/me/stories', { params });
+export const fetchMyStories = async (
+  params: FetchStoriesParams
+): Promise<FetchStoriesResponse> => {
+  const response = await api.get<FetchStoriesResponse>('/users/me/stories', {
+    params,
+  });
+  return response.data;
+};
+
+//===========================================
+
+export const fetchCategories = async (): Promise<Category[]> => {
+  const response = await api.get<Category[]>('/categories');
   return response.data;
 };

@@ -1,14 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { api } from '@/lib/api/api';
+import { useQuery } from '@tanstack/react-query';
+import { fetchCategories } from '@/lib/api/clientApi';
+import type { Category } from '@/types/category';
 import styles from './CategoriesFilter.module.css';
 import ArrowIcon from './ArrowIcon';
-
-interface Category {
-  _id: string;
-  category: string;
-}
 
 interface CategoriesFilterProps {
   selectedCategory: string;
@@ -19,30 +16,19 @@ const CategoriesFilter = ({
   selectedCategory,
   onCategoryChange,
 }: CategoriesFilterProps) => {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-
-        const response = await api.get<Category[]>('/categories');
-        setCategories(response.data);
-      } catch (error) {
-        console.error('Failed to fetch categories:', error);
-        setError('Не вдалося завантажити категорії.');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchCategories();
-  }, []);
+  const {
+    data: categories = [],
+    isLoading,
+    isFetching,
+    error,
+  } = useQuery({
+    queryKey: ['categories'],
+    queryFn: fetchCategories,
+    staleTime: 1000 * 60 * 60 * 24,
+  });
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -54,26 +40,20 @@ const CategoriesFilter = ({
       }
     };
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
-
-  const handleCategoryChange = (category: string) => {
-    if (category !== selectedCategory) {
-      onCategoryChange(category);
-    }
-  };
-
-  if (isLoading) {
-    return <p className={styles.status}>Завантаження категорій...</p>;
-  }
-
-  if (error) {
-    return <p className={styles.error}>{error}</p>;
-  }
 
   return (
     <div className={styles.filter}>
@@ -83,19 +63,19 @@ const CategoriesFilter = ({
           className={`${styles.button} ${
             selectedCategory === 'all' ? styles.active : ''
           }`}
-          onClick={() => handleCategoryChange('all')}
+          onClick={() => onCategoryChange('all')}
         >
           Всі статті
         </button>
 
-        {categories.map(({ _id, category }) => (
+        {categories.map(({ _id, category }: Category) => (
           <button
             key={_id}
             type="button"
             className={`${styles.button} ${
               selectedCategory === category ? styles.active : ''
             }`}
-            onClick={() => handleCategoryChange(category)}
+            onClick={() => onCategoryChange(category)}
           >
             {category}
           </button>
@@ -111,7 +91,6 @@ const CategoriesFilter = ({
             className={`${styles.select} ${isOpen ? styles.selectOpen : ''}`}
             onClick={() => setIsOpen(prev => !prev)}
             aria-expanded={isOpen}
-            aria-haspopup="listbox"
           >
             <span>
               {selectedCategory === 'all' ? 'Всі статті' : selectedCategory}
@@ -121,7 +100,7 @@ const CategoriesFilter = ({
           </button>
 
           {isOpen && (
-            <ul className={styles.options} role="listbox">
+            <ul className={styles.options}>
               <li>
                 <button
                   type="button"
@@ -129,7 +108,7 @@ const CategoriesFilter = ({
                     selectedCategory === 'all' ? styles.selectedOption : ''
                   }`}
                   onClick={() => {
-                    handleCategoryChange('all');
+                    onCategoryChange('all');
                     setIsOpen(false);
                   }}
                 >
@@ -137,7 +116,7 @@ const CategoriesFilter = ({
                 </button>
               </li>
 
-              {categories.map(({ _id, category }) => (
+              {categories.map(({ _id, category }: Category) => (
                 <li key={_id}>
                   <button
                     type="button"
@@ -145,7 +124,7 @@ const CategoriesFilter = ({
                       selectedCategory === category ? styles.selectedOption : ''
                     }`}
                     onClick={() => {
-                      handleCategoryChange(category);
+                      onCategoryChange(category);
                       setIsOpen(false);
                     }}
                   >
@@ -157,6 +136,16 @@ const CategoriesFilter = ({
           )}
         </div>
       </div>
+
+      {isLoading && <p className={styles.status}>Завантаження категорій...</p>}
+
+      {isFetching && !isLoading && (
+        <p className={styles.status}>Оновлення даних...</p>
+      )}
+
+      {error && (
+        <p className={styles.error}>Не вдалося завантажити категорії.</p>
+      )}
     </div>
   );
 };

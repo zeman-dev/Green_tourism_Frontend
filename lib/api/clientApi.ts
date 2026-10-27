@@ -95,6 +95,3 @@ export const fetchCategories = async (): Promise<Category[]> => {
   const response = await api.get<Category[]>('/categories');
   return response.data;
 };
-
-export { fetchUsers } from './usersApi';
-export type { FetchUsersParams } from './usersApi';

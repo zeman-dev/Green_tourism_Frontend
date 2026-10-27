@@ -1,39 +1,27 @@
 'use client'
 
-import { createPortal } from 'react-dom';
-import css from './ConfirmModal.module.css'
-import { useEffect } from 'react';
-import type { MouseEvent } from 'react';
-
-interface ConfirmModalProps{
-    title: string;
-    description?: string;
-    confirmButtonText: string;
-    cancelButtonText: string;
-    onConfirm: () => void;
-    onCancel: ()=> void;
+import css from './ConfirmModal.module.css';
+import Modal from '@/components/Modal/Modal'
+interface ConfirmModalProps {
+  title: string;
+  description?: string;
+  confirmButtonText: string;
+  cancelButtonText: string;
+  onConfirm: () => void;
+  onCancel: () => void;
 }
 
 export default function ConfirmModal({
-    title, description, confirmButtonText, cancelButtonText, onConfirm, onCancel
+  title, 
+  description, 
+  confirmButtonText, 
+  cancelButtonText, 
+  onConfirm, 
+  onCancel
 }: ConfirmModalProps) {
-
-useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onCancel();
-    };
-    
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [onCancel]);
-
-  const handleBackdropClick = (e: MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) onCancel();
-  };
-
-    return createPortal(
-    <div className={css.backdrop} onClick={handleBackdropClick}>
-      <div className={css.modal}>
+  return (
+    <Modal onClose={onCancel}>
+      <div className={css.confirmContent}>
         <button
           className={css.closeButton}
           onClick={onCancel}
@@ -54,7 +42,6 @@ useEffect(() => {
           </button>
         </div>
       </div>
-    </div>,
-    document.body
+    </Modal>
   );
 }

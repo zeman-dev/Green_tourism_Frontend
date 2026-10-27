@@ -16,7 +16,6 @@ const SignIn = () => {
         <AuthHeader/>
       <main className={css.mainContent}>
         <LoginForm />
-        <LogoutButton/>
       </main>
       <AuthFooter />
     </div>

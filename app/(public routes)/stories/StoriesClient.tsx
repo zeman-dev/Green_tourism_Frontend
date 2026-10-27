@@ -43,7 +43,7 @@ export default function StoriesClient() {
     //=============================
     refetchOnMount: false,
   });
-
+console.log(data);//прибрати після тестів
   const stories = data?.pages.flatMap(page => page.stories) ?? [];
 
   useEffect(() => {

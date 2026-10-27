@@ -4,11 +4,23 @@
     width: 100%;
 }
 
+@media (min-width: 1440px) {
+    .form {
+        width: 1091px;
+    }    
+}
+
 .title {
     line-height: 150%;
     color: var(--color-scheme-2-text);
 
     margin-bottom: 8px;
+}
+
+@media (min-width: 1440px) {
+    .title {
+        font-size: 18px;
+    } 
 }
 
 .image {
@@ -22,6 +34,18 @@
     height: 223px;
 
     margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+    .imageWrapper {
+        height: 468px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .imageWrapper {
+        height: 726px;
+    }
 }
 
 .imageButton {
@@ -43,6 +67,14 @@
     transition: background 0.25s ease, border 0.25s ease, color 0.25s ease, opacity 0.25s ease;
 }
 
+@media (min-width: 1440px) {
+    .imageButton {
+        font-size: 20px;
+        width: 215px;
+        height: 38px;
+    }
+}
+
 .imageButton:hover,
 .imageButton:focus {
     border: 1px solid var(--opacity-transparent);
@@ -62,7 +94,7 @@
     opacity: 0.3;
 }
 
-.input, .categorySelect, .textarea {
+.input, .select, .textarea {
     border: 1px solid var(--opacity-neutral-darkest-15);
     border-radius: 6px;
     padding: 8px;
@@ -75,6 +107,14 @@
     
     margin-bottom: 24px;
     outline: none;
+    transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+}
+
+@media (min-width: 1440px) {
+    .input, .select, .textarea {
+        font-size: 18px;
+        min-width: 43px;
+    }
 }
 
 .input {
@@ -93,34 +133,130 @@
     margin-bottom: 60px;
 }
 
-.categorySelect {
+.input:hover,
+.select:hover,
+.textarea:hover,
+.input:focus,
+.select:focus,
+.textarea:focus,
+.input:active,
+.select:active,
+.textarea:active {
+    border-color: #8dd18c;
+    box-shadow: 0 0 0 2px rgba(141, 209, 140, 0.2);
+}
+
+.dropdown {
+    position: relative;
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+.select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-
-    background-image: url(/icons/select-arrow.svg);
-    background-repeat: no-repeat;
-    background-position: right 8px center;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    margin-bottom: 0;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
 }
 
-.categorySelect.isopen {
-    background-image: url(/icons/select-arrow-opened.svg);
+.select:focus-visible {
+    box-shadow: 0 0 0 2px rgba(141, 209, 140, 0.35);
+    border-color: #8dd18c;
 }
 
-.input::placeholder,
-.textarea::placeholder,
-.categorySelect:invalid {
+.selectOpen {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 1px solid #8dd18c;
+    border-bottom: 1px solid #8dd18c;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.placeholder {
     color: var(--opacity-neutral-darkest-60);
 }
 
-.categorySelect option {
-    color: var(--color-scheme-2-text);
+.options {
+    position: absolute;
+    z-index: 10;
+    top: calc(100% - 1px);
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 12px 0px;
+    list-style: none;
+    border: 1px solid #8dd18c;
+    border-top: 1px solid #8dd18c;
+    border-radius: 0 0 6px 6px;
+    background: #eef8ee;
+    font-weight: 400;
+    font-size: 16px;
+    color: #1b391b;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+    animation: menuFade 180ms ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes menuFade {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (min-width: 1440px) {
+    .options {
+        font-size: 18px;
+    }   
+}
+
+.option {
+    width: 100%;
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: #1b391b;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.option:hover,
+.option:focus-visible {
+    background: #f2f2f2;
+    outline: none;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+    color: var(--opacity-neutral-darkest-60);
 }
 
 .buttonWrapper {
     display: flex;
     gap: 16px;
     flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .buttonWrapper {
+        flex-direction: row;
+    }
 }
 
 .submitButton, .cancelButton {
@@ -134,6 +270,19 @@
 
     outline: none;
     transition: background 0.25s ease, border 0.25s ease, color 0.25s ease, opacity 0.25s ease;
+}
+
+@media (min-width: 768px) {
+    .submitButton, .cancelButton {
+        width: 203.5px;
+    }
+}
+
+@media (min-width: 1440px) {
+
+    .submitButton, .cancelButton {
+        font-size: 20px;
+    }
 }
 
 .cancelButton {

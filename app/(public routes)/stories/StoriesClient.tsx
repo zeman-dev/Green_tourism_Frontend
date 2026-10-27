@@ -12,12 +12,12 @@ import { Toaster, toast } from 'react-hot-toast';
 
 export default function StoriesClient() {
   const [selectedCategory, setSelectedCategory] = useState('all');
-
   const perPage = usePerPage();
 
   const {
     data,
     isError,
+    error,
     isLoading,
     isFetchingNextPage,
     hasNextPage,
@@ -34,13 +34,14 @@ export default function StoriesClient() {
       }),
     initialPageParam: 1,
 
-    // definition of next page
+    // definition of next page====
     getNextPageParam: lastPage => {
       if (lastPage.page < lastPage.totalPages) {
         return lastPage.page + 1;
       }
       return undefined;
     },
+    //=============================
     refetchOnMount: false,
   });
 
@@ -48,7 +49,7 @@ export default function StoriesClient() {
 
   useEffect(() => {
     if (isError) {
-      toast.error('Не вдалося завантажити історії.');
+      toast.error(`Не вдалося завантажити історії. ${error}`);
     }
   }, [isError]);
 

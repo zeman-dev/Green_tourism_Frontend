@@ -1,11 +1,11 @@
 'use client';
-// import StoryCard from '@/components/StoryCard/StoryCard';
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperType } from 'swiper';
 import type { Story } from '@/types/story';
 import 'swiper/css';
 import styles from './PopularStories.module.css';
+import StoryCard from '@/components/StoryCard/StoryCard';
 
 type PopularStoriesSliderProps = {
   stories: Story[];
@@ -40,8 +40,11 @@ export default function PopularStoriesSlider({
       >
         {stories.map(story => (
           <SwiperSlide key={story._id}>
-            <h3 className={styles.cardTitle}>{story.title}</h3>
-            {/* <StoryCard story={story}/> */}
+            <StoryCard
+              story={story}
+              authorName={story.ownerId.name}
+              savedCount={story.rate}
+            />
           </SwiperSlide>
         ))}
       </Swiper>

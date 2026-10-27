@@ -1,0 +1,227 @@
+.card {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #def2de;
+    color: #1b391b;
+    font-family: Montserrat, sans-serif;
+}
+
+.imageWrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #e6ecdf;
+}
+
+.image {
+    object-fit: cover;
+}
+
+.content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    padding: 0 16px 16px;
+}
+
+.meta {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    min-height: 24px;
+    margin-top: 4px;
+    gap: 8px;
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    color: #1b391b;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.author::after {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 6px;
+    margin: 0 8px;
+    content: "\2022";
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.savedCount {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 2px;
+    min-height: 24px;
+    color: #1b391b;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+.savedCount svg {
+    width: 16px;
+    height: 16px;
+}
+
+.title {
+    display: -webkit-box;
+    height: 54px;
+    margin: 0;
+    overflow: hidden;
+    color: #1b391b;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.footer {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    min-width: 0;
+    margin-top: auto;
+}
+
+.readButton {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 48px;
+    padding: 6px 12px;
+    border: 1px solid rgb(0 0 0 / 15%);
+    border-radius: 6px;
+    background: rgb(0 0 0 / 5%);
+    color: #1b391b;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 250ms ease, border-color 250ms ease;
+}
+
+.bookmarkButton {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: 0 0 48px;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 6px;
+    border: 1px solid rgb(0 0 0 / 15%);
+    border-radius: 6px;
+    background: rgb(0 0 0 / 5%);
+    color: #1b391b;
+    cursor: pointer;
+    transition:
+        background-color 250ms ease,
+        border-color 250ms ease,
+        color 250ms ease;
+}
+
+.readButton:hover,
+.bookmarkButton:hover:not(:disabled) {
+    border-color: rgb(0 0 0 / 25%);
+    background: rgb(0 0 0 / 10%);
+}
+
+.bookmarkButton[aria-pressed="true"] {
+    border-color: #1b391b;
+    background: #1b391b;
+    color: #def2de;
+}
+
+.bookmarkButton[aria-pressed="true"] svg path {
+    fill: currentColor;
+}
+
+.bookmarkButton:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin 700ms linear infinite;
+}
+
+.readButton:focus-visible,
+.bookmarkButton:focus-visible {
+    outline: 2px solid #1b391b;
+    outline-offset: 2px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .readButton,
+    .bookmarkButton,
+    .spinner {
+        animation: none;
+        transition: none;
+    }
+}
+
+@media (min-width: 1440px) {
+
+    .author,
+    .savedCount {
+        min-height: 30px;
+        font-size: 16px;
+    }
+
+    .author::after {
+        font-size: 20px;
+    }
+
+    .savedCount svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .title {
+        height: 78px;
+        font-size: 26px;
+    }
+
+    .readButton {
+        font-size: 20px;
+    }
+}

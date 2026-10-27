@@ -1,0 +1,29 @@
+.pageWrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 18px 20px; 
+}
+
+.mainContent {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+@media (min-width: 768px) {
+  /* .header { padding-left: 32px; padding-right: 32px; } */
+}
+
+/* @media (min-width: 1440px) {
+  .header { padding-left: 64px; padding-right: 64px; }
+} */

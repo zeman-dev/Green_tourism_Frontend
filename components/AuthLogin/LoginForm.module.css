@@ -1,0 +1,112 @@
+.formContainer {
+  width: 100%;
+  max-width: 335px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 52px;
+  line-height: 120%;
+  letter-spacing: -0.01em;
+  color: #000000;
+}
+
+.subtitle {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 150%;
+  text-align: center;
+  color: #000000;
+  margin-bottom: 32px;
+}
+
+.label {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 150%;
+  color: #000000; /* Додано крапку з комою */
+  margin-bottom: 8px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; 
+  margin-bottom: 24px; 
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 150%;
+  color: var(--opacity-neutral-darkest-60);
+  border: 1px solid var(--color-scheme-1-border); 
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: var(--color-neutral-light);
+}
+
+.input:focus {
+  border-color: var(--color-scheme-1-accent);
+}
+
+.errorText {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 150%;
+  color: var(--color-red);
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 12px; 
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-white);
+  background-color: var(--color-mantis-dark); 
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px; 
+}
+
+.submitBtn:hover:not(:disabled),
+.submitBtn:focus:not(:disabled) {
+  background-color:  var(--color-mantis-lighter); 
+  color: var(--color-scheme-2-text);
+  border: 1px solid var(--color-mantis-dark);
+}
+
+.submitBtn:active:not(:disabled) {
+  background-color: var(--color-mantis-darker); 
+  color: var(--color-white);
+}
+
+.submitBtn:disabled {
+  background-color: var(--color-mantis-light); 
+  color: var(--color-white);
+  cursor: not-allowed;
+}
+
+@media (min-width: 768px) {
+  .formContainer {
+    max-width: 644px;
+  }
+}

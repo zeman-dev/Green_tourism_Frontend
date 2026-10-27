@@ -1,109 +1,76 @@
 'use client';
 
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { isAxiosError } from 'axios';
+import toast from 'react-hot-toast';
 import TravellerCard from '@/components/TravellerCard/TravellerCard';
 import LoadMore from '@/components/LoadMore/LoadMore';
-import { fetchUsers } from '@/lib/api/clientApi';
+import { fetchUsers } from '@/lib/api/usersApi';
+import { TRAVELLERS_PER_PAGE, TRAVELLERS_QUERY_KEY } from '@/lib/constants';
 import styles from './TravellersList.module.css';
 
-const PER_PAGE = 12;
+export default function TravellersList() {
+  const seenCount = useRef(0);
 
-function getErrorMessage(error: unknown) {
-    if (!isAxiosError(error)){
-        return 'Не вдалося завантажити мандрівників';
+  const {
+    data,
+    error,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: TRAVELLERS_QUERY_KEY,
+    queryFn: ({ pageParam }) =>
+      fetchUsers({ page: pageParam, perPage: TRAVELLERS_PER_PAGE }),
+    initialPageParam: 1,
+    getNextPageParam: lastPage =>
+      lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined,
+  });
+
+  const users = data?.pages.flatMap(page => page.users) ?? [];
+
+  useEffect(() => {
+    if (isError && error) {
+      toast.error(error.message, { id: 'travellers-load-error' });
     }
+  }, [isError, error]);
 
-    const message = error.response?.data?.message;
+  useEffect(() => {
+    if (seenCount.current > 0 && users.length > seenCount.current) {
+      const firstNew = users[seenCount.current];
 
-    return typeof message === 'string'
-    ? message
-    : 'Не вдалося завантажити мандрівників';
-}
-
-export default function TravellersList(){
-    const seenCount = useRef(0);
-
-    const {
-        data,
-        error,
-        isPending,
-        isError,
-        isFetchNextPageError,
-        fetchNextPage,
-        hasNextPage,
-        isFetchingNextPage,
-    } = useInfiniteQuery({
-        queryKey : ['users', 'travellers-page'],
-        queryFn: ({pageParam}) =>
-            fetchUsers({ page: pageParam, perPage : PER_PAGE}),
-        initialPageParam: 1,
-        getNextPageParam: (lastPage)=>
-            lastPage.page< lastPage.totalPages ? lastPage.page + 1: undefined,
-    });
-
-    const users = useMemo(
-        () => data?.pages.flatMap((page) => page.users) ?? [],
-        [data],
-    );
-
-    useEffect(() =>{
-    if (seenCount.current > 0 && users.length > seenCount.current){
-        const firstNew = users[seenCount.current];
-
-        document.getElementById(`traveller-${firstNew._id}`)?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-        });
+      document.getElementById(`traveller-${firstNew._id}`)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
     }
 
     seenCount.current = users.length;
-},[users]);
+  }, [users]);
 
-if (isPending) {
-    return (
-    <div className={styles.loaderWrap}>
-        <span 
-        className={styles.loader}
-        role="status"
-        aria-label="Завантаження"
-        />
-    </div>
-    );
-}
-
-const errorMessage = 
-isError || isFetchNextPageError ? getErrorMessage(error): null;
-
-return (
+  return (
     <div className={styles.section}>
-        <h1 className={styles.title}>Мандрівники</h1>
+      <h1 className={styles.title}>Мандрівники</h1>
 
-        <ul className={styles.list}>
-            {users.map((user) => (
-            <li id={`traveller-${user._id}`}
+      <ul className={styles.list}>
+        {users.map(user => (
+          <li
+            id={`traveller-${user._id}`}
             key={user._id}
-            className={styles.item}>
-                <TravellerCard user={user}/>
-            </li>))}
-        </ul>
+            className={styles.item}
+          >
+            <TravellerCard user={user} />
+          </li>
+        ))}
+      </ul>
 
-        <LoadMore
+      <LoadMore
         className={styles.more}
-        onLoadMore={() => {
-            void fetchNextPage();
-        }}
+        onLoadMore={fetchNextPage}
         isLoading={isFetchingNextPage}
         hasMore={Boolean(hasNextPage)}
-        />
-
-        {errorMessage && (
-            <p className={styles.toast} role='alert'>
-                {errorMessage}
-            </p>
-        )}
-        </div>
-);
-
+      />
+    </div>
+  );
 }

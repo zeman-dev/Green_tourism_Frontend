@@ -5,8 +5,6 @@ import { getPopularStories } from '@/lib/api/popularStories';
 import PopularStoriesSlider from './PopularStoriesSlider';
 import styles from './PopularStories.module.css';
 
-
-
 export default function PopularStories() {
   const {
     data: stories,
@@ -15,24 +13,15 @@ export default function PopularStories() {
   } = useQuery({
     queryKey: ['popularStories'],
     queryFn: getPopularStories,
-    retry:1 ,
   });
- if (isLoading) {
-  return (
-    <section className={styles.section}>
-      <div className={`${styles.inner} container`}>
-        <p>Завантаження...</p>
-      </div>
-    </section>
-  );
-}
+  if (isLoading) {
+    return <p className={styles.section}>Завантаження...</p>;
+  }
 
   if (isError && !stories) {
     return (
       <section className={styles.section}>
-         <div className={`${styles.inner} container`}>
         <p>Не вдалось завантажити популярні статті.</p>
-        </div>
       </section>
     );
   }
@@ -42,8 +31,7 @@ export default function PopularStories() {
 }
   return (
     <section className={styles.section}>
-     <div className={`${styles.inner} container`}>
-       <div className={styles.header}>
+      <div className={styles.header}>
         <h2 className={styles.title}>Популярні статті</h2>
       </div>
 
@@ -54,8 +42,6 @@ export default function PopularStories() {
       <Link className={styles.allStories} href="/stories">
           Всі статті
         </Link>
-     </div>
-        
     </section>
   );
 }

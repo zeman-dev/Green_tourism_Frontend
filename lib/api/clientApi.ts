@@ -50,6 +50,21 @@ export const fetchStories = async (
 };
 
 //============================================
+
+export interface FetchTravellerStoriesParams extends FetchStoriesParams {
+  travellerId: string;
+}
+export const fetchTravellerStories = async ({
+  travellerId,
+  ...params
+}: FetchTravellerStoriesParams): Promise<FetchStoriesResponse> => {
+  const response = await api.get<FetchStoriesResponse>(
+    `/users/${encodeURIComponent(travellerId)}`,
+    { params },
+  );
+  return response.data;
+};
+
 export const fetchCurrentUser = async (): Promise<User> => {
   const response = await api.get<{ user: User }>('/users/me');
   return response.data.user;

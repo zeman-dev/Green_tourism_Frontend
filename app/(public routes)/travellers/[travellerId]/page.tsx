@@ -1,5 +1,5 @@
 import { isAxiosError } from 'axios';
-
+import { notFound } from 'next/navigation';
 import {
   dehydrate,
   HydrationBoundary,
@@ -63,20 +63,17 @@ export default async function TravellerPage({
 
   profile = profileData;
 } catch (error) {
-    const isNotFound =
-      (isAxiosError(error) && error.response?.status === 404) ||
-      (error instanceof Error &&
-        error.message === 'Traveller not found');
-
-    return (
-      <main className={`${styles.page} ${styles.statePage}`}>
-        <p className={styles.message}>
-          {isNotFound
-            ? 'Такий користувач відсутній'
-            : 'Не вдалося завантажити сторінку.'}
-        </p>
-      </main>
-    );
+  if (
+    (isAxiosError(error) && error.response?.status === 404) ||
+    (error instanceof Error && error.message === 'Traveller not found')
+  ) {
+    notFound();
+  }
+  return (
+    <main className={`${styles.page} ${styles.statePage}`}>
+      <p className={styles.message}>Не вдалося завантажити сторінку.</p>
+    </main>
+  );
   }
 
   return (

@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 import TravellersStories from '@/components/TravellersStories/TravellersStories';
@@ -16,23 +14,7 @@ type Props = {
 export default function TravellerStoriesClient({
   travellerId,
 }: Props) {
-  const [perPage, setPerPage] = useState(6);
-
-  useEffect(() => {
-    const desktop = window.matchMedia('(min-width: 1440px)');
-
-    const updatePageSize = () => {
-      setPerPage(desktop.matches ? 6 : 4);
-    };
-
-    updatePageSize();
-
-    desktop.addEventListener('change', updatePageSize);
-
-    return () => {
-      desktop.removeEventListener('change', updatePageSize);
-    };
-  }, []);
+  const perPage = 6;
 
   const {
     data,

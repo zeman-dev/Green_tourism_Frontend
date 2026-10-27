@@ -1,4 +1,3 @@
-
 import styles from './page.module.css';
 import About from '@/components/About/About';
 import PopularStories from '@/components/PopularStories/PopularStories';
@@ -10,6 +9,7 @@ import Footer from '@/components/Footer/Footer';
 export default function Home() {
   return (
     <div className={styles.page}>
+      <Header />
       <main className={styles.main}>
         <Hero />
         <Community isAuthenticated={false} />

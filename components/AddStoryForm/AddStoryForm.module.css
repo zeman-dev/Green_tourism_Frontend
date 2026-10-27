@@ -14,6 +14,10 @@
     line-height: 150%;
     color: var(--color-scheme-2-text);
 
+    margin-bottom: 0;
+}
+
+.imageTitle {
     margin-bottom: 8px;
 }
 
@@ -61,7 +65,7 @@
     color: var(--color-scheme-2-text);
     background: var(--opacity-neutral-darkest-5);
 
-    margin-bottom: 24px;
+    margin-bottom: 0;
 
     outline: none;
     transition: background 0.25s ease, border 0.25s ease, color 0.25s ease, opacity 0.25s ease;
@@ -94,6 +98,24 @@
     opacity: 0.3;
 }
 
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.imageFieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.fileInput {
+    display: none;
+}
+
 .input, .select, .textarea {
     border: 1px solid var(--opacity-neutral-darkest-15);
     border-radius: 6px;
@@ -105,7 +127,7 @@
     color: var(--color-scheme-2-text);
     background: var(--opacity-transparent);
     
-    margin-bottom: 24px;
+    margin-bottom: 0;
     outline: none;
     transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
 }
@@ -130,6 +152,10 @@
 
     min-height: 180px;
 
+    margin-bottom: 0;
+}
+
+.textareaFieldGroup {
     margin-bottom: 60px;
 }
 
@@ -149,7 +175,7 @@
 .dropdown {
     position: relative;
     width: 100%;
-    margin-bottom: 24px;
+    margin-bottom: 0;
 }
 
 .select {
@@ -247,6 +273,27 @@
     color: var(--opacity-neutral-darkest-60);
 }
 
+.inputError {
+    border-color: #b00101;
+}
+
+.inputError:focus {
+    border-color: #b00101;
+}
+
+.error {
+    margin: 8px 0 0;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #b00101;
+}
+
+.submitErrorWrapper {
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
 .buttonWrapper {
     display: flex;
     gap: 16px;
@@ -331,6 +378,17 @@
     color: var(--color-white);
 }
 
-.submitButton:disabled {
+.submitButton:disabled,
+.submitButton:disabled:hover,
+.submitButton:disabled:focus,
+.submitButton:disabled:active {
+    cursor: not-allowed;
     opacity: 0.3;
+    background: var(--color-mantis-dark);
+    border: 1px solid var(--color-mantis-dark);
+    color: var(--color-white);
+}
+
+.submitButton:disabled {
+    cursor: not-allowed;
 }

@@ -91,7 +91,21 @@ export const fetchMyStories = async (
 
 //===========================================
 
+export type StoryCreateResponse = {
+  _id?: string;
+  story?: {
+    _id?: string;
+  };
+};
+
 export const fetchCategories = async (): Promise<Category[]> => {
   const response = await api.get<Category[]>('/categories');
+  return response.data;
+};
+
+export const createStory = async (
+  formData: FormData,
+): Promise<StoryCreateResponse> => {
+  const response = await api.post<StoryCreateResponse>('/stories', formData);
   return response.data;
 };

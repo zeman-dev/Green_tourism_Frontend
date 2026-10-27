@@ -3,7 +3,6 @@ import css from './login.module.css';
 import AuthFooter from '@/components/AuthFooter/AuthFooter';
 import LoginForm from '@/components/AuthLogin/LoginForm'
 import AuthHeader from '@/components/AuthHeader/AuthHeader';
-import LogoutButton from './logOutBtn';
 
 export const metadata: Metadata = {
   title: 'Логін | Природні Мандри',

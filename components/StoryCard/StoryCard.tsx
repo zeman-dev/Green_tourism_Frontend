@@ -1,6 +1,7 @@
 "use client";
 import type { Story } from "@/types/story";
 
+import Image from "next/image"
 import Link from "next/link";
 import styles from "./StoryCard.module.css";
 
@@ -10,7 +11,7 @@ export type StoryCardProps = {
   savedCount: number;
   isSaved?: boolean;
   isSaving?: boolean;
-  onToggleSaved?: () => void;
+  onToggleSaved?: () => void | Promise<void>;
   className?: string;
 };
 
@@ -34,6 +35,10 @@ function BookmarkIcon() {
   );
 }
 
+function LoadingSpinner() {
+  return <span className={styles.spinner} aria-hidden="true" />;
+}
+
 export default function StoryCard({
   story,
   authorName,
@@ -46,24 +51,56 @@ export default function StoryCard({
   const cardClassName = className
     ? `${styles.card} ${className}`
     : styles.card;
+  
+  const bookmarkLabel = isSaved
+    ? "Видалити статтю зі збережених"
+    : "Зберегти статтю";
 
   return (
     <article className={cardClassName}>
       <div className={styles.imageWrap}>
-        <img className={styles.image} src={story.img} alt="" />
-        <span className={styles.savedCount} aria-label={`Збережено ${savedCount} разів`}>
-          <BookmarkIcon />
-          <span>{savedCount}</span>
-        </span>
+        <Image
+          className={styles.image}
+          src={story.img}
+          alt={story.title}
+          fill
+          sizes="(max-width: 767px) 100vw, (max-width: 1439px) 50vw, 33vw"
+        />
       </div>
 
       <div className={styles.content}>
-        <p className={styles.author}>{authorName}</p>
-        <h3 className={styles.title}>{story.title}</h3>
-        <div className={styles.footer}>
-          <Link className={styles.readButton} href={`/stories/${encodeURIComponent(story._id)}`}>Переглянути статтю</Link>
-          <button type="button" className={styles.bookmarkButton} aria-label="Зберегти статтю" aria-pressed={isSaved} aria-busy={isSaving} disabled={isSaving} onClick={onToggleSaved}>
+        <div className={styles.meta}>
+          <p className={styles.author}>{authorName}</p>
+
+          <span
+            className={styles.savedCount}
+            aria-label={`Збережено ${savedCount} разів`}
+          >
+            <span>{savedCount}</span>
             <BookmarkIcon />
+          </span>
+        </div>
+
+        <h3 className={styles.title}>{story.title}</h3>
+
+        <div className={styles.footer}>
+          <Link
+            className={styles.readButton}
+            href={`/stories/${encodeURIComponent(story._id)}`}
+          >
+            Переглянути статтю
+          </Link>
+
+          <button
+            type="button"
+            className={styles.bookmarkButton}
+            aria-label={isSaving ? "Збереження статті" : bookmarkLabel}
+            aria-pressed={isSaved}
+            aria-busy={isSaving}
+            disabled={isSaving}
+            onClick={onToggleSaved}
+          >
+            {isSaving ? <LoadingSpinner /> : <BookmarkIcon />}
           </button>
         </div>
       </div>

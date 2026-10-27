@@ -62,6 +62,8 @@ export const fetchTravellerStories = async ({
     `/users/${encodeURIComponent(travellerId)}`,
     { params },
   );
+  return response.data;
+};
 
 export const fetchCurrentUser = async (): Promise<User> => {
   const response = await api.get<{ user: User }>('/users/me');

@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import LoadMore from '@/components/LoadMore/LoadMore';
 import usePerPage from '@/hooks/usePerPage';
 import css from './StoriesClient.module.css';
+import CategoriesFilter from '@/components/CategoriesFilter/CategoriesFilter';
 import { Toaster, toast } from 'react-hot-toast';
 
 export default function StoriesClient() {
@@ -60,6 +61,10 @@ export default function StoriesClient() {
   return (
     <div className={css.storiespage}>
       <h1>Статті</h1>
+      <CategoriesFilter
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+      />
       <TravellersStories stories={stories}>
         <LoadMore
           onLoadMore={() => fetchNextPage()}

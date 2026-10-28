@@ -109,3 +109,6 @@ export const createStory = async (
   const response = await api.post<StoryCreateResponse>('/stories', formData);
   return response.data;
 };
+export async function logout(): Promise<void> {
+  await api.post('/auth/logout');
+}

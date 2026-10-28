@@ -44,20 +44,18 @@ export default function StoriesClient() {
     //=============================
     refetchOnMount: false,
   });
-
   const stories = data?.pages.flatMap(page => page.stories) ?? [];
 
   useEffect(() => {
     if (isError) {
-      toast.error(`Не вдалося завантажити історії. ${error}`);
+      toast.error(`Не вдалося завантажити історії. ${error.message}`);
     }
-  }, [isError]);
+  }, [isError,error]);
 
   if (isLoading) {
     return <p className={css.loading}>Завантаження історій...</p>;
   }
 
-  // заготовка, має йти після h1: <CategoriesFilter  selectedCategory={selectedCategory}  onCategoryChange={setSelectedCategory}/>
   return (
     <div className={css.storiespage}>
       <h1>Статті</h1>

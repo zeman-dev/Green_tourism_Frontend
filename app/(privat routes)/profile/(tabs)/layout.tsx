@@ -3,6 +3,8 @@ import type { ReactNode } from 'react';
 import ProfileInfo from '@/components/ProfileInfo/ProfileInfo';
 import ProfileTabs from '@/components/ProfileTabs/ProfileTabs';
 import css from './layout.module.css';
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
 
 export const metadata: Metadata = {
   title: 'Мій профіль | Природні мандри',
@@ -19,11 +21,15 @@ export default function ProfileLayout({
   stories,
 }: ProfileLayoutProps) {
   return (
-    <main className={css.profile}>
-      <ProfileInfo />
-      <ProfileTabs />
-      {stories}
-      {children}
-    </main>
+    <>
+      <Header />
+      <main className={css.profile}>
+        <ProfileInfo />
+        <ProfileTabs />
+        {stories}
+        {children}
+      </main>
+      <Footer />
+    </>
   );
 }

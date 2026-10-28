@@ -1,18 +1,19 @@
 'use client';
+
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 import {
-  fetchCurrentUser,
   updateAvatar,
   updateCurrentUser,
   type UpdateUserPayload,
 } from '@/lib/api/clientApi';
+import { useAuthStore } from '@/lib/store/authStore';
 import { getErrorMessage } from '@/lib/utils';
 import css from './EditProfileForm.module.css';
 
@@ -46,23 +47,11 @@ interface EditProfileValues {
 export default function EditProfileForm() {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const user = useAuthStore(state => state.user);
   const [preview, setPreview] = useState('');
 
-  const {
-    data: user,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ['currentUser'],
-    queryFn: fetchCurrentUser,
-  });
-
-  if (isLoading) {
+  if (!user) {
     return <p className={css.status}>Завантаження профілю...</p>;
-  }
-
-  if (isError || !user) {
-    return <p className={css.status}>Не вдалося завантажити профіль.</p>;
   }
 
   const handleSubmit = async (values: EditProfileValues) => {
@@ -70,23 +59,30 @@ export default function EditProfileForm() {
       if (values.avatar) {
         await updateAvatar(values.avatar);
       }
+
       const name = values.name.trim();
       const email = values.email.trim();
       const payload: UpdateUserPayload = {};
+
       if (name !== user.name) payload.name = name;
       if (email) payload.email = email;
 
+      let emailVerificationSent = false;
+
       if (payload.name || payload.email) {
         const response = await updateCurrentUser(payload);
-
-        if (response.emailVerificationSent) {
-          toast.success(
-            'Ми надіслали лист на вашу поточну пошту. Підтвердіть зміну email за посиланням у ньому.',
-            { duration: 6000 }
-          );
-        }
+        emailVerificationSent = response.emailVerificationSent;
       }
-      toast.success('Профіль оновлено');
+
+      if (emailVerificationSent) {
+        toast.success(
+          'Ми надіслали лист на вашу поточну пошту. Підтвердіть зміну email за посиланням у ньому.',
+          { duration: 6000 }
+        );
+      } else {
+        toast.success('Профіль оновлено');
+      }
+
       router.push('/profile');
     } catch (error) {
       toast.error(getErrorMessage(error, 'Не вдалося оновити профіль'));
@@ -94,6 +90,7 @@ export default function EditProfileForm() {
       await queryClient.invalidateQueries({ queryKey: ['currentUser'] });
     }
   };
+
   return (
     <Formik<EditProfileValues>
       initialValues={{ name: user.name, email: '', avatar: null }}

@@ -31,13 +31,13 @@ export default async function Home() {
       
       <main className={styles.main}>
         <Hero />
-        <Community isAuthenticated={false} />
         <HydrationBoundary state={dehydrate(queryClient)}>
           <PopularStories />
         </HydrationBoundary>
         <PrefetchTravellers />
         <About />
         <OurTravellers />
+        <Community isAuthenticated={false} />
       </main>
       <Footer />
     </div>

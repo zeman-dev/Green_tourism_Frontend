@@ -29,12 +29,21 @@ const sora = Sora({
 export const metadata: Metadata = {
   title: 'Природні мандри',
   description: 'Відкрий Україну заново — еко-мандри для натхнення',
+  openGraph: {
+    type: 'website',
+    title: 'Природні мандри',
+    description:
+      'Відкрий Україну заново — еко-мандри для натхнення',
+    url: 'https://green-tourism-frontend.vercel.app',
+  },
 };
+
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
+
 }>) {
   return (
     <html
@@ -42,7 +51,9 @@ export default function RootLayout({
       className={`${sora.variable} ${montserrat.variable} ${nunito.variable}`}
     >
       <body>
-        <TanstackProvider>{children}</TanstackProvider>
+        <TanstackProvider>
+          {children}
+          </TanstackProvider>
         <Toaster position="top-center" />
       </body>
     </html>

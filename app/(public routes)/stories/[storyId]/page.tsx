@@ -14,6 +14,8 @@ import {
 } from '@/lib/api/storyApi';
 
 import styles from './page.module.css';
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
 
 export default function StoryPage() {
   const params = useParams<{ storyId: string }>();
@@ -63,7 +65,8 @@ export default function StoryPage() {
     );
   }
 
-  return (
+  return (<>
+  <Header/>
     <main className={styles.page}>
       <StoryDetails story={story} />
 
@@ -74,5 +77,7 @@ export default function StoryPage() {
 
       <RecommendedStories currentStoryId={story._id} />
     </main>
+    <Footer/>
+    </>
   );
 }

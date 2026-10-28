@@ -5,6 +5,8 @@ import {
   dehydrate,
 } from '@tanstack/react-query';
 import { fetchStories } from '@/lib/api/clientApi';
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
 
 async function StoriesPage() {
   const queryClient = new QueryClient();
@@ -15,9 +17,13 @@ async function StoriesPage() {
   });
 
   return (
+    <>
+    <Header/>
     <HydrationBoundary state={dehydrate(queryClient)}>
       <StoriesClient />
     </HydrationBoundary>
+    <Footer/>
+    </>
   );
 }
 

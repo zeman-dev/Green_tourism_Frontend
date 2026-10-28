@@ -1,7 +1,8 @@
-
 .section {
-  width: 100%;
-  margin: 48px auto 0;
+width: 100%;
+max-width: 1312px;
+margin: 48px auto 0;
+box-sizing: border-box;
 }
 
 .heading {

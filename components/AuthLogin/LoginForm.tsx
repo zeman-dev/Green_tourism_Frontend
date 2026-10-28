@@ -1,5 +1,6 @@
 'use client';
 
+import { isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
@@ -39,7 +40,21 @@ export default function LoginForm() {
       await loginUser(values);
       router.push('/profile');
     } catch (error: unknown) {
-      toast.error(error instanceof Error ? error.message : 'Помилка авторизації. Спробуйте ще раз.');
+      let errorMessage = 'Помилка авторизації. Спробуйте ще раз.';
+
+      if (isAxiosError(error)) {
+        if (error.response?.data?.message) {
+          errorMessage = error.response.data.message;
+        } 
+        // Якщо повідомлення від бекенду немає, орієнтуємось на статус 401
+        else if (error.response?.status === 401) {
+          errorMessage = 'Невірна пошта або пароль. Перевірте дані.';
+        }
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+      toast.error(errorMessage);
     } finally {
       actions.setSubmitting(false);
     }

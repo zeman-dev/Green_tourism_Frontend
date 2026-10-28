@@ -103,6 +103,33 @@ export const fetchCategories = async (): Promise<Category[]> => {
   return response.data;
 };
 
+export interface UpdateUserPayload {
+  name?: string;
+  email?: string;
+}
+
+export interface UpdateUserResponse {
+  user: User;
+  emailVerificationSent: boolean;
+}
+
+export const updateCurrentUser = async (
+  payload: UpdateUserPayload
+): Promise<UpdateUserResponse> => {
+  const response = await api.patch<UpdateUserResponse>('/users/me', payload);
+  return response.data;
+};
+
+export const updateAvatar = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append('avatar', file);
+  const response = await api.patch<{ url: string }>('/users/me/avatar', formData);
+  return response.data.url;
+};
+
+export const confirmEmail = async (token: string): Promise<void> => {
+  await api.post('/users/confirm-email', { token });
+};
 export const createStory = async (
   formData: FormData,
 ): Promise<StoryCreateResponse> => {

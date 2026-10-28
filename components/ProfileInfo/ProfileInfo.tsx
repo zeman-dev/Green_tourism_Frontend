@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import TravellerInfo from '@/components/TravellerInfo/TravellerInfo';
 import { fetchCurrentUser } from '@/lib/api/clientApi';
+import Link from 'next/link';
 import css from './ProfileInfo.module.css';
 
 export default function ProfileInfo() {
@@ -23,5 +24,14 @@ export default function ProfileInfo() {
     );
   }
 
-  return <TravellerInfo user={data} />;
+  return (
+    <>
+      <TravellerInfo user={data} />
+      <div className="container">
+        <Link href="/profile/edit" className={css.editLink}>
+          Редагувати профіль
+        </Link>
+      </div>
+    </>
+  );
 }

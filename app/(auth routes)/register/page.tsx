@@ -1,4 +1,4 @@
-import { Montserrat } from 'next/font/google';
+// import { Montserrat } from 'next/font/google';
 
 import AuthHeader from '../../../components/AuthHeader/AuthHeader';
 import AuthNavigation from '../../../components/AuthNavigation/AuthNavigation';
@@ -7,10 +7,12 @@ import AuthFooter from '../../../components/AuthFooter/AuthFooter';
 
 import styles from './page.module.css';
 
-const montserrat = Montserrat({
-  subsets: ['latin', 'cyrillic'],
-  weight: ['400', '500', '700'],
-});
+// Vercel видає помилку через імпорт цього шрифту
+// const montserrat = Montserrat({
+//   subsets: ['latin', 'cyrillic'],
+//   weight: ['400', '500', '700'],
+// });
+
 
 export const metadata = {
   title: 'Реєстрація | Природні Мандри',
@@ -19,7 +21,7 @@ export const metadata = {
 
 export default function RegisterPage() {
   return (
-    <div className={`${styles.page} ${montserrat.className}`}>
+    <div className={`${styles.page} `}> {/*${montserrat.className}*/}
       <AuthHeader />
 
       <main className={styles.main}>

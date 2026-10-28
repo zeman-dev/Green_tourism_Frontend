@@ -1,9 +1,13 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 
 import StoryDetails from '@/components/StoryDetails/StoryDetails';
+import SaveStory from '@/components/SaveStory/SaveStory';
+import RecommendedStories from '@/components/RecommendedStories/RecommendedStories';
+
 import {
   getStoryById,
   type StoryDetailsData,
@@ -25,7 +29,6 @@ export default function StoryPage() {
         setIsNotFound(false);
 
         const data = await getStoryById(params.storyId);
-
         setStory(data);
       } catch {
         setIsNotFound(true);
@@ -43,7 +46,10 @@ export default function StoryPage() {
     return (
       <main className={styles.page}>
         <div className={styles.loaderWrapper}>
-          <span className={styles.loader} aria-label="Завантаження" />
+          <span
+            className={styles.loader}
+            aria-label="Завантаження"
+          />
         </div>
       </main>
     );
@@ -60,6 +66,13 @@ export default function StoryPage() {
   return (
     <main className={styles.page}>
       <StoryDetails story={story} />
+
+      <SaveStory
+        storyId={story._id}
+        isAuthenticated={false}
+      />
+
+      <RecommendedStories currentStoryId={story._id} />
     </main>
   );
 }

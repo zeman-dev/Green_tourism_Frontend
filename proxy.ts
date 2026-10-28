@@ -20,6 +20,10 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith(route)
   );
 
+  if (isPublicRoute) {
+  return NextResponse.next();
+}
+
   if (accessToken) {
     if (isPublicRoute) {
       return NextResponse.redirect(new URL("/", request.url));

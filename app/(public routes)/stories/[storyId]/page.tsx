@@ -46,7 +46,10 @@ export default function StoryPage() {
     return (
       <main className={styles.page}>
         <div className={styles.loaderWrapper}>
-          <span className={styles.loader} aria-label="Завантаження" />
+          <span
+            className={styles.loader}
+            aria-label="Завантаження"
+          />
         </div>
       </main>
     );

@@ -1,3 +1,4 @@
+
 import { api } from '@/app/api/api';
 import { cookies } from 'next/headers';
 import { isAxiosError } from 'axios';
@@ -12,31 +13,36 @@ export async function checkSession() {
   try {
     const apiRes = await api.get('auth/session', {
       headers: {
-        Cookie: cookieStore.toString(), 
+        Cookie: cookieStore.toString(),
       },
     });
 
     const setCookie = apiRes.headers['set-cookie'];
+
     if (setCookie) {
       const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
+
       for (const cookieStr of cookieArray) {
         const parsed = parseSetCookie(cookieStr);
+
         if (parsed.value) {
           cookieStore.set(parsed.name, parsed.value, parsed);
         }
       }
     }
 
-    return apiRes; 
+    return apiRes;
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
+
       if (error.response) {
         return error.response;
       }
     } else {
       logErrorResponse({ message: (error as Error).message });
     }
-    throw error; 
+
+    throw error;
   }
 }

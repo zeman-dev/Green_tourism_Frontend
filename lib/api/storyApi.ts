@@ -39,8 +39,6 @@ export const unsaveStory = async (storyId: string) => {
   return response.data;
 };
 
-
-
 export const getSavedStories = async () => {
   const response = await api.get('/users/me/saved-stories');
   return response.data;

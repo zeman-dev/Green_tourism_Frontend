@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import css from './page.module.css';
 import EditProfileForm from '@/components/EditProfileForm/EditProfileForm';
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
 
 export const metadata: Metadata = {
   title: 'Редагування профілю | Природні мандри',
@@ -9,11 +11,15 @@ export const metadata: Metadata = {
 
 export default function EditProfilePage() {
   return (
-    <main className={css.page}>
-      <div className="container">
-        <h1 className={css.title}>Редагування профілю</h1>
-        <EditProfileForm />
-      </div>
-    </main>
+    <>
+      <Header />
+      <main className={css.page}>
+        <div className="container">
+          <h1 className={css.title}>Редагування профілю</h1>
+          <EditProfileForm />
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 }

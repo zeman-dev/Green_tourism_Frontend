@@ -1,0 +1,45 @@
+/* Табы «Реєстрація / Вхід» — по макету Figma */
+
+.tabs {
+  display: flex;
+  width: 100%;
+  max-width: 644px;
+}
+
+.link {
+  flex: 1 1 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-family: var(--font-nunito), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  color: var(--color-scheme-1-text);
+  border-bottom: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+  transition: background-color 0.2s ease;
+}
+
+/* Активный таб — линия снизу (Divider 15% чёрного в макете) */
+.active {
+  border-bottom-color: var(--color-scheme-1-border);
+}
+
+.link:hover:not(.active) {
+  background-color: var(--color-scheme-1-foreground);
+}
+
+.link:focus-visible {
+  outline: 3px solid var(--color-mantis-light);
+  outline-offset: -3px;
+}
+
+@media (min-width: 1440px) {
+  .link {
+    font-size: 18px;
+  }
+}

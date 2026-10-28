@@ -7,7 +7,11 @@ import toast from 'react-hot-toast';
 
 import css from './LoginForm.module.css';
 import { loginUser } from '@/lib/api/clientApi';
-import AuthNavigation from '@/components/AuthNavigation/AuthNavigation';
+import {
+  AuthTabs,
+  RegisterLink,
+  LoginLink,
+} from '@/components/AuthTabLinks/AuthTabLinks';
 
 interface LoginFormValues {
   email: string;
@@ -43,8 +47,10 @@ export default function LoginForm() {
 
   return (
     <div className={css.formContainer}>
-      <AuthNavigation />
-      
+            <AuthTabs>
+              <RegisterLink />
+              <LoginLink />
+            </AuthTabs>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

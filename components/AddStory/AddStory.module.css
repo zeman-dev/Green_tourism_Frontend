@@ -1,0 +1,34 @@
+.section {
+    padding-top: 32px;
+    padding-bottom: 64px;
+
+    background: var(--color-scheme-2-background);
+}
+
+@media (min-width: 1440px) {
+    .section {
+        padding-top: 48px;
+        padding-bottom: 72px;
+    }
+}
+
+.title {
+    margin: 0 0 32px;
+
+    line-height: 110%;
+    letter-spacing: -0.01em;
+    color: var(--color-scheme-2-text);
+}
+
+@media (min-width: 768px) {
+    .title {
+        font-size: 48px;
+    }    
+}
+
+@media (min-width: 1440px) {
+    .title {
+        margin: 0 0 48px;
+        font-size: 56px;
+    }
+}

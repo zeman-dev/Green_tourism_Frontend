@@ -1,32 +1,25 @@
 'use client';
 
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './AuthNavigation.module.css';
-import Link from 'next/link';
 
-export default function AuthNavigation() {
+type Props = { variant?: 'header' | 'auth' };
+const login = { href: '/login', label: 'Вхід' };
+const register = { href: '/register', label: 'Реєстрація' };
+
+export default function AuthNavigation({ variant = 'header' }: Props) {
   const pathname = usePathname();
-
-  const isRegisterPage = pathname === '/register';
-  const isLoginPage = pathname === '/login';
-
+  const links = variant === 'auth' ? [register, login] : [login, register];
   return (
-    <nav className={styles.navigation} aria-label="Авторизація">
-      <Link
-        href="/register"
-        className={`${styles.link} ${isRegisterPage ? styles.active : ''}`}
-        aria-current={isRegisterPage ? 'page' : undefined}
-      >
-        Реєстрація
-      </Link>
-
-      <Link
-        href="/login"
-        className={`${styles.link} ${isLoginPage ? styles.active : ''}`}
-        aria-current={isLoginPage ? 'page' : undefined}
-      >
-        Вхід
-      </Link>
+    <nav className={`${styles.navigation} ${styles[variant]}`} aria-label="Авторизація">
+      {links.map(({ href, label }) => (
+        <Link key={href} href={href}
+          className={`${styles.link} ${pathname === href ? styles.active : ''}`}
+          aria-current={pathname === href ? 'page' : undefined}>
+          {label}
+        </Link>
+      ))}
     </nav>
   );
 }

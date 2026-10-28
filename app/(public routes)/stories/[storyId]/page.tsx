@@ -1,15 +1,21 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 
 import StoryDetails from '@/components/StoryDetails/StoryDetails';
+import SaveStory from '@/components/SaveStory/SaveStory';
+import RecommendedStories from '@/components/RecommendedStories/RecommendedStories';
+
 import {
   getStoryById,
   type StoryDetailsData,
 } from '@/lib/api/storyApi';
 
 import styles from './page.module.css';
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
 
 export default function StoryPage() {
   const params = useParams<{ storyId: string }>();
@@ -25,7 +31,6 @@ export default function StoryPage() {
         setIsNotFound(false);
 
         const data = await getStoryById(params.storyId);
-
         setStory(data);
       } catch {
         setIsNotFound(true);
@@ -43,7 +48,10 @@ export default function StoryPage() {
     return (
       <main className={styles.page}>
         <div className={styles.loaderWrapper}>
-          <span className={styles.loader} aria-label="Завантаження" />
+          <span
+            className={styles.loader}
+            aria-label="Завантаження"
+          />
         </div>
       </main>
     );
@@ -57,9 +65,19 @@ export default function StoryPage() {
     );
   }
 
-  return (
+  return (<>
+  <Header/>
     <main className={styles.page}>
       <StoryDetails story={story} />
+
+      <SaveStory
+        storyId={story._id}
+        isAuthenticated={false}
+      />
+
+      <RecommendedStories currentStoryId={story._id} />
     </main>
+    <Footer/>
+    </>
   );
 }

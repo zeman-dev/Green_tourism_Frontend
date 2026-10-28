@@ -1,6 +1,7 @@
 .profile {
   padding-bottom: 64px;
   background-color: var(--color-scheme-2-background);
+  flex-grow: 1;
 }
 
 @media (min-width: 1440px) {

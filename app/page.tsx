@@ -30,9 +30,11 @@ export default async function Home() {
       <Header />
       <main className={styles.main}>
         <Hero />
+
         <HydrationBoundary state={dehydrate(queryClient)}>
           <PopularStories />
         </HydrationBoundary>
+
         <PrefetchTravellers />
         <About />
         <OurTravellers />

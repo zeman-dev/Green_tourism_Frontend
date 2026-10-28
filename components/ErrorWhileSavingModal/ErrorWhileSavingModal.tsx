@@ -1,45 +1,58 @@
-
 'use client';
+import css from '@/components/ErrorWhileSavingModal/ErrorWhileSavingModal.module.css';
+import Modal from '@/components/Modal/Modal';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-import styles from './ErrorWhileSavingModal.module.css';
-
-type ErrorWhileSavingModalProps = {
+interface ErrorWhileSavingModalProps {
   onClose: () => void;
-};
+}
 
-export default function ErrorWhileSavingModal({
-  onClose,
-}: ErrorWhileSavingModalProps) {
+export default function ErrorWhileSavingModal({ onClose }: ErrorWhileSavingModalProps) {
+
+  const router = useRouter();
+
+
+  const register = () => router.push('/register');
+
+  const login = () => router.push('/login');
+
   return (
-    <div className={styles.backdrop} onClick={onClose}>
-      <div
-        className={styles.modal}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="save-modal-title"
-        onClick={(event) => event.stopPropagation()}
-      >
+    <Modal onClose={onClose}>
+      <div className={css.container}>
         <button
           type="button"
-          className={styles.closeButton}
+          className={css.closeButton}
+          aria-label="Закрити"
           onClick={onClose}
-          aria-label="Закрити вікно"
         >
-          ×
+          <Image
+            src="/icons/close.svg"
+            width={13} 
+            height={13}
+            alt=""
+          />
         </button>
-
-        <h2 id="save-modal-title" className={styles.title}>
-          Увійдіть у свій профіль
-        </h2>
-
-        <p className={styles.description}>
-          Щоб зберегти історію, потрібно увійти або зареєструватися.
-        </p>
-
-        <a href="/login" className={styles.link}>
-          Увійти
-        </a>
+        <div className={css.contentContainer}>
+          <h2 className={css.title}>Помилка під час <br /> збереження</h2>
+          <p className={css.text}>
+            Щоб зберегти статтю вам треба увійти, якщо ще немає <br />облікового
+            запису зареєструйтесь
+          </p>
+          <div className={css.buttons}>
+            <button type="button" className={css.loginButton} onClick={login}>
+              Увійти
+            </button>
+            <button
+              type="button"
+              className={css.registerButton}
+              onClick={register}
+            >
+              Зареєструватись
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+    </Modal>
   );
 }

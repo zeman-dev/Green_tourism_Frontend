@@ -15,6 +15,7 @@ import {
 import OurTravellers from '@/components/OurTravellers/OurTravellers';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
+// import Modal from '@/components/ConfirmModal/ConfirmModal';
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -26,24 +27,16 @@ export default async function Home() {
 
   return (
     <div className={styles.page}>
-<<<<<<< HEAD
       <Header />
-      
-=======
-   
-
->>>>>>> 8f854ed (fix story page)
       <main className={styles.main}>
         <Hero />
-        <Community isAuthenticated={false} />
-
         <HydrationBoundary state={dehydrate(queryClient)}>
           <PopularStories />
         </HydrationBoundary>
-
         <PrefetchTravellers />
         <About />
         <OurTravellers />
+        <Community isAuthenticated={false} />
       </main>
 
       <Footer />

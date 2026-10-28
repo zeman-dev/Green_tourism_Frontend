@@ -3,6 +3,8 @@ import 'modern-normalize/modern-normalize.css';
 import './globals.css';
 import { Montserrat, Sora, Nunito_Sans } from 'next/font/google';
 import TanstackProvider from '@/components/TanStackProvider/TanStackProvider';
+import Header from '@/components/Header/Header';
+import AuthProvider from '@/components/AuthProvider/AuthProvider';
 import { Toaster } from 'react-hot-toast';
 
 const montserrat = Montserrat({
@@ -29,12 +31,21 @@ const sora = Sora({
 export const metadata: Metadata = {
   title: 'Природні мандри',
   description: 'Відкрий Україну заново — еко-мандри для натхнення',
+  openGraph: {
+    type: 'website',
+    title: 'Природні мандри',
+    description:
+      'Відкрий Україну заново — еко-мандри для натхнення',
+    url: 'https://green-tourism-frontend.vercel.app',
+  },
 };
+
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
+
 }>) {
   return (
     <html
@@ -42,7 +53,12 @@ export default function RootLayout({
       className={`${sora.variable} ${montserrat.variable} ${nunito.variable}`}
     >
       <body>
-        <TanstackProvider>{children}</TanstackProvider>
+        <TanstackProvider>
+          <AuthProvider>
+            <Header />
+            {children}
+          </AuthProvider>
+          </TanstackProvider>
         <Toaster position="top-center" />
       </body>
     </html>

@@ -3,6 +3,8 @@ import 'modern-normalize/modern-normalize.css';
 import './globals.css';
 import { Montserrat, Sora, Nunito_Sans } from 'next/font/google';
 import TanstackProvider from '@/components/TanStackProvider/TanStackProvider';
+import Header from '@/components/Header/Header';
+import AuthProvider from '@/components/AuthProvider/AuthProvider';
 import { Toaster } from 'react-hot-toast';
 
 const montserrat = Montserrat({
@@ -52,7 +54,10 @@ export default function RootLayout({
     >
       <body>
         <TanstackProvider>
-          {children}
+          <AuthProvider>
+            <Header />
+            {children}
+          </AuthProvider>
           </TanstackProvider>
         <Toaster position="top-center" />
       </body>

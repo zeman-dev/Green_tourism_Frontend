@@ -1,7 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
+import { useAuthStore } from '@/lib/store/authStore';
+import { logout } from '@/lib/api/clientApi';
+import type { User } from '@/types/user';
+import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -20,15 +24,31 @@ const navigationLinks = [
 export default function Header() {
   const pathname = usePathname();
 
-  // Тимчасовий стан для перевірки верстки.
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const user = useAuthStore(state => state.user);
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+  const clear = useAuthStore(state => state.clearIsAuthenticated);
+
+  async function handleLogout() {
+    await logout();
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    clear();
+    router.replace('/');
+    router.refresh();
+  }
+
+
+  if (pathname === '/login' || pathname === '/register') return null;
 
   return (
     <HeaderContent
       key={pathname}
       pathname={pathname}
-      isAuthenticated={isAuthenticated}
-      onLogout={() => setIsAuthenticated(false)}
+      isAuthenticated={isAuthenticated && Boolean(user)}
+      user={user}
+      onLogout={handleLogout}
     />
   );
 }
@@ -36,12 +56,14 @@ export default function Header() {
 type HeaderContentProps = {
   pathname: string;
   isAuthenticated: boolean;
-  onLogout: () => void;
+  user: User | null;
+  onLogout: () => Promise<void>;
 };
 
 function HeaderContent({
   pathname,
   isAuthenticated,
+  user,
   onLogout,
 }: HeaderContentProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,8 +73,8 @@ function HeaderContent({
     setIsMenuOpen(false);
   }
 
-  function handleLogout() {
-    onLogout();
+  async function handleLogout() {
+    await onLogout();
     closeMenu();
   }
 
@@ -82,6 +104,14 @@ function HeaderContent({
       document.body.style.overflow = previousOverflow;
     };
   }, [isMenuOpen]);
+
+  function isActiveLink(href: string) {
+
+  if (href === '/') return pathname === '/';
+
+
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
   function renderLinks() {
     return navigationLinks.map(({ href, label }) => (
@@ -121,7 +151,7 @@ function HeaderContent({
               <Link
                 href="/profile"
                 className={css.navLink}
-                aria-current={pathname === '/profile' ? 'page' : undefined}
+               aria-current={isActiveLink('/profile') ? 'page' : undefined}
               >
                 Мій профіль
               </Link>
@@ -137,7 +167,8 @@ function HeaderContent({
 
                 <div className={css.desktopUserBar}>
                   <UserBar
-                    name="John Doe"
+                    name={user?.name || 'Мандрівник'}
+                    avatarUrl={user?.avatarUrl}
                     onLogout={handleLogout}
                   />
                 </div>
@@ -189,12 +220,16 @@ function HeaderContent({
                 </Link>
 
                 <UserBar
-                  name="John Doe"
+                  name={user?.name || 'Мандрівник'}
+                  avatarUrl={user?.avatarUrl}
                   onLogout={handleLogout}
                 />
               </>
             ) : (
-              <div className={css.mobileAuth} onClick={closeMenu}>
+              <div
+                className={css.mobileAuth}
+                onClick={closeMenu}
+              >
                 <AuthNavigation variant="header" />
               </div>
             )}

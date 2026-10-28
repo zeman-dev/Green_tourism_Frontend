@@ -32,7 +32,7 @@ const Community = ({ isAuthenticated }: CommunityProps) => {
           </p>
 
           <Link
-            href={isAuthenticated ? '/auth/profile' : '/auth/register'}
+            href={isAuthenticated ? '/profile' : '/register'}
             className={css.joinbtn}
           >
             {isAuthenticated ? 'Збережені статті' : 'Зареєструватися'}

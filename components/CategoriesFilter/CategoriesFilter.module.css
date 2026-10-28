@@ -1,0 +1,165 @@
+.filter {
+  background-color: #eef8ee;
+  width: 100%;
+  max-width: 335px;
+  margin: 0 auto;
+}
+
+/* Mobile: heading and dropdown */
+.buttons {
+  display: none;
+}
+
+.selectWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.label {
+  margin: 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000;
+}
+
+.dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  background: transparent;
+  color: #1b391b;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+}
+
+.selectOpen {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid #8dd18c;
+}
+
+.options {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 12px 8px;
+  list-style: none;
+  border: 1px solid #8dd18c;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  background: #eef8ee;
+  font-weight: 400;
+  font-size: 18px;
+  color: #1b391b;
+}
+
+.option {
+  width: 100%;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #1b391b;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.option:hover,
+.option:focus-visible {
+  background: #f2f2f2;
+  outline: none;
+}
+
+.selectedOption {
+  background: #f2f2f2;
+}
+
+.status {
+  text-align: center;
+  color: #1b391b;
+}
+
+.error {
+  color: #b42318;
+}
+
+/* Tablet and desktop: category buttons */
+@media screen and (min-width: 768px) {
+  .filter {
+    max-width: 704px;
+    margin: 0 auto;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .button {
+    padding: 6px 12px;
+    background-color: transparent;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #1b391b;
+    cursor: pointer;
+    transition:
+      background-color 200ms ease,
+      color 200ms ease,
+      border-color 200ms ease;
+  }
+
+  .button:focus-visible {
+    outline: 2px solid #387a38;
+    outline-offset: 3px;
+  }
+
+  .button.active {
+    border: 1px solid rgba(255, 255, 255, 0);
+    background: #f2f2f2;
+    border-radius: 8px;
+    color: #1b391b;
+    font-weight: 500;
+  }
+
+  .selectWrapper {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .filter {
+    max-width: 800px;
+  }
+  .button {
+    font-size: 18px;
+  }
+  .button.active {
+    font-size: 20px;
+  }
+}

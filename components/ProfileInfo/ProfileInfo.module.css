@@ -1,0 +1,18 @@
+.status {
+  min-height: 113px;
+  margin-top: 32px;
+  font-size: 16px;
+  color: var(--color-scheme-2-text);
+}
+
+@media (min-width: 768px) {
+  .status {
+    min-height: 145px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .status {
+    margin-top: 48px;
+  }
+}

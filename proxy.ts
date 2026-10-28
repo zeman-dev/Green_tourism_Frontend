@@ -3,8 +3,8 @@ import { parseSetCookie } from "cookie";
 
 import { checkSession } from "./lib/api/serverApi";
 
-const privateRoutes = ["/profile", "/notes"];
-const publicRoutes = ["/sign-in", "/sign-up"];
+const privateRoutes = ["/profile", "/new-story"];
+const publicRoutes = ["/login", "/register"];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -71,12 +71,12 @@ export async function proxy(request: NextRequest) {
   }
 
   if (isPrivateRoute) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/profile/:path*", "/notes/:path*", "/sign-in", "/sign-up"],
+  matcher: ["/profile/:path*","/new-story/:path*", "/login", "/register"],
 };

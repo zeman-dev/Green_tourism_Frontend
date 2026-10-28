@@ -1,7 +1,9 @@
 import type { StoriesResponse, Story } from '@/types/story';
 
 export async function getPopularStories(): Promise<Story[]> {
-  const response = await fetch('/api/stories?type=popular');
+  const response = await fetch(
+    'https://green-tourism-backend.onrender.com/api/stories?type=popular'
+  );
 
   if (!response.ok) {
     throw new Error('Не вдалося завантажити статті');

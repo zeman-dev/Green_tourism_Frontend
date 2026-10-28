@@ -10,7 +10,7 @@ export async function checkSession() {
   const cookieStore = await cookies();
 
   try {
-    const apiRes = await api.get('auth/session', {
+    const apiRes = await api.get('auth/refresh', {
       headers: {
         Cookie: cookieStore.toString(), // передаємо всі куки як є —
                                           // бекенд сам вирішить, який токен валідний

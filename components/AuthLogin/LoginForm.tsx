@@ -47,29 +47,45 @@ export default function LoginForm() {
 
   return (
     <div className={css.formContainer}>
-            <AuthTabs>
-              <RegisterLink />
-              <LoginLink />
-            </AuthTabs>
+      <AuthTabs>
+        <RegisterLink />
+        <LoginLink />
+      </AuthTabs>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting }) => (
-          <Form className={css.form}>
+        {({ isSubmitting, errors, touched }) => (
+          <Form className={css.form} noValidate>
             <h1 className={css.title}>Вхід</h1>
             <p className={css.subtitle}>Вітаємо знову у спільноті мандрівників!</p>
 
             <div className={css.inputGroup}>
               <label htmlFor='email' className={css.label}>Пошта*</label>
-              <Field type="email" name="email" id="email" required placeholder='hello@podorozhnyky.ua' className={css.input} />
+              <Field 
+                type="email" 
+                name="email" 
+                id="email" 
+                required 
+                placeholder='hello@podorozhnyky.ua' 
+
+                className={`${css.input} ${errors.email && touched.email ? css.inputError : ''}`} 
+              />
               <ErrorMessage name="email" component="span" className={css.errorText} />
             </div>
 
             <div className={css.inputGroup}>
               <label htmlFor='password' className={css.label}>Пароль*</label>
-              <Field type="password" name="password" id="password" required placeholder='very_secret_password' className={css.input} />
+              <Field 
+                type="password" 
+                name="password" 
+                id="password" 
+                required 
+                placeholder='very_secret_password' 
+               
+                className={`${css.input} ${errors.password && touched.password ? css.inputError : ''}`} 
+              />
               <ErrorMessage name="password" component="span" className={css.errorText} />
             </div>
             

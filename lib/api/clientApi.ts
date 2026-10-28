@@ -95,3 +95,7 @@ export const fetchCategories = async (): Promise<Category[]> => {
   const response = await api.get<Category[]>('/categories');
   return response.data;
 };
+
+export async function logout(): Promise<void> {
+  await api.post('/auth/logout');
+}

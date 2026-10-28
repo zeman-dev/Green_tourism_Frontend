@@ -1,17 +1,20 @@
-"use client";
-import type { Story } from "@/types/story";
-
-import Image from "next/image"
-import Link from "next/link";
-import styles from "./StoryCard.module.css";
+'use client';
+import { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import type { Story } from '@/types/story';
+import { saveStory, unsaveStory } from '@/lib/api/storyApi';
+import { useAuthStore } from '@/lib/store/authStore';
+import { getErrorMessage } from '@/lib/utils';
+import ErrorWhileSavingModal from '@/components/ErrorWhileSavingModal/ErrorWhileSavingModal';
+import styles from './StoryCard.module.css';
 
 export type StoryCardProps = {
   story: Story;
   authorName: string;
   savedCount: number;
-  isSaved?: boolean;
-  isSaving?: boolean;
-  onToggleSaved?: () => void | Promise<void>;
   className?: string;
 };
 
@@ -43,18 +46,45 @@ export default function StoryCard({
   story,
   authorName,
   savedCount,
-  isSaved = false,
-  isSaving = false,
-  onToggleSaved,
   className,
 }: StoryCardProps) {
-  const cardClassName = className
-    ? `${styles.card} ${className}`
-    : styles.card;
-  
+  const queryClient = useQueryClient();
+  const user = useAuthStore(state => state.user);
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+  const setUser = useAuthStore(state => state.setUser);
+
+  const [count, setCount] = useState(savedCount);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const isSaved = user?.savedArticles?.includes(story._id) ?? false;
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: () => (isSaved ? unsaveStory(story._id) : saveStory(story._id)),
+    onSuccess: data => {
+      if (user) setUser({ ...user, savedArticles: data.savedArticles });
+      setCount(current => (isSaved ? current - 1 : current + 1));
+      queryClient.invalidateQueries({ queryKey: ['profileStories'] });
+    },
+    onError: error => {
+      toast.error(
+        getErrorMessage(error, 'Не вдалося оновити збережені історії')
+      );
+    },
+  });
+
+  const handleBookmarkClick = () => {
+    if (!isAuthenticated) {
+      setIsModalOpen(true);
+      return;
+    }
+    mutate();
+  };
+
+  const cardClassName = className ? `${styles.card} ${className}` : styles.card;
+
   const bookmarkLabel = isSaved
-    ? "Видалити статтю зі збережених"
-    : "Зберегти статтю";
+    ? 'Видалити статтю зі збережених'
+    : 'Зберегти статтю';
 
   return (
     <article className={cardClassName}>
@@ -74,9 +104,9 @@ export default function StoryCard({
 
           <span
             className={styles.savedCount}
-            aria-label={`Збережено ${savedCount} разів`}
+            aria-label={`Збережено ${count} разів`}
           >
-            <span>{savedCount}</span>
+            <span>{count}</span>
             <BookmarkIcon />
           </span>
         </div>
@@ -94,16 +124,20 @@ export default function StoryCard({
           <button
             type="button"
             className={styles.bookmarkButton}
-            aria-label={isSaving ? "Збереження статті" : bookmarkLabel}
+            aria-label={isPending ? 'Збереження статті' : bookmarkLabel}
             aria-pressed={isSaved}
-            aria-busy={isSaving}
-            disabled={isSaving}
-            onClick={onToggleSaved}
+            aria-busy={isPending}
+            disabled={isPending}
+            onClick={handleBookmarkClick}
           >
-            {isSaving ? <LoadingSpinner /> : <BookmarkIcon />}
+            {isPending ? <LoadingSpinner /> : <BookmarkIcon />}
           </button>
         </div>
       </div>
+
+      {isModalOpen && (
+        <ErrorWhileSavingModal onClose={() => setIsModalOpen(false)} />
+      )}
     </article>
   );
 }

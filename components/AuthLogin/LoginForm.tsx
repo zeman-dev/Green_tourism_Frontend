@@ -44,7 +44,7 @@ export default function LoginForm() {
       const user = await loginUser(values);
       setUser(user);
       queryClient.setQueryData(['currentUser'], user);
-      router.push('/profile');
+      router.push('/profile/saved');
     } catch (error: unknown) {
       let errorMessage = 'Помилка авторизації. Спробуйте ще раз.';
 

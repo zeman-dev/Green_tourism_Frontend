@@ -61,7 +61,7 @@ export default function UserBar({
     <div className={styles.wrapper}>
       <div className={styles.userBar}>
         <Link
-          href="/profile"
+          href="/profile/saved"
           className={styles.profile}
           aria-label={`Профіль: ${name}`}
         >

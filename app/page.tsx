@@ -15,7 +15,6 @@ import {
 import OurTravellers from '@/components/OurTravellers/OurTravellers';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
-// import Modal from '@/components/ConfirmModal/ConfirmModal';
 
 export default async function Home() {
   const queryClient = new QueryClient();

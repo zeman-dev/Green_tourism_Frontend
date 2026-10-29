@@ -2,6 +2,7 @@
 
 import type { StoriesResponse } from '@/types/story';
 import type { User } from '@/types/user';
+import { DEFAULT_AVATAR_URL } from '@/lib/constants';
 
 const serverApi = axios.create({
   baseURL: process.env.API_URL,
@@ -43,7 +44,7 @@ return {
     ...apiUser,
     _id: apiUser._id,
     name: apiUser.name || apiUser.username || 'Мандрівник',
-    avatarUrl: apiUser.avatarUrl || '',
+    avatarUrl: apiUser.avatarUrl || DEFAULT_AVATAR_URL,
     articlesAmount: apiUser.articlesAmount,
   },
 };

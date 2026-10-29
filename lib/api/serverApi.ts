@@ -1,48 +1,38 @@
+import { isAxiosError } from 'axios';
+import type { AxiosResponse } from 'axios';
 
 import { api } from '@/app/api/api';
-import { cookies } from 'next/headers';
-import { isAxiosError } from 'axios';
 import { logErrorResponse } from '@/app/api/_utils/utils';
-import { parseSetCookie } from 'cookie';
+
+export type CheckSessionResult =
+  | { ok: true; response: AxiosResponse }
+  | { ok: false; error: unknown };
 
 ///// {CHECK SESSION} /////
 
-export async function checkSession() {
-  const cookieStore = await cookies();
-
+export async function checkSession(
+  cookieHeader: string
+): Promise<CheckSessionResult> {
   try {
-    const apiRes = await api.get('auth/refresh', {
+    const response = await api.post('auth/refresh', null, {
       headers: {
-        Cookie: cookieStore.toString(),
+        Cookie: cookieHeader,
       },
     });
 
-    const setCookie = apiRes.headers['set-cookie'];
-
-    if (setCookie) {
-      const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
-
-      for (const cookieStr of cookieArray) {
-        const parsed = parseSetCookie(cookieStr);
-
-        if (parsed.value) {
-          cookieStore.set(parsed.name, parsed.value, parsed);
-        }
-      }
-    }
-
-    return apiRes;
+    return { ok: true, response };
   } catch (error) {
     if (isAxiosError(error)) {
-      logErrorResponse(error.response?.data);
-
-      if (error.response) {
-        return error.response;
-      }
+      logErrorResponse(
+        error.response?.data ?? {
+          status: error.response?.status,
+          message: error.message,
+        }
+      );
     } else {
       logErrorResponse({ message: (error as Error).message });
     }
 
-    throw error;
+    return { ok: false, error };
   }
 }

@@ -1,5 +1,3 @@
-// import { Montserrat } from 'next/font/google';
-
 import AuthHeader from '../../../components/AuthHeader/AuthHeader';
 import RegistrationForm from '../../../components/RegistrationForm/RegistrationForm';
 import AuthFooter from '../../../components/AuthFooter/AuthFooter';
@@ -18,27 +16,31 @@ export const metadata = {
 
 export default function RegisterPage() {
   return (
-    <div className={`${styles.page} `}>
+    <>
       <AuthHeader />
-      <main className={styles.main}>
-        <AuthTabs>
-          <RegisterLink />
-          <LoginLink />
-        </AuthTabs>
 
-        <section className={styles.content}>
-          <div className={styles.heading}>
-            <h1 className={styles.title}>Реєстрація</h1>
+      <div className={styles.page}>
+        <main className={styles.main}>
+          <AuthTabs>
+            <RegisterLink />
+            <LoginLink />
+          </AuthTabs>
 
-            <p className={styles.subtitle}>
-              Раді вас бачити у спільноті мандрівників!
-            </p>
-          </div>
+          <section className={styles.content}>
+            <div className={styles.heading}>
+              <h1 className={styles.title}>Реєстрація</h1>
 
-          <RegistrationForm />
-        </section>
-      </main>
-      <AuthFooter />
-    </div>
+              <p className={styles.subtitle}>
+                Раді вас бачити у спільноті мандрівників!
+              </p>
+            </div>
+
+            <RegistrationForm />
+          </section>
+        </main>
+
+        <AuthFooter />
+      </div>
+    </>
   );
 }

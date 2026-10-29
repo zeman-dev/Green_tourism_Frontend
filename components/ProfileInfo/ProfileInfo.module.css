@@ -1,0 +1,38 @@
+.status {
+  min-height: 113px;
+  margin-top: 32px;
+  font-size: 16px;
+  color: var(--color-scheme-2-text);
+}
+.editLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  margin-top: 16px;
+  padding: 6px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--color-scheme-2-text);
+  text-decoration: none;
+  border: 1px solid var(--color-scheme-2-border);
+  border-radius: 6px;
+  transition: background-color 250ms ease;
+}
+
+.editLink:hover {
+  background-color: var(--opacity-neutral-darkest-5);
+}
+
+@media (min-width: 768px) {
+  .status {
+    min-height: 145px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .status {
+    margin-top: 48px;
+  }
+}

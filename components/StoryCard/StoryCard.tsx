@@ -1,16 +1,20 @@
-"use client";
-import type { Story } from "@/types/story";
-
-import Link from "next/link";
-import styles from "./StoryCard.module.css";
+'use client';
+import { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import type { Story } from '@/types/story';
+import { saveStory, unsaveStory } from '@/lib/api/storyApi';
+import { useAuthStore } from '@/lib/store/authStore';
+import { getErrorMessage } from '@/lib/utils';
+import ErrorWhileSavingModal from '@/components/ErrorWhileSavingModal/ErrorWhileSavingModal';
+import styles from './StoryCard.module.css';
 
 export type StoryCardProps = {
   story: Story;
   authorName: string;
   savedCount: number;
-  isSaved?: boolean;
-  isSaving?: boolean;
-  onToggleSaved?: () => void;
   className?: string;
 };
 
@@ -34,39 +38,106 @@ function BookmarkIcon() {
   );
 }
 
+function LoadingSpinner() {
+  return <span className={styles.spinner} aria-hidden="true" />;
+}
+
 export default function StoryCard({
   story,
   authorName,
   savedCount,
-  isSaved = false,
-  isSaving = false,
-  onToggleSaved,
   className,
 }: StoryCardProps) {
-  const cardClassName = className
-    ? `${styles.card} ${className}`
-    : styles.card;
+  const queryClient = useQueryClient();
+  const user = useAuthStore(state => state.user);
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+  const setUser = useAuthStore(state => state.setUser);
+
+  const [count, setCount] = useState(savedCount);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const isSaved = user?.savedArticles?.includes(story._id) ?? false;
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: () => (isSaved ? unsaveStory(story._id) : saveStory(story._id)),
+    onSuccess: data => {
+      if (user) setUser({ ...user, savedArticles: data.savedArticles });
+      setCount(current => (isSaved ? current - 1 : current + 1));
+      queryClient.invalidateQueries({ queryKey: ['profileStories'] });
+    },
+    onError: error => {
+      toast.error(
+        getErrorMessage(error, 'Не вдалося оновити збережені історії')
+      );
+    },
+  });
+
+  const handleBookmarkClick = () => {
+    if (!isAuthenticated) {
+      setIsModalOpen(true);
+      return;
+    }
+    mutate();
+  };
+
+  const cardClassName = className ? `${styles.card} ${className}` : styles.card;
+
+  const bookmarkLabel = isSaved
+    ? 'Видалити статтю зі збережених'
+    : 'Зберегти статтю';
 
   return (
     <article className={cardClassName}>
       <div className={styles.imageWrap}>
-        <img className={styles.image} src={story.img} alt="" />
-        <span className={styles.savedCount} aria-label={`Збережено ${savedCount} разів`}>
-          <BookmarkIcon />
-          <span>{savedCount}</span>
-        </span>
+        <Image
+          className={styles.image}
+          src={story.img}
+          alt={story.title}
+          fill
+          sizes="(max-width: 767px) 100vw, (max-width: 1439px) 50vw, 33vw"
+        />
       </div>
 
       <div className={styles.content}>
-        <p className={styles.author}>{authorName}</p>
-        <h3 className={styles.title}>{story.title}</h3>
-        <div className={styles.footer}>
-          <Link className={styles.readButton} href={`/stories/${encodeURIComponent(story._id)}`}>Переглянути статтю</Link>
-          <button type="button" className={styles.bookmarkButton} aria-label="Зберегти статтю" aria-pressed={isSaved} aria-busy={isSaving} disabled={isSaving} onClick={onToggleSaved}>
+        <div className={styles.meta}>
+          <p className={styles.author}>{authorName}</p>
+
+          <span
+            className={styles.savedCount}
+            aria-label={`Збережено ${count} разів`}
+          >
+            <span>{count}</span>
             <BookmarkIcon />
+          </span>
+        </div>
+
+        <h3 className={styles.title}>{story.title}</h3>
+
+        <div className={styles.footer}>
+          <Link
+            className={styles.readButton}
+            href={`/stories/${encodeURIComponent(story._id)}`}
+          >
+            Переглянути статтю
+          </Link>
+
+          <button
+            type="button"
+            className={styles.bookmarkButton}
+            aria-label={isPending ? 'Збереження статті' : bookmarkLabel}
+            aria-pressed={isSaved}
+            aria-busy={isPending}
+            disabled={isPending}
+            onClick={handleBookmarkClick}
+          >
+            {isPending ? <LoadingSpinner /> : <BookmarkIcon />}
           </button>
         </div>
       </div>
+
+      {isModalOpen && (
+        <ErrorWhileSavingModal onClose={() => setIsModalOpen(false)} />
+      )}
     </article>
   );
 }

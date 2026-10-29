@@ -1,16 +1,13 @@
-import { Montserrat } from 'next/font/google';
-
 import AuthHeader from '../../../components/AuthHeader/AuthHeader';
-import AuthNavigation from '../../../components/AuthNavigation/AuthNavigation';
 import RegistrationForm from '../../../components/RegistrationForm/RegistrationForm';
 import AuthFooter from '../../../components/AuthFooter/AuthFooter';
+import {
+  AuthTabs,
+  RegisterLink,
+  LoginLink,
+} from '@/components/AuthTabLinks/AuthTabLinks';
 
 import styles from './page.module.css';
-
-const montserrat = Montserrat({
-  subsets: ['latin', 'cyrillic'],
-  weight: ['400', '500', '700'],
-});
 
 export const metadata = {
   title: 'Реєстрація | Природні Мандри',
@@ -19,26 +16,31 @@ export const metadata = {
 
 export default function RegisterPage() {
   return (
-    <div className={`${styles.page} ${montserrat.className}`}>
+    <>
       <AuthHeader />
 
-      <main className={styles.main}>
-        <AuthNavigation />
+      <div className={styles.page}>
+        <main className={styles.main}>
+          <AuthTabs>
+            <RegisterLink />
+            <LoginLink />
+          </AuthTabs>
 
-        <section className={styles.content}>
-          <div className={styles.heading}>
-            <h1 className={styles.title}>Реєстрація</h1>
+          <section className={styles.content}>
+            <div className={styles.heading}>
+              <h1 className={styles.title}>Реєстрація</h1>
 
-            <p className={styles.subtitle}>
-              Раді вас бачити у спільноті мандрівників!
-            </p>
-          </div>
+              <p className={styles.subtitle}>
+                Раді вас бачити у спільноті мандрівників!
+              </p>
+            </div>
 
-          <RegistrationForm />
-        </section>
-      </main>
+            <RegistrationForm />
+          </section>
+        </main>
 
-      <AuthFooter />
-    </div>
+        <AuthFooter />
+      </div>
+    </>
   );
 }

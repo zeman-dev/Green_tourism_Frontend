@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { AxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 import {
   ErrorMessage,
   Field,
@@ -11,6 +10,7 @@ import {
   FormikHelpers,
 } from 'formik';
 import * as Yup from 'yup';
+import toast from 'react-hot-toast';
 
 import { registerUser } from '../../lib/api/authApi';
 import styles from './RegistrationForm.module.css';
@@ -44,24 +44,32 @@ type RegistrationFormValues = typeof initialValues;
 
 export default function RegistrationForm() {
   const router = useRouter();
-  const [serverError, setServerError] = useState('');
 
   const handleSubmit = async (
     values: RegistrationFormValues,
     { setSubmitting }: FormikHelpers<RegistrationFormValues>,
   ) => {
     try {
-      setServerError('');
-
       await registerUser(values);
 
       router.push('/');
-    } catch (error) {
-      const axiosError = error as AxiosError<{ message?: string }>;
+    } catch (error: unknown) {
+      let errorMessage = 'Помилка реєстрації. Спробуйте ще раз.';
 
-      setServerError(
-        axiosError.response?.data?.message || 'Не вдалося зареєструватися',
-      );
+      if (isAxiosError(error)) {
+        if (error.response?.status === 409) {
+          errorMessage =
+            'Користувач з такою електронною поштою вже існує.';
+        } else if (error.response?.status === 400) {
+          errorMessage = 'Перевірте правильність введених даних.';
+        } else if (error.response?.data?.message) {
+          errorMessage = error.response.data.message;
+        }
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+      toast.error(errorMessage);
     } finally {
       setSubmitting(false);
     }
@@ -143,8 +151,6 @@ export default function RegistrationForm() {
               className={styles.error}
             />
           </div>
-
-          {serverError && <p className={styles.error}>{serverError}</p>}
 
           <button
             type="submit"

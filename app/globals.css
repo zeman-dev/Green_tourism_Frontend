@@ -1,6 +1,7 @@
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
+
 :root {
     --color-scheme-1-background: var(--color-white);
     --color-neutral-darkest: #000;
@@ -57,6 +58,9 @@ html {
 
 body {
     font-family: var(--font-montserrat), sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .font-nunito {

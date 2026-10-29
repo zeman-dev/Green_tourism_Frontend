@@ -6,6 +6,7 @@ import type { Story } from '@/types/story';
 import 'swiper/css';
 import styles from './PopularStories.module.css';
 import StoryCard from '@/components/StoryCard/StoryCard';
+import { ArrowLeftIcon, ArrowRightIcon } from '../icons/icons';
 
 type PopularStoriesSliderProps = {
   stories: Story[];
@@ -53,25 +54,26 @@ export default function PopularStoriesSlider({
           type="button"
           className={styles.arrow}
           aria-label="Попередні статті"
-          disabled={isBeginning}
+          disabled={!swiper || isBeginning}
           onClick={() => {
             if (!swiper) return;
             swiper.slidePrev();
           }}
         >
-          ←
+          <ArrowLeftIcon className={styles.arrowIcon} />
         </button>
+
         <button
           type="button"
           className={styles.arrow}
           aria-label="Наступні статті"
-          disabled={isEnd}
+           disabled={!swiper || isEnd}
           onClick={() => {
             if (!swiper) return;
             swiper.slideNext();
           }}
         >
-          →
+          <ArrowRightIcon className={styles.arrowIcon} />
         </button>
       </div>
     </div>

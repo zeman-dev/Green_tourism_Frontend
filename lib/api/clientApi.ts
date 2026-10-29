@@ -1,3 +1,5 @@
+import { isAxiosError } from 'axios';
+
 import { api } from './api';
 import type { login, User } from '../../types/user';
 import { Story } from '@/types/story';
@@ -137,5 +139,16 @@ export const createStory = async (
   return response.data;
 };
 export async function logout(): Promise<void> {
-  await api.post('/auth/logout');
+  try {
+    await api.post('/auth/logout');
+  } catch (error) {
+    if (isAxiosError(error) && error.response?.status === 401) {
+      await api.post('/auth/refresh');
+      await api.post('/auth/logout');
+
+      return;
+    }
+
+    throw error;
+  }
 }

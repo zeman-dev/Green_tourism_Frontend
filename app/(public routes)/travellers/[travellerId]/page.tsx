@@ -19,6 +19,8 @@ import {
 import TravellerStoriesClient from '../TravellerStoriesClient';
 
 import styles from './page.module.css';
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
 
 type TravellerPageProps = {
   params: Promise<{
@@ -77,7 +79,10 @@ export default async function TravellerPage({
   }
 
   return (
+    <>
+    
     <HydrationBoundary state={dehydrate(queryClient)}>
+      <Header/>
       <main className={styles.page}>
         <TravellerInfo user={profile.user} />
 
@@ -97,6 +102,10 @@ export default async function TravellerPage({
           )}
         </section>
       </main>
+      <Footer/>
     </HydrationBoundary>
+    
+  </>
   );
+  
 }

@@ -93,8 +93,8 @@ export default function StoryCard({
           className={styles.image}
           src={story.img}
           alt={story.title}
-          fill
-          sizes="(max-width: 767px) 100vw, (max-width: 1439px) 50vw, 33vw"
+          height={335}
+          width={335}
         />
       </div>
 

@@ -7,7 +7,28 @@
 .mainContent {
   flex: 1 1 auto;
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 72px 20px;
+}
+
+.page {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 24px 16px;
+  background-color: #ffffff;
+}
+
+@media (min-width: 1440px) {
+  .page {
+    padding: 40px 64px;
+  }
+}
+
+@media (min-width: 768px) {
+  .page {
+    padding: 32px 40px;
+  }
 }

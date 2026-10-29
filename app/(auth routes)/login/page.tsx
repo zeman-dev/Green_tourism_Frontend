@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import css from './login.module.css';
 import AuthFooter from '@/components/AuthFooter/AuthFooter';
-import LoginForm from '@/components/AuthLogin/LoginForm'
+import LoginForm from '@/components/AuthLogin/LoginForm';
 import AuthHeader from '@/components/AuthHeader/AuthHeader';
 
 export const metadata: Metadata = {
@@ -12,10 +12,12 @@ export const metadata: Metadata = {
 const SignIn = () => {
   return (
     <div className={css.pageWrapper}>
-        <AuthHeader/>
-      <main className={css.mainContent}>
-        <LoginForm />
-      </main>
+      <AuthHeader />
+      <div className={css.page}>
+        <main className={css.mainContent}>
+          <LoginForm />
+        </main>
+      </div>
       <AuthFooter />
     </div>
   );

@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import {
   ErrorMessage,
@@ -13,6 +14,7 @@ import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 
 import { registerUser } from '../../lib/api/authApi';
+import { useAuthStore } from '@/lib/store/authStore';
 import styles from './RegistrationForm.module.css';
 
 const registrationSchema = Yup.object({
@@ -44,13 +46,17 @@ type RegistrationFormValues = typeof initialValues;
 
 export default function RegistrationForm() {
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const setUser = useAuthStore(state => state.setUser);
 
   const handleSubmit = async (
     values: RegistrationFormValues,
     { setSubmitting }: FormikHelpers<RegistrationFormValues>,
   ) => {
     try {
-      await registerUser(values);
+      const user = await registerUser(values);
+      setUser(user);
+      queryClient.setQueryData(['currentUser'], user);
 
       router.push('/');
     } catch (error: unknown) {

@@ -1,3 +1,5 @@
+import type { User } from '@/types/user';
+
 import { api } from './api';
 
 export interface RegisterUserData {
@@ -6,8 +8,8 @@ export interface RegisterUserData {
   password: string;
 }
 
-export const registerUser = async (data: RegisterUserData) => {
-  const response = await api.post('/auth/register', data);
+export const registerUser = async (data: RegisterUserData): Promise<User> => {
+  const response = await api.post<User>('/auth/register', data);
 
   return response.data;
 };

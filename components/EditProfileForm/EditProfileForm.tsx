@@ -83,7 +83,7 @@ export default function EditProfileForm() {
         toast.success('Профіль оновлено');
       }
 
-      router.push('/profile');
+      router.push('/profile/saved');
     } catch (error) {
       toast.error(getErrorMessage(error, 'Не вдалося оновити профіль'));
     } finally {
@@ -171,7 +171,7 @@ export default function EditProfileForm() {
             >
               {isSubmitting ? 'Зберігаємо...' : 'Зберегти'}
             </button>
-            <Link href="/profile" className={css.cancelButton}>
+            <Link href="/profile/saved" className={css.cancelButton}>
               Скасувати
             </Link>
           </div>

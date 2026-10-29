@@ -66,6 +66,14 @@
   border-color: var(--color-scheme-1-accent);
 }
 
+.inputError {
+  border-color: var(--color-red);
+}
+
+.inputError:focus {
+  border-color: var(--color-red);
+}
+
 .errorText {
   font-size: 12px;
   font-weight: 400;

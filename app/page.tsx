@@ -25,9 +25,11 @@ export default async function Home() {
     queryFn: getPopularStories,
   });
 
+
   return (
     <div className={styles.page}>
       <Header />
+      
       <main className={styles.main}>
         <Hero />
 

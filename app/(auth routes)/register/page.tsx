@@ -1,5 +1,3 @@
-// import { Montserrat } from 'next/font/google';
-
 import AuthHeader from '../../../components/AuthHeader/AuthHeader';
 import RegistrationForm from '../../../components/RegistrationForm/RegistrationForm';
 import AuthFooter from '../../../components/AuthFooter/AuthFooter';
@@ -11,6 +9,7 @@ import {
 
 import styles from './page.module.css';
 
+
 export const metadata = {
   title: 'Реєстрація | Природні Мандри',
   description: 'Створення облікового запису в Природних Мандрах',
@@ -18,6 +17,7 @@ export const metadata = {
 
 export default function RegisterPage() {
   return (
+
     <div className={`${styles.page} `}>
       <AuthHeader />
       <main className={styles.main}>

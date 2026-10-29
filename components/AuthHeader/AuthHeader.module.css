@@ -1,10 +1,11 @@
 .header {
     display: flex;
     align-items: center;
-    margin-top: 18px;
-    margin-bottom: 18px;
-
-    
+    width: 100%;
+    max-width: 1312px; 
+    margin: 18px auto; 
+    padding: 0 20px;
+    box-sizing: border-box;  
 }
 
 .logo {
@@ -19,4 +20,16 @@
     width: 100%;
     max-width: 165px;
     height: auto;
+}
+
+@media (min-width: 768px) {
+  .header {
+    padding: 0 32px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .header {
+    padding: 0 64px;
+  }
 }

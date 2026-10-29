@@ -6,6 +6,7 @@ import type { Story } from '@/types/story';
 import 'swiper/css';
 import styles from './PopularStories.module.css';
 import StoryCard from '@/components/StoryCard/StoryCard';
+import { ArrowLeftIcon, ArrowRightIcon } from '../icons/icons';
 
 type PopularStoriesSliderProps = {
   stories: Story[];

@@ -27,7 +27,7 @@
   margin-top: 24px;
   padding: 0 16px;
   border-radius: 8px;
-  background-color: #8dd18c;
+  background-color: #4A9849;
   color: #fff;
   text-decoration: none;
   cursor: pointer;
@@ -65,24 +65,27 @@
     height: 40px;
     border: none;
     border-radius: 8px;
-    background-color: #8dd18c;
-    color: #fff;
+    background-color: #F2F2F2;
+    color: #1B391B;
     cursor: pointer;
 }
 
 .arrow:hover {
-    background-color: #def2de;
-    color: #254c24;
+    background-color: #DEF2DE;
+    
 }
 
 .arrow:focus-visible {
     background-color: #4a9849;
-    color: #fff;
+}
+
+.arrowIcon {
+  width: 16px;
+  height: 16px;
 }
 
 .arrow:active {
-    background-color: #254c24;
-    color: #fff;
+    background-color: #8DD18C;
 }
 
 .arrow:disabled {

@@ -9,7 +9,6 @@ import {
 
 import styles from './page.module.css';
 
-
 export const metadata = {
   title: 'Реєстрація | Природні Мандри',
   description: 'Створення облікового запису в Природних Мандрах',
@@ -17,28 +16,31 @@ export const metadata = {
 
 export default function RegisterPage() {
   return (
-
-    <div className={`${styles.page} `}>
+    <>
       <AuthHeader />
-      <main className={styles.main}>
-        <AuthTabs>
-          <RegisterLink />
-          <LoginLink />
-        </AuthTabs>
 
-        <section className={styles.content}>
-          <div className={styles.heading}>
-            <h1 className={styles.title}>Реєстрація</h1>
+      <div className={styles.page}>
+        <main className={styles.main}>
+          <AuthTabs>
+            <RegisterLink />
+            <LoginLink />
+          </AuthTabs>
 
-            <p className={styles.subtitle}>
-              Раді вас бачити у спільноті мандрівників!
-            </p>
-          </div>
+          <section className={styles.content}>
+            <div className={styles.heading}>
+              <h1 className={styles.title}>Реєстрація</h1>
 
-          <RegistrationForm />
-        </section>
-      </main>
-      <AuthFooter />
-    </div>
+              <p className={styles.subtitle}>
+                Раді вас бачити у спільноті мандрівників!
+              </p>
+            </div>
+
+            <RegistrationForm />
+          </section>
+        </main>
+
+        <AuthFooter />
+      </div>
+    </>
   );
 }

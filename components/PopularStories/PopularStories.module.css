@@ -61,27 +61,24 @@
 }
 
 .arrow {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     border: none;
     border-radius: 8px;
-    background-color: #F2F2F2;
+    background-color: #DEF2DE;
     color: #1B391B;
     cursor: pointer;
 }
 
-.arrow:hover {
-    background-color: #DEF2DE;
-    
-}
+
 
 .arrow:focus-visible {
-    background-color: #4a9849;
+    background-color: #8DD18C;
 }
 
 .arrowIcon {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
 }
 
 .arrow:active {

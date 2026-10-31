@@ -44,7 +44,6 @@ export default function Header() {
 
   return (
     <HeaderContent
-      key={pathname}
       pathname={pathname}
       isAuthenticated={isAuthenticated && Boolean(user)}
       user={user}
@@ -66,11 +65,12 @@ function HeaderContent({
   user,
   onLogout,
 }: HeaderContentProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openMenuPath, setOpenMenuPath] = useState<string | null>(null);
+  const isMenuOpen = openMenuPath === pathname;
   const burgerRef = useRef<HTMLButtonElement>(null);
 
   function closeMenu() {
-    setIsMenuOpen(false);
+    setOpenMenuPath(null);
   }
 
   async function handleLogout() {
@@ -83,7 +83,7 @@ function HeaderContent({
 
     function handleResize() {
       if (desktop.matches) {
-        setIsMenuOpen(false);
+        setOpenMenuPath(null);
       }
     }
 
@@ -104,14 +104,6 @@ function HeaderContent({
       document.body.style.overflow = previousOverflow;
     };
   }, [isMenuOpen]);
-
-  function isActiveLink(href: string) {
-
-  if (href === '/') return pathname === '/';
-
-
-  return pathname === href || pathname.startsWith(`${href}/`);
-}
 
   function renderLinks() {
     return navigationLinks.map(({ href, label }) => (
@@ -149,9 +141,11 @@ function HeaderContent({
 
             {isAuthenticated && (
               <Link
-                href="/profile"
+                href="/profile/saved"
                 className={css.navLink}
-               aria-current={isActiveLink('/profile') ? 'page' : undefined}
+                aria-current={
+                  pathname.startsWith('/profile') ? 'page' : undefined
+                }
               >
                 Мій профіль
               </Link>
@@ -185,7 +179,11 @@ function HeaderContent({
             aria-label={isMenuOpen ? 'Закрити меню' : 'Відкрити меню'}
             aria-expanded={isMenuOpen}
             aria-controls="header-menu"
-            onClick={() => setIsMenuOpen(previous => !previous)}
+            onClick={() =>
+              setOpenMenuPath(current =>
+                current === pathname ? null : pathname
+              )
+            }
           >
             <Image
               src={isMenuOpen ? '/icons/close.svg' : '/icons/burger.svg'}

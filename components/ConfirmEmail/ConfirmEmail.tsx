@@ -31,7 +31,7 @@ export default function ConfirmEmail({ token }: { token?: string }) {
         <p className={css.text}>
           Нова адреса вже прив’язана до вашого профілю.
         </p>
-        <Link href="/profile" className={css.button}>
+        <Link href="/profile/saved" className={css.button}>
           До профілю
         </Link>
       </div>

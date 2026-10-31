@@ -2,12 +2,14 @@
 
 import { isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 
 import css from './LoginForm.module.css';
 import { loginUser } from '@/lib/api/clientApi';
+import { useAuthStore } from '@/lib/store/authStore';
 import {
   AuthTabs,
   RegisterLink,
@@ -31,13 +33,17 @@ const validationSchema = Yup.object({
 
 export default function LoginForm() {
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const setUser = useAuthStore(state => state.setUser);
 
   const handleSubmit = async (
     values: LoginFormValues,
     actions: FormikHelpers<LoginFormValues>
   ) => {
     try {
-      await loginUser(values);
+      const user = await loginUser(values);
+      setUser(user);
+      queryClient.setQueryData(['currentUser'], user);
       router.push('/profile');
     } catch (error: unknown) {
       let errorMessage = 'Помилка авторизації. Спробуйте ще раз.';
